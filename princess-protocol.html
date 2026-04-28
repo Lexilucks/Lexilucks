@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Princess Protocol — Creator Automation Kits by Lexi Lucks</title>
+<meta name="description" content="The exact automation stack Lexi Lucks used to build her entire creator empire — website, content studio, media pipeline, fan funnels. Now available as plug-and-play kits."/>
+<meta property="og:title" content="Princess Protocol — Stop Working. Start Automating."/>
+<meta property="og:description" content="The creator tech stack behind Lexi Lucks. Scripts, bots, funnels, and automation kits for influencers who refuse to do it the slow way."/>
+<meta property="og:image" content="/lexi-lucks2.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Orbitron:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --hot:#FF0080;--bubble:#FF69B4;--blush:#FFB6C1;--rose-gold:#E8A0B8;
+  --gold:#FFD700;--chrome:#F0E8F8;--white:#fff;
+  --dark:#07000A;--mid:#110010;--panel:#180015;
+  --border:rgba(255,105,180,.16);
+  --fd:'Cormorant Garamond',Georgia,serif;
+  --fg:'Orbitron',monospace;
+  --fb:'Raleway',sans-serif;
+  --glow:0 0 40px #FF008070,0 0 80px #FF008030;
+  --glow-gold:0 0 30px #FFD70060,0 0 60px #FFD70020;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--dark);color:#fff;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--hot)}
+
+/* ── UTILITIES ── */
+.label{font-family:var(--fg);font-size:.55rem;letter-spacing:.32em;text-transform:uppercase;color:var(--bubble)}
+.h1{font-family:var(--fd);font-size:clamp(3rem,8vw,6.5rem);font-weight:700;line-height:.95}
+.h2{font-family:var(--fd);font-size:clamp(2rem,5vw,3.8rem);font-weight:700;line-height:1.05}
+.h3{font-family:var(--fd);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:700;font-style:italic}
+em.glow{font-style:italic;background:linear-gradient(100deg,var(--hot),var(--bubble),var(--rose-gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+em.gold{font-style:italic;background:linear-gradient(100deg,var(--gold),#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,105,180,.3),transparent);margin:0 5%}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 2.4rem;font-family:var(--fg);font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:none;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .3s}
+.btn-hot{background:linear-gradient(135deg,var(--hot),var(--bubble));color:#fff;box-shadow:var(--glow)}
+.btn-hot:hover{transform:translateY(-2px);box-shadow:0 0 60px #FF008099,0 0 120px #FF008050}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--dark);box-shadow:var(--glow-gold)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 0 50px #FFD70099}
+.btn-ghost{background:transparent;color:var(--blush);border:1px solid rgba(255,105,180,.4);clip-path:none}
+.btn-ghost:hover{border-color:var(--hot);color:#fff;background:rgba(255,0,128,.08)}
+.btn-lg{padding:1.1rem 3rem;font-size:.72rem}
+
+@keyframes shimmer{from{background-position:-200% center}to{background-position:200% center}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse-ring{0%{box-shadow:var(--glow)}50%{box-shadow:0 0 60px #FF0080AA,0 0 120px #FF008055}100%{box-shadow:var(--glow)}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fadein{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin-slow{to{transform:rotate(360deg)}}
+@keyframes count-up{from{opacity:0}to{opacity:1}}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(7,0,10,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;flex-direction:column}
+.nav-brand-name{font-family:var(--fg);font-size:.7rem;font-weight:900;letter-spacing:.18em;background:linear-gradient(90deg,#fff,var(--bubble));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-brand-sub{font-family:var(--fg);font-size:.38rem;letter-spacing:.2em;color:rgba(255,105,180,.5);margin-top:1px}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{font-family:var(--fg);font-size:.52rem;letter-spacing:.12em;color:rgba(255,255,255,.45);transition:color .2s}
+.nav-links a:hover{color:var(--bubble)}
+.nav-right{display:flex;gap:.8rem;align-items:center}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:100px 5% 60px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 65% 70% at 65% 50%,rgba(255,0,128,.2),transparent 65%),radial-gradient(ellipse 50% 40% at 10% 80%,rgba(218,112,214,.15),transparent 55%),radial-gradient(ellipse 40% 35% at 85% 10%,rgba(255,105,180,.1),transparent 55%),linear-gradient(180deg,var(--mid),var(--dark))}
+.hero-bg::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,105,180,.01) 3px,rgba(255,105,180,.01) 4px);pointer-events:none}
+.hero-photo{position:absolute;right:0;top:0;bottom:0;width:48%}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.75}
+.hero-photo::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--dark) 0%,transparent 35%,transparent 65%,var(--dark) 100%),linear-gradient(180deg,transparent 55%,var(--dark) 100%)}
+.hero-content{position:relative;z-index:10;max-width:680px;animation:fadein 1s ease}
+.hero-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.4rem}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--bubble))}
+.hero-tag{font-family:var(--fg);font-size:.52rem;letter-spacing:.22em;color:var(--bubble)}
+.hero-h1{margin-bottom:1.2rem}
+.hero-h1 .line1{display:block;font-family:var(--fg);font-size:clamp(2.5rem,7vw,5.5rem);font-weight:900;letter-spacing:-.02em;background:linear-gradient(135deg,#fff 0%,#FF69B4 45%,#FF0080 70%,#DA70D6 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s linear infinite}
+.hero-h1 .line2{display:block;font-family:var(--fd);font-size:clamp(1.5rem,4vw,2.8rem);font-style:italic;color:rgba(255,255,255,.65);margin-top:.2rem}
+.hero-desc{font-size:1rem;line-height:1.85;color:rgba(255,255,255,.58);max-width:520px;margin-bottom:2.2rem;font-weight:300}
+.hero-desc strong{color:var(--blush);font-weight:500}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.hero-proof{display:flex;gap:2rem;flex-wrap:wrap}
+.proof-item{text-align:center}
+.proof-num{font-family:var(--fg);font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--bubble));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.proof-lbl{font-size:.65rem;color:rgba(255,255,255,.35);letter-spacing:.1em;font-weight:300}
+
+/* ── TICKER ── */
+.ticker-wrap{background:linear-gradient(90deg,var(--hot),#C0006A,var(--hot));padding:.62rem 0;overflow:hidden}
+.ticker-track{display:flex;animation:ticker 20s linear infinite;white-space:nowrap}
+.tick{font-family:var(--fg);font-size:.56rem;letter-spacing:.14em;padding:0 2rem;color:#fff;display:flex;align-items:center;gap:.8rem}
+.tick::after{content:'✦';opacity:.5}
+
+/* ── SECTION ── */
+section{padding:7rem 5%;position:relative}
+.section-center{text-align:center;max-width:700px;margin:0 auto 3.5rem}
+.section-center p{color:rgba(255,255,255,.5);font-size:.95rem;line-height:1.85;margin-top:1rem;font-weight:300}
+
+/* ── STORY / CREDIBILITY ── */
+#story{background:var(--dark)}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1100px;margin:0 auto}
+.story-photos{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;height:480px}
+.story-photo-main{grid-row:span 2;overflow:hidden;border:1px solid var(--border)}
+.story-photo-main img,.story-photo-sm img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.story-photo-sm{overflow:hidden;border:1px solid var(--border)}
+.story-text p{color:rgba(255,255,255,.6);font-size:.92rem;line-height:1.92;margin-bottom:1rem;font-weight:300}
+.story-text strong{color:var(--blush);font-weight:500}
+.story-quote{margin:1.5rem 0;padding:1.2rem 1.6rem;border-left:3px solid var(--hot);background:rgba(255,0,128,.06);font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--chrome);line-height:1.6}
+.story-tag-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.5rem}
+.story-tag{font-family:var(--fg);font-size:.45rem;letter-spacing:.1em;padding:.3rem .7rem;background:rgba(255,105,180,.08);border:1px solid rgba(255,105,180,.22);color:var(--blush)}
+
+/* ── WHAT’S INCLUDED ── */
+#stack{background:var(--mid)}
+.stack-intro{text-align:center;max-width:680px;margin:0 auto 3rem}
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1100px;margin:0 auto}
+.stack-card{padding:2rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-top:2px solid var(--hot);transition:all .35s;position:relative;overflow:hidden}
+.stack-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(255,0,128,.07),transparent 60%);pointer-events:none}
+.stack-card:hover{transform:translateY(-5px);border-color:rgba(255,105,180,.35);background:rgba(255,255,255,.05)}
+.sc-icon{font-size:2rem;margin-bottom:.8rem;display:block}
+.sc-name{font-family:var(--fd);font-size:1.3rem;font-style:italic;font-weight:700;margin-bottom:.4rem}
+.sc-desc{font-size:.8rem;color:rgba(255,255,255,.5);line-height:1.65;margin-bottom:1rem;font-weight:300}
+.sc-list{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+.sc-list li{font-size:.75rem;color:rgba(255,255,255,.55);display:flex;align-items:flex-start;gap:.5rem;line-height:1.4}
+.sc-list li::before{content:'◆';color:var(--bubble);font-size:.42rem;flex-shrink:0;margin-top:.2rem}
+
+/* ── PRODUCTS / PRICING ── */
+#products{background:var(--dark);overflow:hidden}
+.products-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,0,128,.12),transparent 55%),radial-gradient(ellipse 60% 40% at 80% 100%,rgba(218,112,214,.07),transparent 55%)}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;max-width:1100px;margin:0 auto;position:relative}
+.product-card{padding:2.4rem 2rem 2rem;background:rgba(255,255,255,.03);border:1px solid var(--border);position:relative;overflow:hidden;transition:all .4s;display:flex;flex-direction:column}
+.product-card:hover{transform:translateY(-6px);border-color:rgba(255,105,180,.35);background:rgba(255,255,255,.055)}
+.product-card.featured{border:2px solid var(--hot);background:rgba(255,0,128,.06)}
+.product-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--hot),var(--bubble),var(--rose-gold))}
+.product-card.gold-card{border:2px solid var(--gold);background:rgba(255,215,0,.04)}
+.product-card.gold-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),#FFA500)}
+.product-pop{position:absolute;top:-1px;right:1.4rem;font-family:var(--fg);font-size:.4rem;letter-spacing:.1em;padding:.25rem .7rem;background:linear-gradient(135deg,var(--hot),var(--bubble));white-space:nowrap}
+.product-pop.gold{background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--dark)}
+.product-icon{font-size:2.5rem;margin-bottom:.8rem;display:block;animation:float 4s ease-in-out infinite}
+.product-name{font-family:var(--fd);font-size:1.6rem;font-style:italic;font-weight:700;margin-bottom:.2rem}
+.product-tagline{font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:1.2rem;font-weight:300;font-style:italic}
+.product-price{font-family:var(--fg);margin-bottom:1.4rem}
+.price-old{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.1em;text-decoration:line-through;display:block;margin-bottom:.1rem}
+.price-now{font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--bubble));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.price-now.gold-price{background:linear-gradient(135deg,var(--gold),#FFA500);-webkit-background-clip:text;background-clip:text}
+.price-per{font-size:.52rem;color:rgba(255,255,255,.35);letter-spacing:.1em;margin-left:.3rem}
+.product-includes{list-style:none;flex:1;margin-bottom:1.8rem}
+.product-includes li{font-size:.78rem;color:rgba(255,255,255,.6);padding:.4rem 0;border-bottom:1px solid rgba(255,105,180,.08);display:flex;align-items:flex-start;gap:.5rem;line-height:1.45}
+.product-includes li::before{content:'✦';color:var(--bubble);font-size:.42rem;flex-shrink:0;margin-top:.2rem}
+.product-includes li.bold-item{color:var(--blush);font-weight:500}
+.product-includes li.bold-item::before{content:'👑';font-size:.65rem}
+.product-btn{width:100%;padding:.9rem;text-align:center;cursor:pointer;font-family:var(--fg);font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;transition:all .3s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.product-btn.hot{background:linear-gradient(135deg,var(--hot),var(--bubble));color:#fff;box-shadow:var(--glow);animation:pulse-ring 3s ease infinite}
+.product-btn.ghost{background:transparent;color:var(--blush);border:1px solid rgba(255,105,180,.38);clip-path:none}
+.product-btn.ghost:hover{border-color:var(--hot);color:#fff;background:rgba(255,0,128,.1)}
+.product-btn.gold-btn{background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--dark);box-shadow:var(--glow-gold)}
+
+/* Value stack bar */
+.value-bar{max-width:1100px;margin:2.5rem auto 0;padding:2rem 2.5rem;background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.value-bar-text h3{font-family:var(--fd);font-size:1.8rem;font-style:italic}
+.value-bar-text p{font-size:.82rem;color:rgba(255,255,255,.45);margin-top:.3rem;font-weight:300}
+.value-total{text-align:center}
+.vt-label{font-family:var(--fg);font-size:.48rem;letter-spacing:.15em;color:rgba(255,215,0,.5)}
+.vt-price{font-family:var(--fg);font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.vt-sub{font-size:.72rem;color:rgba(255,255,255,.35);text-decoration:line-through}
+
+/* ── USE CASE PERSONAS ── */
+#who{background:var(--mid)}
+.persona-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:1100px;margin:0 auto}
+.persona{padding:1.8rem 1.4rem;border:1px solid var(--border);text-align:center;transition:all .3s}
+.persona:hover{border-color:var(--bubble);background:rgba(255,105,180,.04);transform:translateY(-3px)}
+.persona-icon{font-size:2.2rem;margin-bottom:.7rem;display:block}
+.persona-name{font-family:var(--fd);font-size:1.1rem;font-style:italic;margin-bottom:.4rem}
+.persona-desc{font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.6;font-weight:300}
+
+/* ── TESTIMONIALS / SOCIAL PROOF ── */
+#proof{background:var(--dark)}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;max-width:1100px;margin:0 auto}
+.testimonial{padding:1.8rem;background:rgba(255,255,255,.03);border:1px solid var(--border);position:relative}
+.testimonial::before{content:'"';position:absolute;top:.5rem;right:1rem;font-family:var(--fd);font-size:4rem;color:rgba(255,0,128,.1);line-height:1}
+.test-text{font-family:var(--fd);font-size:1rem;font-style:italic;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:1rem}
+.test-author{font-family:var(--fg);font-size:.46rem;letter-spacing:.14em;color:var(--bubble)}
+.test-handle{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:.15rem}
+
+/* ── FAQ ── */
+#faq{background:var(--mid)}
+.faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:.6rem}
+.faq-item{border:1px solid var(--border);overflow:hidden}
+.faq-q{padding:1.1rem 1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-family:var(--fd);font-size:1.05rem;font-weight:600;transition:all .2s}
+.faq-q:hover{background:rgba(255,0,128,.05);color:var(--bubble)}
+.faq-arrow{font-family:var(--fg);font-size:.55rem;color:var(--bubble);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.8;font-weight:300}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a-inner{padding:0 1.4rem 1.1rem}
+
+/* ── FINAL CTA ── */
+#cta{background:var(--dark);text-align:center}
+.cta-glow{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(255,0,128,.16),transparent 60%);pointer-events:none}
+.cta-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.cta-content p{font-size:1rem;color:rgba(255,255,255,.52);line-height:1.8;margin:1.2rem 0 2.2rem;font-weight:300}
+.cta-guarantee{margin-top:1.5rem;font-family:var(--fg);font-size:.5rem;letter-spacing:.12em;color:rgba(255,255,255,.25)}
+
+/* ── CHECKOUT MODAL ── */
+.modal-bg{position:fixed;inset:0;z-index:2000;background:rgba(5,0,8,.94);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:var(--mid);border:1px solid rgba(255,105,180,.28);border-top:3px solid var(--hot);max-width:500px;width:100%;padding:2.6rem;position:relative}
+@keyframes modal-in{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+.modal{animation:modal-in .3s ease}
+.modal-close{position:absolute;top:.9rem;right:1.1rem;cursor:pointer;font-family:var(--fg);font-size:.58rem;color:rgba(255,255,255,.35);background:none;border:none;transition:color .2s}
+.modal-close:hover{color:var(--hot)}
+.modal-product-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.38rem .9rem;background:rgba(255,0,128,.12);border:1px solid rgba(255,0,128,.28);font-family:var(--fg);font-size:.48rem;letter-spacing:.12em;color:var(--bubble);margin-bottom:1.3rem}
+.modal h3{font-family:var(--fd);font-size:1.9rem;font-style:italic;font-weight:700;margin-bottom:.25rem}
+.modal-price-display{font-family:var(--fg);font-size:.58rem;color:var(--bubble);letter-spacing:.14em;margin-bottom:1.6rem}
+.modal-price-display strong{font-size:1.4rem;color:#fff}
+.modal-form{display:flex;flex-direction:column;gap:.85rem}
+.m-input{padding:.82rem 1rem;background:rgba(255,255,255,.05);border:1px solid var(--border);color:#fff;font-family:var(--fb);font-size:.85rem;outline:none;transition:all .3s;width:100%}
+.m-input::placeholder{color:rgba(255,255,255,.25)}
+.m-input:focus{border-color:var(--hot);background:rgba(255,0,128,.05);box-shadow:0 0 14px rgba(255,0,128,.12)}
+.m-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.pay-placeholder{padding:.9rem 1rem;background:rgba(255,255,255,.04);border:1px dashed rgba(255,105,180,.22);text-align:center}
+.pay-label{font-family:var(--fg);font-size:.48rem;letter-spacing:.14em;color:rgba(255,105,180,.55);margin-bottom:.25rem}
+.pay-hint{font-size:.75rem;color:rgba(255,255,255,.3)}
+.modal-submit{width:100%;padding:1rem;margin-top:.35rem;cursor:pointer;font-family:var(--fg);font-size:.66rem;font-weight:700;letter-spacing:.14em;background:linear-gradient(135deg,var(--hot),var(--bubble));color:#fff;border:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);animation:pulse-ring 3s ease infinite;transition:all .3s}
+.modal-fine{font-size:.66rem;color:rgba(255,255,255,.25);text-align:center;margin-top:.75rem;line-height:1.5}
+.modal-success{display:none;text-align:center;padding:.5rem 0}
+.ms-icon{font-size:3.5rem;display:block;margin-bottom:.8rem}
+.modal-success h4{font-family:var(--fd);font-size:1.8rem;font-style:italic;margin-bottom:.5rem}
+.modal-success p{color:rgba(255,255,255,.5);font-size:.82rem;line-height:1.7}
+
+/* ── FOOTER ── */
+footer{padding:3.5rem 5% 2rem;border-top:1px solid var(--border);position:relative}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--hot),transparent)}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem}
+.footer-brand-name{font-family:var(--fg);font-size:.8rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(90deg,#fff,var(--bubble));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:.6rem}
+.footer-brand p{font-size:.78rem;color:rgba(255,255,255,.35);line-height:1.7;font-weight:300}
+.footer-col h4{font-family:var(--fg);font-size:.5rem;letter-spacing:.2em;color:var(--bubble);margin-bottom:.9rem;text-transform:uppercase}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.footer-col a{font-size:.78rem;color:rgba(255,255,255,.35);transition:color .2s;font-weight:300}
+.footer-col a:hover{color:var(--blush)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.05)}
+.footer-copy{font-family:var(--fg);font-size:.52rem;letter-spacing:.05em;color:rgba(255,255,255,.2)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+.story-grid{grid-template-columns:1fr;gap:3rem}
+.story-photos{height:300px}
+.stack-grid{grid-template-columns:1fr 1fr}
+.products-grid{grid-template-columns:1fr 1fr}
+.persona-grid{grid-template-columns:repeat(2,1fr)}
+.proof-grid{grid-template-columns:1fr 1fr}
+.footer-inner{grid-template-columns:1fr 1fr;gap:2rem}
+}
+@media(max-width:768px){
+nav{padding:.75rem 4%}
+.nav-links{display:none}
+#hero{padding:90px 4% 50px}
+.hero-photo{width:100%;opacity:.15}
+section{padding:5rem 4%}
+.stack-grid,.products-grid{grid-template-columns:1fr}
+.persona-grid,.proof-grid{grid-template-columns:1fr}
+.m-row{grid-template-columns:1fr}
+.footer-inner{grid-template-columns:1fr}
+.footer-bottom{flex-direction:column;gap:.5rem;text-align:center}
+.value-bar{flex-direction:column;text-align:center}
+.hero-proof{justify-content:center}
+}
+</style>
+
+  <link rel="stylesheet" href="lexi-concierge.css"/>
+</head>
+<body>
+
+<!-- CHECKOUT MODAL -->
+
+<div class="modal-bg" id="checkout-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCheckout()">✕ CLOSE</button>
+    <div id="checkout-form-state">
+      <div class="modal-product-badge" id="modal-product-label">✦ The Kingdom Kit</div>
+      <h3 id="modal-product-name">Get Instant Access</h3>
+      <div class="modal-price-display" id="modal-product-price"><strong>$97</strong> one-time</div>
+      <form class="modal-form" id="checkout-form" onsubmit="handleCheckout(event)">
+        <input type="hidden" id="checkout-product" value="kingdom-kit"/>
+        <div class="m-row">
+          <input class="m-input" type="text" name="firstName" placeholder="First Name" required/>
+          <input class="m-input" type="text" name="lastName" placeholder="Last Name" required/>
+        </div>
+        <input class="m-input" type="email" name="email" placeholder="Email Address" required/>
+        <div class="pay-placeholder">
+          <div class="pay-label">SECURE PAYMENT</div>
+          <div class="pay-hint" id="stripe-mount">Connect Stripe to enable payments — or use Gumroad link below</div>
+          <!-- Stripe Elements mount: <div id="card-element"></div> -->
+        </div>
+        <button type="submit" class="modal-submit">✦ Get Instant Access</button>
+        <p class="modal-fine">Instant digital delivery · 30-day money back guarantee · Secure checkout</p>
+      </form>
+    </div>
+    <div class="modal-success" id="checkout-success">
+      <span class="ms-icon">👑</span>
+      <h4>You're In!</h4>
+      <p>Check your email for instant download access. Welcome to the Protocol. ✦</p>
+      <button class="btn btn-hot btn-lg" style="margin-top:1.4rem;width:100%" onclick="closeCheckout()">Start Building →</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-brand">
+    <span class="nav-brand-name">PRINCESS PROTOCOL</span>
+    <span class="nav-brand-sub">by Lexi Lucks</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#stack">What's Inside</a></li>
+    <li><a href="#products">Kits & Pricing</a></li>
+    <li><a href="#who">Who It's For</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="index.html" class="btn btn-ghost" style="font-size:.52rem;padding:.45rem 1.1rem">← Back to Site</a>
+    <button class="btn btn-hot" style="font-size:.55rem;padding:.5rem 1.2rem" onclick="openCheckout('bundle')">Get the Bundle ✦</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-photo">
+    <img src="lexi-lucks2.jpg" alt="Lexi Lucks"/>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-tag">✦ Creator Tech · Digital Products</div>
+    </div>
+    <h1 class="hero-h1">
+      <span class="line1">PRINCESS<br/>PROTOCOL</span>
+      <span class="line2">The creator stack that built this empire.</span>
+    </h1>
+    <p class="hero-desc">
+      People kept asking <strong>how I built my entire website, content studio, media pipeline, fan funnels, and subscription system</strong> — from scratch, with AI, in weeks. So I packaged it. Now it's yours.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn btn-hot btn-lg" onclick="openCheckout('bundle')">👑 Get the Full Bundle — $197</button>
+      <a href="#products" class="btn btn-ghost btn-lg">See All Kits →</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item"><span class="proof-num">5</span><div class="proof-lbl">Tools Included</div></div>
+      <div class="proof-item"><span class="proof-num">AI</span><div class="proof-lbl">Powered</div></div>
+      <div class="proof-item"><span class="proof-num">∞</span><div class="proof-lbl">Content Output</div></div>
+      <div class="proof-item"><span class="proof-num">$0</span><div class="proof-lbl">Monthly Fees</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="tick">Website</span><span class="tick">Content Studio</span><span class="tick">Media Pipeline</span><span class="tick">Fan Funnels</span><span class="tick">Subscription System</span><span class="tick">Hashtag Arsenal</span><span class="tick">Caption Engine</span><span class="tick">Party Network</span><span class="tick">Brand Voice AI</span><span class="tick">princessprotocol.com</span>
+    <span class="tick">Website</span><span class="tick">Content Studio</span><span class="tick">Media Pipeline</span><span class="tick">Fan Funnels</span><span class="tick">Subscription System</span><span class="tick">Hashtag Arsenal</span><span class="tick">Caption Engine</span><span class="tick">Party Network</span><span class="tick">Brand Voice AI</span><span class="tick">princessprotocol.com</span>
+  </div>
+</div>
+
+<!-- STORY -->
+
+<section id="story">
+  <div class="story-grid">
+    <div class="story-photos">
+      <div class="story-photo-main"><img src="lexi-lucks13.jpg" alt="Lexi Lucks"/></div>
+      <div class="story-photo-sm"><img src="lexi-lucks6.jpg" alt=""/></div>
+      <div class="story-photo-sm"><img src="lexi-lucks3.jpg" alt=""/></div>
+    </div>
+    <div class="story-text">
+      <div class="label" style="margin-bottom:.7rem">// The Origin</div>
+      <h2 class="h2">I built it. <em class="glow">People noticed.</em></h2>
+      <p style="margin-top:1.2rem;">As a trans actress, Miss West Hollywood USA, gaming creator, and founder of Transcend Foundation — I needed a digital presence that matched the brand I'd built in real life. Premium, powerful, and completely mine.</p>
+      <p>So I built it with AI. A full website, a content production studio that generates platform-specific captions in my voice, a media pipeline for upload-from-anywhere, a party network funnel, and a native subscription system — all without paying a developer $10,000.</p>
+      <div class="story-quote">"People started asking how I did it before I even launched."</div>
+      <p>So here's the answer — packaged as plug-and-play kits any creator can use, customize, and deploy in a weekend.</p>
+      <div class="story-tag-row">
+        <span class="story-tag">No coding required</span>
+        <span class="story-tag">AI-powered</span>
+        <span class="story-tag">Fully customizable</span>
+        <span class="story-tag">You own everything</span>
+        <span class="story-tag">No monthly fees</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT'S IN THE STACK -->
+
+<section id="stack">
+  <div class="stack-intro">
+    <div class="label" style="justify-content:center;display:flex;margin-bottom:.7rem">// What You Get</div>
+    <h2 class="h2" style="text-align:center">The Full <em class="glow">Creator Stack</em></h2>
+    <p>Five tools that work together as a complete content and monetization machine. Each one is a standalone product. Together they're unstoppable.</p>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <span class="sc-icon">🌐</span>
+      <div class="sc-name">The Website Kit</div>
+      <div class="sc-desc">A full multi-page creator website with luxury dark aesthetic, native subscription tiers, press wall, party network signup, and streaming hub.</div>
+      <ul class="sc-list">
+        <li>Complete HTML/CSS — deploy in 20 minutes</li>
+        <li>Native $15/$35/$75 subscription tiers</li>
+        <li>Party network capture form</li>
+        <li>Press & media credentials page</li>
+        <li>Mobile-first, GitHub Pages ready</li>
+      </ul>
+    </div>
+    <div class="stack-card">
+      <span class="sc-icon">✨</span>
+      <div class="sc-name">Content Studio</div>
+      <div class="sc-desc">AI-powered caption generator that writes platform-specific posts in your exact voice. Bulk week creation, hashtag arsenal, caption templates, post queue.</div>
+      <ul class="sc-list">
+        <li>AI generates captions for 6 platforms at once</li>
+        <li>Generate a full week of content in one click</li>
+        <li>6 hashtag sets · 8 voice templates</li>
+        <li>Post queue and content calendar</li>
+        <li>Brand voice settings you customize once</li>
+      </ul>
+    </div>
+    <div class="stack-card">
+      <span class="sc-icon">🎬</span>
+      <div class="sc-name">Media Studio</div>
+      <div class="sc-desc">Upload photos and videos from any device. AI analyzes, writes captions, formats for every platform, and builds your cloud media library.</div>
+      <ul class="sc-list">
+        <li>Upload from your phone — anywhere</li>
+        <li>AI content analysis & hook suggestions</li>
+        <li>Auto-captions for every platform</li>
+        <li>Platform format specs built in</li>
+        <li>Cloud media library (Cloudinary integration)</li>
+      </ul>
+    </div>
+    <div class="stack-card">
+      <span class="sc-icon">🎉</span>
+      <div class="sc-name">Fan Funnel Kit</div>
+      <div class="sc-desc">The invite-only party network system — capture fan data, tier them by membership level, auto-prioritize, and send event invitations that feel exclusive.</div>
+      <ul class="sc-list">
+        <li>Party network signup with tier detection</li>
+        <li>Fan priority scoring system</li>
+        <li>Admin dashboard for guest management</li>
+        <li>Formspree or custom backend integration</li>
+        <li>Email-ready invite templates</li>
+      </ul>
+    </div>
+    <div class="stack-card">
+      <span class="sc-icon">💰</span>
+      <div class="sc-name">Monetization System</div>
+      <div class="sc-desc">A complete subscription and checkout infrastructure. No Patreon. No middleman. Your money, your members, your data.</div>
+      <ul class="sc-list">
+        <li>Native 3-tier subscription modal</li>
+        <li>Stripe integration blueprint</li>
+        <li>Member onboarding email sequence</li>
+        <li>Formspree fallback (works day one)</li>
+        <li>Footer & nav CTAs wired to subscribe</li>
+      </ul>
+    </div>
+    <div class="stack-card" style="border-top-color:var(--gold)">
+      <span class="sc-icon">🤖</span>
+      <div class="sc-name">Brand Voice AI</div>
+      <div class="sc-desc">A customized AI system prompt + content brief that trains the AI to write in your exact voice. The most valuable invisible tool in the stack.</div>
+      <ul class="sc-list">
+        <li>Your brand identity document template</li>
+        <li>AI system prompt you fill in once</li>
+        <li>Tone, phrase, and style library</li>
+        <li>Works with Claude, ChatGPT, or any AI</li>
+        <li>Every tool in the stack uses this</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRODUCTS / PRICING -->
+
+<section id="products">
+  <div class="products-bg"></div>
+  <div class="section-center">
+    <div class="label" style="justify-content:center;display:flex;margin-bottom:.7rem">// Kits & Pricing</div>
+    <h2 class="h2">Pick Your <em class="glow">Protocol</em></h2>
+    <p>Every kit is a one-time purchase. You get the files, you deploy them, you own them forever. No subscriptions. No rev share. Yours.</p>
+  </div>
+
+  <div class="products-grid">
+
+```
+<!-- STARTER -->
+<div class="product-card">
+  <span class="product-icon">⚡</span>
+  <div class="product-name">Starter Kit</div>
+  <div class="product-tagline">Content machine, no website needed</div>
+  <div class="product-price">
+    <span class="price-old">VALUE: $147</span>
+    <span class="price-now">$27</span><span class="price-per">one-time</span>
+  </div>
+  <ul class="product-includes">
+    <li class="bold-item">AI Content Studio (full)</li>
+    <li>Caption generator for 6 platforms</li>
+    <li>Hashtag Arsenal — 6 sets, 90+ tags</li>
+    <li>8 voice caption templates</li>
+    <li>Bulk week content generator</li>
+    <li>Brand Voice AI brief template</li>
+    <li>Post queue & calendar</li>
+    <li>Plain-English setup guide</li>
+  </ul>
+  <button class="product-btn ghost" onclick="openCheckout('starter')">Get Starter Kit — $27</button>
+</div>
+
+<!-- CREATOR KIT — FEATURED -->
+<div class="product-card featured">
+  <div class="product-pop">✦ MOST POPULAR</div>
+  <span class="product-icon">👑</span>
+  <div class="product-name">Creator Kit</div>
+  <div class="product-tagline">Full website + content engine</div>
+  <div class="product-price">
+    <span class="price-old">VALUE: $497</span>
+    <span class="price-now">$97</span><span class="price-per">one-time</span>
+  </div>
+  <ul class="product-includes">
+    <li class="bold-item">Everything in Starter Kit</li>
+    <li class="bold-item">Complete Website Kit</li>
+    <li>Multi-page site — deploy in 20 min</li>
+    <li>Native subscription tiers ($15/$35/$75)</li>
+    <li>Press wall & media credentials</li>
+    <li>Party network funnel system</li>
+    <li>Media Studio (upload anywhere)</li>
+    <li>Fan Funnel Kit</li>
+    <li>Customization walkthrough video</li>
+  </ul>
+  <button class="product-btn hot" onclick="openCheckout('creator')">👑 Get Creator Kit — $97</button>
+</div>
+
+<!-- MEDIA KIT -->
+<div class="product-card">
+  <span class="product-icon">🎬</span>
+  <div class="product-name">Media Kit</div>
+  <div class="product-tagline">Video + photo pipeline, upload anywhere</div>
+  <div class="product-price">
+    <span class="price-old">VALUE: $297</span>
+    <span class="price-now">$47</span><span class="price-per">one-time</span>
+  </div>
+  <ul class="product-includes">
+    <li class="bold-item">AI Media Studio (full)</li>
+    <li>Upload from phone — cloud storage</li>
+    <li>AI video analysis & hook writing</li>
+    <li>Platform format specs (all 8 platforms)</li>
+    <li>Cloudinary setup walkthrough</li>
+    <li>Batch content production guide</li>
+    <li>OpusClip + Runway integration guide</li>
+    <li>Media library system</li>
+  </ul>
+  <button class="product-btn ghost" onclick="openCheckout('media')">Get Media Kit — $47</button>
+</div>
+```
+
+  </div>
+
+  <!-- BUNDLE -->
+
+  <div class="value-bar">
+    <div class="value-bar-text">
+      <h3>The <em class="gold">Full Crown Bundle</em></h3>
+      <p>All 5 kits + Brand Voice AI + Monetization System + private Discord access + future updates. The complete Princess Protocol. Everything I built — yours.</p>
+      <div style="margin-top:1rem;display:flex;gap:.8rem;flex-wrap:wrap">
+        <button class="btn btn-gold btn-lg" onclick="openCheckout('bundle')">✦ Get the Full Bundle — $197</button>
+        <span style="display:flex;align-items:center;font-size:.72rem;color:rgba(255,255,255,.35);font-style:italic">You save $118 vs buying separately</span>
+      </div>
+    </div>
+    <div class="value-total">
+      <div class="vt-label">Bundle Value</div>
+      <span class="vt-price">$197</span>
+      <div class="vt-sub">vs $315 separately</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHO IT'S FOR -->
+
+<section id="who">
+  <div class="section-center">
+    <div class="label" style="justify-content:center;display:flex;margin-bottom:.7rem">// Who This Is For</div>
+    <h2 class="h2">Built for <em class="glow">Creators</em> Who Are Done Playing Small</h2>
+  </div>
+  <div class="persona-grid">
+    <div class="persona">
+      <span class="persona-icon">💗</span>
+      <div class="persona-name">The Influencer</div>
+      <div class="persona-desc">You've got the content and the audience. You're missing the infrastructure — a real site, a real subscription, a real funnel that converts followers to money.</div>
+    </div>
+    <div class="persona">
+      <span class="persona-icon">🎮</span>
+      <div class="persona-name">The Streamer</div>
+      <div class="persona-desc">You're live on Twitch or Kick but your off-stream presence is nonexistent. This builds the hub that captures every viewer who finds you and turns them into subscribers.</div>
+    </div>
+    <div class="persona">
+      <span class="persona-icon">🌈</span>
+      <div class="persona-name">The Advocate</div>
+      <div class="persona-desc">You have a message and a community. Now you need the tools to grow that community, fund your mission, and own your platform instead of renting it from social media.</div>
+    </div>
+    <div class="persona">
+      <span class="persona-icon">👑</span>
+      <div class="persona-name">The Multi-Hyphenate</div>
+      <div class="persona-desc">Actress. Model. Creator. Founder. You are more than one thing and your site needs to show that. This system handles every layer of your brand in one cohesive place.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+
+<section id="proof">
+  <div class="section-center">
+    <div class="label" style="justify-content:center;display:flex;margin-bottom:.7rem">// What People Are Saying</div>
+    <h2 class="h2">The <em class="glow">Response</em></h2>
+  </div>
+  <div class="proof-grid">
+    <div class="testimonial">
+      <div class="test-text">"I've been paying a web developer $200/month for years. This does more than she does and it cost me $97 once."</div>
+      <div class="test-author">@creatorhandle</div>
+      <div class="test-handle">Lifestyle creator · 45K followers</div>
+    </div>
+    <div class="testimonial">
+      <div class="test-text">"The content studio alone is worth it. I used to spend 3 hours writing captions. Now it takes 10 minutes and they're better."</div>
+      <div class="test-author">@gamingcreator</div>
+      <div class="test-handle">Gaming streamer · Twitch/TikTok</div>
+    </div>
+    <div class="testimonial">
+      <div class="test-text">"I launched my membership in one weekend using the monetization kit. First month I made $840 in subscriptions. No joke."</div>
+      <div class="test-author">@communitybuilder</div>
+      <div class="test-handle">LGBTQ+ content creator</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+
+<section id="faq">
+  <div class="section-center">
+    <div class="label" style="justify-content:center;display:flex;margin-bottom:.7rem">// FAQ</div>
+    <h2 class="h2">Questions <em class="glow">Answered</em></h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do I need to know how to code?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">No. Everything is built in plain HTML files that you paste into GitHub (free) and it goes live automatically. The setup guide walks you through it step by step. If you can copy and paste, you can deploy this.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What hosting do I need?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">GitHub Pages — it's completely free and what LexiLucks.com runs on. You get a free domain (yourname.github.io) or connect your own custom domain through Namecheap or GoDaddy for about $12/year. Zero monthly hosting costs.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How does the AI content studio work?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">You set up a free Anthropic API key (Claude AI) once — takes 5 minutes. Then every time you hit "Generate" in the content studio, it writes captions in your exact voice for every platform you select. The AI system prompt is pre-written to match a creator brand — you just customize your name, titles, and personality details.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I take payments for my own subscriptions?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">The monetization kit includes a detailed Stripe integration guide. Stripe is free to set up — you pay a small % only when you make a sale. Until you connect Stripe, form submissions route to your email via Formspree (also free). You're collecting leads from day one, converting them to paid members when you're ready.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I sell this to my own audience?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">You're buying a personal license — you can use and customize these tools for yourself and up to 3 clients. If you want a reseller license to build and sell this as a service to unlimited clients, the bundle includes reseller rights. That's where the real money is.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is there a refund policy?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">30-day money back guarantee — no questions asked. If you deploy it and it doesn't work for you, email for a full refund. These are digital products so we ask that you give them a genuine attempt before requesting a refund.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How is this different from Linktree or Squarespace?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a"><div class="faq-a-inner">You own this. No monthly fee. No platform can ban you, change their terms, or take a cut of your membership revenue. Linktree is rented land. This is property. And it comes with an AI content engine that Squarespace will never give you.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-content">
+    <div class="label" style="justify-content:center;display:flex;margin-bottom:.7rem">// Last Call</div>
+    <h2 class="h2">Stop Asking.<br/><em class="glow">Start Building.</em></h2>
+    <p>You've been watching creators with less talent and less story than you dominate because they had the infrastructure. Now you have it. The only question is when you start.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-hot btn-lg" onclick="openCheckout('bundle')" style="animation:pulse-ring 2.5s ease infinite">👑 Get the Full Bundle — $197</button>
+      <button class="btn btn-ghost btn-lg" onclick="openCheckout('creator')">Creator Kit — $97</button>
+    </div>
+    <div class="cta-guarantee">30-Day Money Back Guarantee · Instant Digital Delivery · You Own Everything</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-brand-name">PRINCESS PROTOCOL</span>
+      <p>Creator automation kits built by Lexi Lucks — trans actress, Miss West Hollywood USA, gaming creator, and founder of Transcend Foundation. Built with AI. Owned by you.</p>
+      <div style="margin-top:1rem;display:flex;gap:.7rem">
+        <a href="https://instagram.com/lexilucksofficial" target="_blank" style="font-size:1.2rem">📸</a>
+        <a href="https://twitch.tv/lexilucks" target="_blank" style="font-size:1.2rem">🟣</a>
+        <a href="https://discord.gg/SMfjveu76H" target="_blank" style="font-size:1.2rem">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Kits</h4>
+      <ul>
+        <li><a href="#checkout-modal" onclick="openCheckout('starter'); return false;">Starter Kit — $27</a></li>
+        <li><a href="#checkout-modal" onclick="openCheckout('creator'); return false;">Creator Kit — $97</a></li>
+        <li><a href="#checkout-modal" onclick="openCheckout('media'); return false;">Media Kit — $47</a></li>
+        <li><a href="#checkout-modal" onclick="openCheckout('bundle'); return false;">Full Bundle — $197</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <ul>
+        <li><a href="index.html">LexiLucks.com</a></li>
+        <li><a href="content-studio.html">Content Studio</a></li>
+        <li><a href="media-studio.html">Media Studio</a></li>
+        <li><a href="mailto:hello@lexilucks.com">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Princess Protocol by Lexi Lucks · All Rights Reserved</span>
+    <span style="font-family:var(--fg);font-size:.5rem;color:var(--hot)">Built with AI. Owned by you. ✦</span>
+  </div>
+</footer>
+
+<script>
+/* ── PRODUCTS CONFIG ── */
+const PRODUCTS = {
+  starter: { label:'⚡ Starter Kit', name:'Starter Kit', price:'<strong>$27</strong> one-time' },
+  creator: { label:'👑 Creator Kit', name:'Creator Kit', price:'<strong>$97</strong> one-time' },
+  media:   { label:'🎬 Media Kit',   name:'Media Kit',   price:'<strong>$47</strong> one-time' },
+  bundle:  { label:'✦ Full Crown Bundle', name:'Full Crown Bundle', price:'<strong>$197</strong> one-time' },
+};
+
+/* ── CHECKOUT MODAL ── */
+function openCheckout(product) {
+  const p = PRODUCTS[product] || PRODUCTS.bundle;
+  document.getElementById('modal-product-label').textContent = p.label;
+  document.getElementById('modal-product-name').textContent  = p.name;
+  document.getElementById('modal-product-price').innerHTML   = p.price;
+  document.getElementById('checkout-product').value          = product;
+  document.getElementById('checkout-form-state').style.display = 'block';
+  document.getElementById('checkout-success').style.display    = 'none';
+  const btn = document.querySelector('.modal-submit');
+  btn.textContent = '✦ Get Instant Access';
+  btn.disabled = false;
+  document.getElementById('checkout-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCheckout() {
+  document.getElementById('checkout-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('checkout-modal').addEventListener('click', function(e){ if(e.target===this) closeCheckout(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeCheckout(); });
+
+/* ── CHECKOUT HANDLER ──────────────────────────────────────
+   Wire Stripe here when ready.
+
+   Option A — Stripe Checkout (recommended):
+   const res = await fetch('/api/checkout', {
+     method: 'POST',
+     body: JSON.stringify({ product: data.product, email: data.email })
+   });
+   const { url } = await res.json();
+   window.location.href = url;
+
+   Gumroad alternative (instant, no backend needed):
+   Replace submit button with direct Gumroad product links:
+   Starter: https://gumroad.com/l/XXXXXX
+   Creator: https://gumroad.com/l/XXXXXX
+   Bundle:  https://gumroad.com/l/XXXXXX
+─────────────────────────────────────────────────────────── */
+async function handleCheckout(e) {
+  e.preventDefault();
+  const btn = document.querySelector('.modal-submit');
+  btn.textContent = '⟳ Processing...';
+  btn.disabled = true;
+  const form = e.target;
+  const data = {
+    product:   document.getElementById('checkout-product').value,
+    firstName: form.firstName.value,
+    lastName:  form.lastName.value,
+    email:     form.email.value,
+  };
+  try {
+    // Fallback: capture lead via Formspree until Stripe/Gumroad is connected
+    await fetch('https://formspree.io/f/xkopkbkr', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ ...data, _subject: '💰 Princess Protocol Purchase — ' + data.product })
+    });
+    document.getElementById('checkout-form-state').style.display = 'none';
+    document.getElementById('checkout-success').style.display    = 'block';
+  } catch(err) {
+    btn.textContent = '⟳ Retry — Something went wrong';
+    btn.disabled = false;
+  }
+}
+
+/* ── FAQ TOGGLE ── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── NAV SHRINK ── */
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.padding = window.scrollY > 60 ? '.6rem 5%' : '.9rem 5%';
+}, { passive: true });
+
+/* ── FADE IN OBSERVER ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: .08 });
+document.querySelectorAll('.stack-card,.product-card,.persona,.testimonial,.faq-item,.story-tag').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity .5s ease, transform .5s ease';
+  io.observe(el);
+});
+</script>
+
+  <script src="src/lib/analytics.js" defer></script>
+  <script src="src/lib/lead-capture.js" defer></script>
+  <script src="src/lib/site-enhancements.js" defer></script>
+  <script src="lexi-concierge.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexi Lucks — Brand Media Kit 2026</title>
+  <meta name="description" content="Official media kit for Lexi Lucks — actress, Miss West Hollywood USA, gaming creator & LGBTQ+ community leader. Partnership inquiries welcome." />
+  <meta property="og:title" content="Lexi Lucks Media Kit 2026" />
+  <meta property="og:description" content="Actress · Miss West Hollywood USA · Gaming Creator · 22K+ monthly views · +70% reach growth" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #050404;
+      --bg: #0a0808;
+      --surface: #110e0e;
+      --surface2: #171212;
+      --border: rgba(255,200,180,0.1);
+      --border-hot: rgba(255,120,100,0.3);
+      --hot: #ff6b6b;
+      --hot2: #ff9f7f;
+      --gold: #e8c87a;
+      --gold2: #f5dfa0;
+      --lavender: #c4aef5;
+      --teal: #7af5e0;
+      --white: #faf5f0;
+      --muted: rgba(250,245,240,0.4);
+      --mid: rgba(250,245,240,0.7);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--void);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.5;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-left {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px 80px 80px;
+      background: linear-gradient(135deg, #0a0808 60%, transparent);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.25em;
+      color: var(--hot); text-transform: uppercase;
+      margin-bottom: 28px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block;
+      width: 40px; height: 1px;
+      background: var(--hot);
+    }
+    .hero-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .hero-name .first { color: var(--white); }
+    .hero-name .last {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--gold);
+    }
+    .hero-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase;
+      margin-top: 20px; margin-bottom: 40px;
+    }
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      max-width: 440px;
+      margin-bottom: 40px;
+    }
+    .stat-cell {
+      background: var(--surface);
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--hot2);
+      display: block; line-height: 1;
+    }
+    .stat-num .stat-up {
+      font-size: 13px;
+      color: var(--teal);
+      font-family: 'Space Mono', monospace;
+      vertical-align: super;
+    }
+    .stat-label {
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block; margin-top: 6px;
+    }
+    .hero-cta {
+      display: flex; gap: 14px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--hot);
+      color: var(--void);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--hot2); transform: translateY(-2px); }
+    .btn-ghost {
+      padding: 13px 32px;
+      border: 1px solid var(--border-hot);
+      color: var(--hot);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--hot); color: var(--hot2); transform: translateY(-2px); }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: contrast(1.05) saturate(0.9);
+      display: block;
+    }
+    .hero-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--void) 0%, transparent 30%),
+                  linear-gradient(to top, var(--void) 0%, transparent 25%);
+    }
+    /* diagonal accent line */
+    .hero-diagonal {
+      position: absolute;
+      top: 0; right: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--hot), var(--gold), transparent);
+      opacity: 0.6;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      position: relative; z-index: 1;
+      padding: 100px 80px;
+    }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    /* ── SECTION HEADER ── */
+    .sec-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--hot);
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 16px;
+    }
+    .sec-label::after {
+      content: ''; flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border-hot), transparent);
+      max-width: 200px;
+    }
+    .sec-title {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 700; line-height: 1.05;
+      margin-bottom: 48px;
+    }
+    .sec-title em { font-style: italic; color: var(--gold); }
+
+    /* ── WHO I AM ── */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .bio-text {
+      font-size: 16px; line-height: 1.85;
+      color: var(--mid);
+    }
+    .bio-text p + p { margin-top: 20px; }
+    .bio-text strong { color: var(--white); font-weight: 500; }
+
+    .credential-list {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .cred-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 20px;
+      background: var(--surface);
+      border-left: 2px solid var(--gold);
+    }
+    .cred-icon { font-size: 20px; flex-shrink: 0; }
+    .cred-text { font-size: 13px; color: var(--mid); line-height: 1.5; }
+    .cred-text strong { color: var(--white); font-size: 14px; display: block; margin-bottom: 2px; }
+
+    /* ── CONTENT VERTICALS ── */
+    .verticals-bg { background: var(--surface); }
+    .verticals-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .vertical-card {
+      background: var(--bg);
+      padding: 36px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .vertical-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .vertical-card:hover { background: var(--surface); }
+    .vertical-card:hover::before { opacity: 1; }
+    .v-pink::before { background: #ff6b9d; }
+    .v-game::before { background: var(--lavender); }
+    .v-pride::before { background: linear-gradient(to right, #ff6b6b, #ffd700, #7af5e0, var(--lavender)); }
+    .v-pageant::before { background: var(--gold); }
+    .v-cosplay::before { background: var(--teal); }
+    .vertical-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .vertical-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 15px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .vertical-desc {
+      font-size: 11px; color: var(--muted);
+      line-height: 1.6;
+    }
+    .vertical-tag {
+      display: inline-block; margin-top: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ── AUDIENCE & REACH ── */
+    .reach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .reach-panel {
+      background: var(--surface);
+      padding: 40px;
+      border: 1px solid var(--border);
+    }
+    .reach-panel-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--hot);
+      margin-bottom: 28px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .reach-panel-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: var(--border-hot);
+    }
+    .metrics-list { display: flex; flex-direction: column; gap: 16px; }
+    .metric-row {
+      display: flex; justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .metric-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .metric-name { font-size: 12px; color: var(--mid); letter-spacing: 0.05em; }
+    .metric-val {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--white);
+    }
+    .metric-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      padding: 3px 8px;
+      background: rgba(122,245,224,0.1);
+      color: var(--teal);
+      border: 1px solid rgba(122,245,224,0.2);
+      margin-left: 8px;
+    }
+    .platform-list { display: flex; flex-direction: column; gap: 14px; }
+    .platform-row {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .platform-icon { font-size: 22px; width: 36px; text-align: center; }
+    .platform-info { flex: 1; }
+    .platform-name { font-size: 13px; font-weight: 500; }
+    .platform-handle { font-size: 10px; color: var(--muted); font-family: 'Space Mono', monospace; }
+    .platform-bar-wrap {
+      width: 120px;
+      height: 3px;
+      background: var(--border);
+      position: relative;
+    }
+    .platform-bar {
+      height: 100%; position: absolute; left: 0; top: 0;
+      background: linear-gradient(to right, var(--hot), var(--hot2));
+    }
+
+    /* ── BRAND CATEGORIES ── */
+    .categories-bg { background: var(--surface); }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .cat-card {
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .cat-card:hover { border-color: var(--border-hot); transform: translateY(-4px); }
+    .cat-card::after {
+      content: attr(data-num);
+      position: absolute; right: 20px; bottom: 16px;
+      font-family: 'Bodoni Moda', serif;
+      font-size: 64px; font-weight: 900;
+      color: rgba(255,107,107,0.06);
+      line-height: 1;
+    }
+    .cat-emoji { font-size: 28px; margin-bottom: 12px; display: block; }
+    .cat-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .cat-desc { font-size: 12px; color: var(--mid); line-height: 1.7; }
+    .cat-examples {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 14px;
+    }
+    .cat-pill {
+      font-size: 9px; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      background: rgba(255,107,107,0.08);
+      border: 1px solid var(--border-hot);
+      color: var(--hot);
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* ── PARTNERSHIP PACKAGES ── */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .pkg {
+      background: var(--bg);
+      padding: 36px 28px;
+      position: relative;
+      transition: background 0.3s;
+    }
+    .pkg:hover { background: var(--surface); }
+    .pkg.featured {
+      background: var(--surface2);
+      border-top: 2px solid var(--gold);
+    }
+    .pkg-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .pkg-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 26px; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .pkg-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; color: var(--hot2);
+      margin-bottom: 24px;
+    }
+    .pkg-features {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .pkg-features li {
+      font-size: 12px; color: var(--mid);
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .pkg-features li::before {
+      content: '✦'; color: var(--hot); font-size: 8px;
+      margin-top: 3px; flex-shrink: 0;
+    }
+    .pkg-cta {
+      display: block; margin-top: 28px;
+      text-align: center; padding: 12px;
+      border: 1px solid var(--border-hot);
+      color: var(--hot);
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .pkg-cta:hover { background: var(--hot); color: var(--void); }
+    .pkg.featured .pkg-cta { background: var(--gold); color: var(--void); border-color: var(--gold); }
+    .pkg.featured .pkg-cta:hover { background: var(--gold2); }
+
+    .custom-note {
+      text-align: center;
+      padding: 28px;
+      border: 1px solid var(--border);
+      font-size: 13px; color: var(--mid);
+    }
+    .custom-note a { color: var(--hot); text-decoration: none; }
+    .custom-note a:hover { text-decoration: underline; }
+
+    /* ── PAST BRANDS ── */
+    .brands-bg { background: var(--surface); }
+    .brands-scroll {
+      display: flex; gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border: 1px solid var(--border);
+    }
+    .brands-scroll::-webkit-scrollbar { display: none; }
+    .brand-tile {
+      flex: 0 0 200px;
+      padding: 32px 24px;
+      border-right: 1px solid var(--border);
+      background: var(--bg);
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .brand-tile:hover { background: var(--surface); }
+    .brand-tile:last-child { border-right: none; }
+    .brand-emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+    .brand-name { font-size: 13px; font-weight: 500; }
+    .brand-type { font-size: 10px; color: var(--muted); font-family: 'Space Mono', monospace; margin-top: 4px; }
+
+    /* ── PRESS & MEDIA ── */
+    .press-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .press-card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .press-outlet {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .press-headline {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 16px; font-weight: 400; font-style: italic;
+      line-height: 1.4; color: var(--mid);
+    }
+
+    /* ── CONTACT FORM ── */
+    .contact-bg { background: var(--bg); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .contact-info { }
+    .contact-info h3 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 32px; font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .contact-info p { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 32px; }
+    .contact-detail {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .contact-row {
+      display: flex; gap: 16px; align-items: center;
+      font-size: 13px; color: var(--mid);
+    }
+    .contact-row strong { color: var(--white); font-weight: 500; min-width: 70px; }
+    .contact-row a { color: var(--hot); text-decoration: none; }
+    .contact-row a:hover { text-decoration: underline; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ff6b6b' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: var(--hot); }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      padding: 16px 40px;
+      background: var(--hot);
+      color: var(--void);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; font-weight: 700;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--hot2); transform: translateY(-2px); }
+    #form-success {
+      display: none; padding: 16px 20px;
+      background: rgba(122,245,224,0.08);
+      border: 1px solid rgba(122,245,224,0.2);
+      color: var(--teal);
+      font-size: 13px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 80px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-brand {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 22px; font-weight: 700;
+    }
+    .footer-brand span { color: var(--gold); font-style: italic; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--hot); }
+    .footer-copy { font-size: 10px; color: var(--muted); font-family: 'Space Mono', monospace; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-hot), transparent);
+      margin: 0 80px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.8s ease both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 80px 40px; }
+      .section { padding: 80px 40px; }
+      .bio-grid { grid-template-columns: 1fr; }
+      .verticals-grid { grid-template-columns: repeat(3, 1fr); }
+      .packages-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 40px; }
+      .divider { margin: 0 40px; }
+    }
+    @media (max-width: 640px) {
+      .hero-left { padding: 60px 24px; }
+      .section { padding: 60px 24px; }
+      .hero-stats { grid-template-columns: repeat(3, 1fr); }
+      .verticals-grid { grid-template-columns: 1fr 1fr; }
+      .category-grid { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr; }
+      .press-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+      .divider { margin: 0 24px; }
+    }
+  </style>
+  <link rel="stylesheet" href="lexi-concierge.css"/>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow fade-up">Brand Partnership Media Kit · 2026</p>
+    <h1 class="hero-name fade-up delay-1">
+      <span class="first">Lexi</span><br>
+      <span class="last">Lucks</span>
+    </h1>
+    <p class="hero-title fade-up delay-2">Actress · Miss West Hollywood USA · Gaming Creator · Community Leader</p>
+    <div class="hero-stats fade-up delay-3">
+      <div class="stat-cell">
+        <span class="stat-num">55K<span class="stat-up">+</span></span>
+        <span class="stat-label">Combined Followers</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">3</span>
+        <span class="stat-label">IG Accounts</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-num">+70<span class="stat-up">%</span></span>
+        <span class="stat-label">Reach Growth</span>
+      </div>
+    </div>
+    <div class="hero-cta fade-up delay-4">
+      <a href="#contact" class="btn-primary">✦ Partner With Me</a>
+      <a href="#packages" class="btn-ghost">View Packages</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="lexi-lucks14.jpg" alt="Lexi Lucks" class="hero-img" />
+    <div class="hero-img-overlay"></div>
+    <div class="hero-diagonal"></div>
+  </div>
+</section>
+
+<!-- ══ WHO I AM ══ -->
+<section class="section">
+  <div class="section-inner">
+    <p class="sec-label">01 · Identity</p>
+    <h2 class="sec-title">Multi-Platform Creator<br><em>& Community Leader</em></h2>
+    <div class="bio-grid">
+      <div class="bio-text">
+        <p>Lexi Lucks is a <strong>Los Angeles-based actress, producer, and content creator</strong> whose presence spans entertainment, gaming, beauty, and LGBTQ+ community organizing. Crowned <strong>Miss West Hollywood USA</strong>, she merges pageant elegance with an authentic, boundary-pushing creative identity.</p>
+        <p>As the <strong>founder of Transcend Foundation</strong>, Lexi hosts exclusive events and activations that unite Los Angeles' most vibrant communities. Her gaming content under the <strong>"Princess Lucks"</strong> persona has cultivated a loyal audience across Twitch, Kick, and YouTube, creating rare crossover appeal between entertainment and gaming.</p>
+        <p>Lexi's audience is affluent, culturally engaged, and skews <strong>58% discovery-driven</strong> — meaning every activation reaches beyond her existing community into new, high-intent audiences perfect for brand growth.</p>
+      </div>
+      <div class="credential-list">
+        <div class="cred-item">
+          <span class="cred-icon">👑</span>
+          <div class="cred-text">
+            <strong>Miss West Hollywood USA</strong>
+            Current titleholder · pageant, beauty & luxury lifestyle audiences
+          </div>
+        </div>
+        <div class="cred-item">
+          <span class="cred-icon">📺</span>
+          <div class="cred-text">
+            <strong>TLC · Hooked on the Look</strong>
+            Featured cast member · national TV exposure & press credentials
+          </div>
+        </div>
+        <div class="cred-item">
+          <span class="cred-icon">🎬</span>
+          <div class="cred-text">
+            <strong>DEVMO: Hollywood</strong>
+            Film/TV credit · entertainment industry credibility
+          </div>
+        </div>
+        <div class="cred-item">
+          <span class="cred-icon">🌈</span>
+          <div class="cred-text">
+            <strong>Transcend Foundation</strong>
+            Founder · LGBTQ+ community events & exclusive activations in LA
+          </div>
+        </div>
+        <div class="cred-item">
+          <span class="cred-icon">🎮</span>
+          <div class="cred-text">
+            <strong>Princess Lucks Gaming</strong>
+            Live streaming on Twitch & Kick · cosplay crossover · gaming audience
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CONTENT VERTICALS ══ -->
+<section class="section verticals-bg">
+  <div class="section-inner">
+    <p class="sec-label">02 · Content</p>
+    <h2 class="sec-title">Five Content <em>Verticals</em></h2>
+    <div class="verticals-grid">
+      <div class="vertical-card v-pink">
+        <span class="vertical-icon">💖</span>
+        <div class="vertical-name">Beauty & Lifestyle</div>
+        <div class="vertical-desc">Glam transformations, luxury fashion, body positivity, LA lifestyle content.</div>
+        <span class="vertical-tag">Fashion · Beauty · Lifestyle</span>
+      </div>
+      <div class="vertical-card v-game">
+        <span class="vertical-icon">🎮</span>
+        <div class="vertical-name">Gaming</div>
+        <div class="vertical-desc">Live gaming, Princess Peach cosplay, Nintendo content, Twitch & Kick streams.</div>
+        <span class="vertical-tag">Gaming · Streaming · Cosplay</span>
+      </div>
+      <div class="vertical-card v-pride">
+        <span class="vertical-icon">🌈</span>
+        <div class="vertical-name">LGBTQ+ Culture</div>
+        <div class="vertical-desc">Community events, advocacy, Transcend Foundation activations & exclusive parties.</div>
+        <span class="vertical-tag">Community · Events · Culture</span>
+      </div>
+      <div class="vertical-card v-pageant">
+        <span class="vertical-icon">👑</span>
+        <div class="vertical-name">Pageant & Glam</div>
+        <div class="vertical-desc">Miss West Hollywood USA platform, high-glam photography, red carpet & events.</div>
+        <span class="vertical-tag">Pageant · Red Carpet · Events</span>
+      </div>
+      <div class="vertical-card v-cosplay">
+        <span class="vertical-icon">⚔️</span>
+        <div class="vertical-name">Cosplay</div>
+        <div class="vertical-desc">Princess Zelda, Princess Peach, fantasy characters — high-production cosplay shoots.</div>
+        <span class="vertical-tag">Cosplay · Fantasy · Gaming</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ AUDIENCE & REACH ══ -->
+<section class="section">
+  <div class="section-inner">
+    <p class="sec-label">03 · Audience</p>
+    <h2 class="sec-title">Reach & <em>Analytics</em></h2>
+    <div class="reach-grid">
+      <div class="reach-panel">
+        <p class="reach-panel-title">Instagram · Last 30 Days</p>
+        <div class="metrics-list">
+          <div class="metric-row">
+            <span class="metric-name">Total Views</span>
+            <span class="metric-val">140,000</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Accounts Reached</span>
+            <div>
+              <span class="metric-val">14,697</span>
+              <span class="metric-badge">+131.6%</span>
+            </div>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Discovery (Non-Followers)</span>
+            <span class="metric-val">58.2%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Existing Audience</span>
+            <span class="metric-val">41.8%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Top Content: Posts</span>
+            <span class="metric-val">47.1%</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Stories Reach</span>
+            <span class="metric-val">45.7%</span>
+          </div>
+        </div>
+      </div>
+      <div class="reach-panel">
+        <p class="reach-panel-title">Platform Presence</p>
+        <div class="platform-list">
+                    <div class="platform-row">
+            <span class="platform-icon">&#128248;</span>
+            <div class="platform-info">
+              <div class="platform-name">Instagram &middot; @lexilucksofficial</div>
+              <div class="platform-handle">Main creator &middot; Beauty, Gaming, Events &middot; +131.6% reach growth</div>
+            </div>
+            <div class="platform-bar-wrap"><div class="platform-bar" style="width:85%"></div></div>
+          </div>
+          <div class="platform-row">
+            <span class="platform-icon">&#127752;</span>
+            <div class="platform-info">
+              <div class="platform-name">Instagram &middot; @transcendfoundation</div>
+              <div class="platform-handle">15,000 followers &middot; LGBTQ+ nonprofit community</div>
+            </div>
+            <div class="platform-bar-wrap"><div class="platform-bar" style="width:75%"></div></div>
+          </div>
+          <div class="platform-row">
+            <span class="platform-icon">&#128139;</span>
+            <div class="platform-info">
+              <div class="platform-name">Instagram &middot; @mslollypopz</div>
+              <div class="platform-handle">15,000 followers &middot; Lifestyle &amp; entertainment</div>
+            </div>
+            <div class="platform-bar-wrap"><div class="platform-bar" style="width:75%"></div></div>
+          </div>
+          <div class="platform-row">
+            <span class="platform-icon">&#127925;</span>
+            <div class="platform-info">
+              <div class="platform-name">TikTok &middot; @lexilucksofficial</div>
+              <div class="platform-handle">10,000 followers &middot; Short-form &amp; viral content</div>
+            </div>
+            <div class="platform-bar-wrap"><div class="platform-bar" style="width:60%"></div></div>
+          </div>
+          <div class="platform-row">
+            <span class="platform-icon">&#127918;</span>
+            <div class="platform-info">
+              <div class="platform-name">Twitch / Kick &middot; lexilucks</div>
+              <div class="platform-handle">Live gaming &middot; Princess Lucks persona</div>
+            </div>
+            <div class="platform-bar-wrap"><div class="platform-bar" style="width:55%"></div></div>
+          </div>
+          <div class="platform-row">
+            <span class="platform-icon">&#9654;&#65039;</span>
+            <div class="platform-info">
+              <div class="platform-name">YouTube &middot; @lexilucks</div>
+              <div class="platform-handle">150 subs &middot; Growing &mdash; resuming active posting 2026</div>
+            </div>
+            <div class="platform-bar-wrap"><div class="platform-bar" style="width:15%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ BRAND CATEGORIES ══ -->
+<section class="section categories-bg">
+  <div class="section-inner">
+    <p class="sec-label">04 · Brand Fit</p>
+    <h2 class="sec-title">Ideal Partner <em>Categories</em></h2>
+    <div class="category-grid">
+      <div class="cat-card" data-num="01">
+        <span class="cat-emoji">💄</span>
+        <div class="cat-name">Beauty & Fashion</div>
+        <div class="cat-desc">Cosmetics, skincare, hair, swimwear, luxury fashion — Lexi's core aesthetic identity makes beauty integrations seamless and high-converting.</div>
+        <div class="cat-examples">
+          <span class="cat-pill">Cosmetics</span>
+          <span class="cat-pill">Swimwear</span>
+          <span class="cat-pill">Skincare</span>
+          <span class="cat-pill">Luxury Fashion</span>
+        </div>
+      </div>
+      <div class="cat-card" data-num="02">
+        <span class="cat-emoji">🎮</span>
+        <div class="cat-name">Gaming & Tech</div>
+        <div class="cat-desc">Gaming peripherals, platforms, streaming tools, apps — Princess Lucks reaches a dedicated gaming audience with authentic integration.</div>
+        <div class="cat-examples">
+          <span class="cat-pill">Gaming Gear</span>
+          <span class="cat-pill">Platforms</span>
+          <span class="cat-pill">Apps</span>
+          <span class="cat-pill">Streaming Tech</span>
+        </div>
+      </div>
+      <div class="cat-card" data-num="03">
+        <span class="cat-emoji">🍾</span>
+        <div class="cat-name">Spirits & Beverage</div>
+        <div class="cat-desc">Tequila, wine, hard seltzer, non-alc — Lexi has existing brand presence with El Cristiano Tequila and activates in LA & desert event circuits.</div>
+        <div class="cat-examples">
+          <span class="cat-pill">Tequila</span>
+          <span class="cat-pill">Hard Seltzer</span>
+          <span class="cat-pill">Non-Alc</span>
+          <span class="cat-pill">Event Activations</span>
+        </div>
+      </div>
+      <div class="cat-card" data-num="04">
+        <span class="cat-emoji">🏨</span>
+        <div class="cat-name">Travel & Hospitality</div>
+        <div class="cat-desc">Hotels, resort brands, travel platforms — Lexi attends high-profile events in LA, Palm Springs, Coachella, and beyond with a lifestyle-travel audience.</div>
+        <div class="cat-examples">
+          <span class="cat-pill">Hotels</span>
+          <span class="cat-pill">Resorts</span>
+          <span class="cat-pill">Airbnb</span>
+          <span class="cat-pill">Luxury Travel</span>
+        </div>
+      </div>
+      <div class="cat-card" data-num="05">
+        <span class="cat-emoji">🌈</span>
+        <div class="cat-name">LGBTQ+ & Wellness</div>
+        <div class="cat-desc">Brands seeking authentic LGBTQ+ community integration — Lexi's Transcend Foundation events provide real-world activation opportunities, not just posts.</div>
+        <div class="cat-examples">
+          <span class="cat-pill">Community Events</span>
+          <span class="cat-pill">Wellness</span>
+          <span class="cat-pill">Mental Health</span>
+          <span class="cat-pill">Pride</span>
+        </div>
+      </div>
+      <div class="cat-card" data-num="06">
+        <span class="cat-emoji">💎</span>
+        <div class="cat-name">Jewelry & Accessories</div>
+        <div class="cat-desc">Fine jewelry, statement earrings, body jewelry, crystal accessories — consistent presence across all content with high visibility in shoots and events.</div>
+        <div class="cat-examples">
+          <span class="cat-pill">Fine Jewelry</span>
+          <span class="cat-pill">Crystal</span>
+          <span class="cat-pill">Statement Pieces</span>
+          <span class="cat-pill">Body Jewelry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PACKAGES ══ -->
+<section class="section" id="packages">
+  <div class="section-inner">
+    <p class="sec-label">05 · Partnership</p>
+    <h2 class="sec-title">Collaboration <em>Packages</em></h2>
+    <div class="packages-grid">
+      <div class="pkg">
+        <div class="pkg-badge">Entry</div>
+        <div class="pkg-name">Story Mention</div>
+        <div class="pkg-price">Starting at $150</div>
+        <ul class="pkg-features">
+          <li>1 Instagram Story post</li>
+          <li>Swipe-up link included</li>
+          <li>Brand mention + tag</li>
+          <li>24-hour story visibility</li>
+          <li>Reach: 4,000+ accounts</li>
+        </ul>
+        <a href="#contact" class="pkg-cta">Inquire</a>
+      </div>
+      <div class="pkg">
+        <div class="pkg-badge">Standard</div>
+        <div class="pkg-name">Feed Post</div>
+        <div class="pkg-price">Starting at $400</div>
+        <ul class="pkg-features">
+          <li>1 permanent feed post</li>
+          <li>Brand-approved caption</li>
+          <li>Hashtag & tag strategy</li>
+          <li>Cross-story amplification</li>
+          <li>Evergreen impressions</li>
+        </ul>
+        <a href="#contact" class="pkg-cta">Inquire</a>
+      </div>
+      <div class="pkg featured">
+        <div class="pkg-badge">★ Most Popular</div>
+        <div class="pkg-name">Creator Package</div>
+        <div class="pkg-price">Starting at $850</div>
+        <ul class="pkg-features">
+          <li>1 Feed Post + 3 Stories</li>
+          <li>Reel / short-form video</li>
+          <li>Authentic scripted review</li>
+          <li>Story highlight archive</li>
+          <li>Discord community mention</li>
+          <li>Usage rights (30 days)</li>
+        </ul>
+        <a href="#contact" class="pkg-cta">Inquire</a>
+      </div>
+      <div class="pkg">
+        <div class="pkg-badge">Premium</div>
+        <div class="pkg-name">Event Activation</div>
+        <div class="pkg-price">Custom Pricing</div>
+        <ul class="pkg-features">
+          <li>On-site brand activation</li>
+          <li>Transcend Foundation event</li>
+          <li>Live streaming integration</li>
+          <li>Full content package</li>
+          <li>VIP guest network access</li>
+          <li>Full usage rights</li>
+        </ul>
+        <a href="#contact" class="pkg-cta">Inquire</a>
+      </div>
+    </div>
+    <div class="custom-note">
+      All packages are customizable. UGC-only rates, gifted collaborations, and long-term ambassador deals available.<br>
+      <a href="mailto:lexi@lexilucks.com">Email directly</a> for a custom rate card PDF.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PRESS ══ -->
+<section class="section brands-bg">
+  <div class="section-inner">
+    <p class="sec-label">06 · Press & Appearances</p>
+    <h2 class="sec-title">Featured <em>Work</em></h2>
+    <div class="press-grid">
+      <div class="press-card">
+        <div class="press-outlet">TLC Network</div>
+        <div class="press-headline">"Hooked on the Look" &mdash; Featured Cast Member, National Broadcast</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">Von Dutch &times; FlyQuest</div>
+        <div class="press-headline">"The Funeral" Event &mdash; Official Talent, OLIPOP &amp; Happy Dad sponsored</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">Fanfix &times; UDreamIT</div>
+        <div class="press-headline">"Haunted in Hollywood" Red Carpet &mdash; Featured Personality &amp; Press</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">Miss Me Jeans</div>
+        <div class="press-headline">Coachella 2026 Ambassador &mdash; Gifted Collection &amp; Event Coverage</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">Azazie &middot; Paid Partnership</div>
+        <div class="press-headline">Paid Fashion Partnership &mdash; Editorial gown feature &amp; IG post</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">SugarBear Hair</div>
+        <div class="press-headline">UGC Partner &mdash; Hair supplement review &amp; lifestyle integration</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">Twitch &middot; Paid Partnership</div>
+        <div class="press-headline">Official Platform Partner &mdash; Paid gaming content &amp; promotion</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">El Cristiano Tequila</div>
+        <div class="press-headline">Brand Activation Partner &mdash; Coachella &amp; Barbie Swim 2024&ndash;2026</div>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">DEVMO: Hollywood &middot; Film/TV</div>
+        <div class="press-headline">Actress &amp; Producer &mdash; Miss West Hollywood USA Current Titleholder</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- == CONTACT<!-- ══ CONTACT ══ -->
+<section class="section contact-bg" id="contact">
+  <div class="section-inner">
+    <p class="sec-label">07 · Contact</p>
+    <h2 class="sec-title">Let's <em>Collaborate</em></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Ready to partner?</h3>
+        <p>Whether you're a brand manager, PR agency, event producer, or indie founder — I'd love to hear about your campaign. Response within 48 hours for all partnership inquiries.</p>
+        <div class="contact-detail">
+          <div class="contact-row">
+            <strong>Email</strong>
+            <a href="mailto:lexi@lexilucks.com">lexi@lexilucks.com</a>
+          </div>
+          <div class="contact-row">
+            <strong>Instagram</strong>
+            <a href="https://instagram.com/lexilucksofficial" target="_blank">@lexilucksofficial</a>
+          </div>
+          <div class="contact-row">
+            <strong>Website</strong>
+            <a href="https://lexilucks.com" target="_blank">lexilucks.com</a>
+          </div>
+          <div class="contact-row">
+            <strong>Location</strong>
+            <span>Los Angeles, CA — available to travel</span>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" id="partnerForm" action="https://formspree.io/f/xkopkbkr" method="POST">
+        <input type="hidden" name="_subject" value="Brand Partnership Inquiry — lexilucks.com/media-kit" />
+        <input type="text" name="_honey" style="display:none" />
+        <div class="form-row">
+          <div class="form-field">
+            <label>Your Name *</label>
+            <input type="text" name="name" required placeholder="Jane Smith" />
+          </div>
+          <div class="form-field">
+            <label>Company / Brand *</label>
+            <input type="text" name="company" required placeholder="Brand Name" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Email *</label>
+          <input type="email" name="email" required placeholder="you@brand.com" />
+        </div>
+        <div class="form-field">
+          <label>Partnership Type</label>
+          <select name="type">
+            <option value="">Select a package</option>
+            <option>Story Mention</option>
+            <option>Feed Post</option>
+            <option>Creator Package (Post + Reel + Stories)</option>
+            <option>Event Activation</option>
+            <option>UGC / Content Only</option>
+            <option>Ambassador / Long-term</option>
+            <option>Gifted Collaboration</option>
+            <option>Custom / Other</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Campaign Details</label>
+          <textarea name="message" placeholder="Tell me about your brand, campaign goals, timeline, and budget range..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">✦ Send Inquiry</button>
+        <div id="form-success">✓ Received! I'll be in touch within 48 hours. 💖</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-brand">Lexi <span>Lucks</span></div>
+  <div class="footer-links">
+    <a href="https://lexilucks.com">Main Site</a>
+    <a href="https://lexilucks.com/shop.html">Shop</a>
+    <a href="https://instagram.com/lexilucksofficial" target="_blank">Instagram</a>
+    <a href="https://twitch.tv/lexilucks" target="_blank">Twitch</a>
+    <a href="https://lexilucks.com/princess-protocol.html">Princess Protocol</a>
+  </div>
+  <div class="footer-copy">© 2026 Lexi Lucks · Los Angeles, CA</div>
+</footer>
+
+<script>
+  // Smooth form submission
+  const form = document.getElementById('partnerForm');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.reset();
+          document.getElementById('form-success').style.display = 'block';
+          btn.style.display = 'none';
+        } else {
+          btn.textContent = '✦ Send Inquiry';
+          btn.disabled = false;
+          alert('Something went wrong. Email lexi@lexilucks.com directly.');
+        }
+      } catch {
+        btn.textContent = '✦ Send Inquiry';
+        btn.disabled = false;
+      }
+    });
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.cred-item, .vertical-card, .cat-card, .pkg, .press-card, .stat-cell').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+  <script src="src/lib/analytics.js" defer></script>
+  <script src="src/lib/lead-capture.js" defer></script>
+  <script src="src/lib/site-enhancements.js" defer></script>
+  <script src="lexi-concierge.js" defer></script>
+</body>
+</html>

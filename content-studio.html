@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lexi Lucks — Content Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,700&family=Orbitron:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --hot:#FF0080;--bubble:#FF69B4;--blush:#FFB6C1;--rose-gold:#E8A0B8;
+  --dark:#08000A;--mid:#120010;--panel:#1A001A;--border:rgba(255,105,180,.18);
+  --fg:'Orbitron',monospace;--fd:'Cormorant Garamond',serif;--fb:'Raleway',sans-serif;
+  --glow:0 0 25px #FF008060,0 0 60px #FF008025;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:var(--fb);background:var(--dark);color:#fff;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--hot)}
+a{color:inherit;text-decoration:none}
+
+/* ── LAYOUT ── */
+.app{display:grid;grid-template-columns:240px 1fr;grid-template-rows:56px 1fr;height:100vh}
+
+/* ── TOP BAR ── */
+.topbar{
+grid-column:1/-1;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 1.5rem;
+background:rgba(8,0,10,.9);
+backdrop-filter:blur(20px);
+border-bottom:1px solid var(--border);
+position:sticky;top:0;z-index:100;
+}
+.tb-brand{font-family:var(--fd);font-size:1.3rem;font-weight:700;font-style:italic;
+background:linear-gradient(90deg,#fff 40%,var(--bubble));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tb-brand sub{font-family:var(--fg);font-size:.42rem;font-style:normal;letter-spacing:.18em;display:block;color:var(--bubble);-webkit-text-fill-color:var(--bubble);margin-top:-4px}
+.tb-right{display:flex;align-items:center;gap:1rem}
+.tb-stat{font-family:var(--fg);font-size:.48rem;letter-spacing:.1em;color:rgba(255,255,255,.35);text-align:center}
+.tb-stat strong{display:block;font-size:.9rem;color:var(--bubble)}
+.tb-link{font-family:var(--fg);font-size:.5rem;letter-spacing:.12em;padding:.38rem .9rem;background:linear-gradient(135deg,var(--hot),var(--bubble));clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);cursor:pointer;transition:all .3s}
+.tb-link:hover{box-shadow:var(--glow)}
+
+/* ── SIDEBAR ── */
+.sidebar{
+background:var(--panel);
+border-right:1px solid var(--border);
+padding:1.2rem 0;
+overflow-y:auto;
+}
+.nav-section{padding:.5rem 1rem .3rem;font-family:var(--fg);font-size:.42rem;letter-spacing:.22em;color:rgba(255,105,180,.4);text-transform:uppercase}
+.nav-item{
+display:flex;align-items:center;gap:.7rem;padding:.65rem 1.2rem;
+font-size:.78rem;color:rgba(255,255,255,.5);cursor:pointer;transition:all .22s;
+border-left:2px solid transparent;
+}
+.nav-item:hover{color:#fff;background:rgba(255,0,128,.07);border-left-color:var(--bubble)}
+.nav-item.active{color:#fff;background:rgba(255,0,128,.12);border-left-color:var(--hot);font-weight:600}
+.nav-icon{font-size:1rem;flex-shrink:0}
+.nav-badge{margin-left:auto;font-family:var(--fg);font-size:.38rem;padding:.15rem .45rem;background:var(--hot);border-radius:20px}
+
+/* ── MAIN ── */
+.main{overflow-y:auto;background:var(--dark);padding:1.5rem}
+
+/* ── PANELS (views) ── */
+.view{display:none;animation:fadein .3s ease}
+.view.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PAGE HEADER ── */
+.page-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.page-hdr h1{font-family:var(--fd);font-size:2rem;font-style:italic;font-weight:700;line-height:1}
+.page-hdr h1 em{background:linear-gradient(90deg,var(--hot),var(--bubble));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic}
+.page-hdr p{font-size:.8rem;color:rgba(255,255,255,.42);margin-top:.3rem;font-weight:300}
+.page-hdr-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+
+/* ── CARDS ── */
+.card{background:var(--panel);border:1px solid var(--border);padding:1.4rem;margin-bottom:1.2rem}
+.card-title{font-family:var(--fg);font-size:.55rem;letter-spacing:.18em;color:var(--bubble);text-transform:uppercase;margin-bottom:1rem}
+
+/* ── PLATFORM CHIPS ── */
+.platform-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.chip{
+display:flex;align-items:center;gap:.35rem;
+padding:.4rem .9rem;font-family:var(--fg);font-size:.5rem;letter-spacing:.1em;
+border:1px solid var(--border);color:rgba(255,255,255,.4);cursor:pointer;transition:all .22s;
+}
+.chip.active{border-color:var(--hot);color:#fff;background:rgba(255,0,128,.12);box-shadow:0 0 10px #FF008030}
+.chip:hover{border-color:var(--bubble);color:rgba(255,255,255,.8)}
+
+/* ── CONTENT TYPE GRID ── */
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1rem}
+.type-card{
+padding:1rem;border:1px solid var(--border);cursor:pointer;transition:all .25s;text-align:center;
+display:flex;flex-direction:column;align-items:center;gap:.4rem;
+}
+.type-card:hover{border-color:var(--bubble);background:rgba(255,105,180,.05)}
+.type-card.active{border-color:var(--hot);background:rgba(255,0,128,.1)}
+.type-card .t-icon{font-size:1.6rem}
+.type-card .t-name{font-family:var(--fg);font-size:.45rem;letter-spacing:.12em;color:var(--blush)}
+
+/* ── FORM ELEMENTS ── */
+.field{margin-bottom:1rem}
+.field label{display:block;font-family:var(--fg);font-size:.5rem;letter-spacing:.15em;color:rgba(255,105,180,.65);margin-bottom:.45rem;text-transform:uppercase}
+.field input,.field textarea,.field select{
+width:100%;padding:.75rem 1rem;background:rgba(255,255,255,.04);border:1px solid var(--border);
+color:#fff;font-family:var(--fb);font-size:.85rem;outline:none;transition:all .3s;resize:none;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.22)}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--hot);background:rgba(255,0,128,.05);box-shadow:0 0 12px rgba(255,0,128,.12)}
+.field select option{background:var(--mid);color:#fff}
+
+/* ── TONE CHIPS ── */
+.tone-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem}
+
+/* ── GENERATE BUTTON ── */
+.gen-btn{
+width:100%;padding:1rem;cursor:pointer;font-family:var(--fg);font-size:.68rem;font-weight:700;
+letter-spacing:.16em;text-transform:uppercase;border:none;
+background:linear-gradient(135deg,var(--hot),var(--bubble));color:#fff;
+clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+transition:all .3s;position:relative;overflow:hidden;
+}
+.gen-btn:hover{box-shadow:0 0 40px #FF008080;transform:translateY(-1px)}
+.gen-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.gen-btn .spinner{display:none;animation:spin .8s linear infinite}
+.gen-btn.loading .btn-text{display:none}
+.gen-btn.loading .spinner{display:inline}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── OUTPUT AREA ── */
+.output-area{margin-top:1.2rem}
+.output-block{
+background:rgba(255,255,255,.035);border:1px solid var(--border);
+border-left:3px solid var(--hot);padding:1.2rem;margin-bottom:.8rem;
+position:relative;
+}
+.output-block .out-platform{font-family:var(--fg);font-size:.45rem;letter-spacing:.14em;color:var(--bubble);margin-bottom:.5rem}
+.output-block .out-text{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.85);white-space:pre-wrap}
+.output-block .out-actions{display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap}
+.out-btn{
+padding:.35rem .8rem;font-family:var(--fg);font-size:.44rem;letter-spacing:.1em;
+border:1px solid var(--border);color:rgba(255,255,255,.5);cursor:pointer;background:transparent;transition:all .22s;
+}
+.out-btn:hover{border-color:var(--hot);color:#fff;background:rgba(255,0,128,.1)}
+.out-btn.copied{border-color:#7FFFD4;color:#7FFFD4}
+
+/* ── BULK TABLE ── */
+.bulk-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.bulk-table th{font-family:var(--fg);font-size:.44rem;letter-spacing:.15em;color:var(--bubble);padding:.6rem .9rem;border-bottom:1px solid var(--border);text-align:left;text-transform:uppercase}
+.bulk-table td{padding:.6rem .9rem;border-bottom:1px solid rgba(255,105,180,.07);color:rgba(255,255,255,.65);vertical-align:middle}
+.bulk-table tr:hover td{background:rgba(255,0,128,.04);color:#fff}
+.status-pill{font-family:var(--fg);font-size:.4rem;letter-spacing:.1em;padding:.2rem .55rem}
+.status-pill.ready{border:1px solid #7FFFD4;color:#7FFFD4}
+.status-pill.pending{border:1px solid var(--bubble);color:var(--bubble)}
+.status-pill.draft{border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.3)}
+
+/* ── HASHTAG BUBBLES ── */
+.hashtag-cloud{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.htag{
+padding:.3rem .75rem;font-size:.75rem;border:1px solid rgba(255,105,180,.25);
+color:var(--blush);cursor:pointer;transition:all .22s;
+}
+.htag:hover{border-color:var(--hot);color:#fff;background:rgba(255,0,128,.1)}
+.htag.selected{border-color:var(--hot);background:rgba(255,0,128,.15);color:#fff}
+
+/* ── CALENDAR ── */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;margin-top:1rem}
+.cal-day-header{font-family:var(--fg);font-size:.42rem;letter-spacing:.1em;color:rgba(255,255,255,.3);text-align:center;padding:.3rem}
+.cal-cell{min-height:70px;padding:.5rem;border:1px solid var(--border);font-size:.72rem;transition:all .2s;cursor:pointer}
+.cal-cell:hover{border-color:var(--bubble);background:rgba(255,105,180,.04)}
+.cal-cell .cal-num{font-family:var(--fg);font-size:.48rem;color:rgba(255,255,255,.4);margin-bottom:.3rem}
+.cal-cell.today{border-color:var(--hot);background:rgba(255,0,128,.06)}
+.cal-cell.today .cal-num{color:var(--hot)}
+.cal-post{font-size:.62rem;padding:.15rem .35rem;background:rgba(255,0,128,.2);border-left:2px solid var(--hot);margin-bottom:.2rem;color:var(--blush);truncate:ellipsis;overflow:hidden;white-space:nowrap}
+.cal-post.ig{background:rgba(255,105,180,.2);border-left-color:var(--bubble)}
+.cal-post.tw{background:rgba(135,206,235,.15);border-left-color:#87CEEB}
+.cal-post.tk{background:rgba(255,255,255,.07);border-left-color:rgba(255,255,255,.3)}
+
+/* ── CAPTION TEMPLATES ── */
+.template-list{display:flex;flex-direction:column;gap:.6rem}
+.tpl{padding:1rem 1.2rem;border:1px solid var(--border);cursor:pointer;transition:all .25s;position:relative}
+.tpl:hover{border-color:var(--bubble);background:rgba(255,105,180,.04)}
+.tpl-tag{font-family:var(--fg);font-size:.42rem;letter-spacing:.12em;color:var(--bubble);margin-bottom:.4rem}
+.tpl-text{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.6;font-style:italic}
+.tpl-use{position:absolute;top:.7rem;right:.8rem;font-family:var(--fg);font-size:.42rem;letter-spacing:.1em;padding:.25rem .6rem;border:1px solid var(--border);color:rgba(255,255,255,.3);background:transparent;cursor:pointer;transition:all .22s}
+.tpl-use:hover{border-color:var(--hot);color:#fff}
+
+/* ── STATS MINI CARDS ── */
+.mini-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.5rem}
+.mini-sc{padding:1.2rem;background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--hot)}
+.mini-sc-num{font-family:var(--fg);font-size:1.6rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--bubble));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+.mini-sc-lbl{font-size:.65rem;color:rgba(255,255,255,.38);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem}
+
+/* ── SAVE QUEUE ── */
+.queue-empty{text-align:center;padding:2rem;color:rgba(255,255,255,.25);font-size:.85rem}
+.queue-item{display:flex;align-items:flex-start;gap:1rem;padding:.9rem;border-bottom:1px solid var(--border);transition:all .22s}
+.queue-item:hover{background:rgba(255,0,128,.04)}
+.qi-platform{font-family:var(--fg);font-size:.42rem;letter-spacing:.1em;color:var(--bubble);flex-shrink:0;padding-top:.2rem}
+.qi-text{font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.5;flex:1}
+.qi-actions{display:flex;gap:.4rem;flex-shrink:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+.app{grid-template-columns:1fr;grid-template-rows:56px auto 1fr}
+.sidebar{display:none}
+.mini-stats{grid-template-columns:repeat(2,1fr)}
+.type-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+
+  <link rel="stylesheet" href="lexi-concierge.css"/>
+</head>
+<body>
+<div class="app">
+
+<!-- TOP BAR -->
+
+<header class="topbar">
+  <a href="index.html" class="tb-brand">Lexi Lucks<sub>Content Studio ✦</sub></a>
+  <div class="tb-right">
+    <div class="tb-stat"><strong id="posts-generated">0</strong>Posts Today</div>
+    <div class="tb-stat"><strong id="queue-count">0</strong>In Queue</div>
+    <a href="index.html" class="tb-link">← Site</a>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+
+<nav class="sidebar">
+  <div class="nav-section">Create</div>
+  <div class="nav-item active" onclick="showView('generate')" id="nav-generate">
+    <span class="nav-icon">✨</span> AI Generator
+  </div>
+  <div class="nav-item" onclick="showView('bulk')" id="nav-bulk">
+    <span class="nav-icon">⚡</span> Bulk Create
+    <span class="nav-badge" id="bulk-badge">NEW</span>
+  </div>
+  <div class="nav-item" onclick="showView('hashtags')" id="nav-hashtags">
+    <span class="nav-icon">#</span> Hashtag Sets
+  </div>
+  <div class="nav-item" onclick="showView('templates')" id="nav-templates">
+    <span class="nav-icon">📋</span> Templates
+  </div>
+
+  <div class="nav-section">Manage</div>
+  <div class="nav-item" onclick="showView('queue')" id="nav-queue">
+    <span class="nav-icon">📤</span> Post Queue
+    <span class="nav-badge" id="queue-badge">0</span>
+  </div>
+  <div class="nav-item" onclick="showView('calendar')" id="nav-calendar">
+    <span class="nav-icon">📅</span> Calendar
+  </div>
+
+  <div class="nav-section">Brand</div>
+  <div class="nav-item" onclick="showView('voicesettings')" id="nav-voicesettings">
+    <span class="nav-icon">👑</span> Brand Voice
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+  <!-- ── VIEW: AI GENERATOR ── -->
+
+  <div class="view active" id="view-generate">
+    <div class="page-hdr">
+      <div>
+        <h1><em>AI Content</em> Generator</h1>
+        <p>Generate on-brand captions, posts & copy for every platform instantly</p>
+      </div>
+    </div>
+
+```
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;align-items:start">
+
+  <!-- LEFT: CONTROLS -->
+  <div>
+    <div class="card">
+      <div class="card-title">// Select Platforms</div>
+      <div class="platform-row" id="platform-chips">
+        <div class="chip active" data-platform="Instagram">📸 Instagram</div>
+        <div class="chip" data-platform="TikTok">🎵 TikTok</div>
+        <div class="chip" data-platform="Twitter/X">🐦 Twitter/X</div>
+        <div class="chip" data-platform="Facebook">📘 Facebook</div>
+        <div class="chip" data-platform="Twitch">🟣 Twitch</div>
+        <div class="chip" data-platform="Discord">💬 Discord</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">// Content Type</div>
+      <div class="type-grid" id="type-cards">
+        <div class="type-card active" data-type="Glam & Fashion">
+          <div class="t-icon">👑</div>
+          <div class="t-name">Glam & Fashion</div>
+        </div>
+        <div class="type-card" data-type="Gaming">
+          <div class="t-icon">🎮</div>
+          <div class="t-name">Gaming</div>
+        </div>
+        <div class="type-card" data-type="Event & Party">
+          <div class="t-icon">🎉</div>
+          <div class="t-name">Event & Party</div>
+        </div>
+        <div class="type-card" data-type="Trans Advocacy">
+          <div class="t-icon">🌈</div>
+          <div class="t-name">Trans Advocacy</div>
+        </div>
+        <div class="type-card" data-type="Stream Announcement">
+          <div class="t-icon">📡</div>
+          <div class="t-name">Stream Drop</div>
+        </div>
+        <div class="type-card" data-type="Merch & Shop">
+          <div class="t-icon">🛍️</div>
+          <div class="t-name">Merch & Shop</div>
+        </div>
+        <div class="type-card" data-type="Miss West Hollywood">
+          <div class="t-icon">🏆</div>
+          <div class="t-name">Pageant / Title</div>
+        </div>
+        <div class="type-card" data-type="Personal & Lifestyle">
+          <div class="t-icon">💗</div>
+          <div class="t-name">Lifestyle</div>
+        </div>
+        <div class="type-card" data-type="Membership Promo">
+          <div class="t-icon">✦</div>
+          <div class="t-name">Members Only</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">// Tone & Vibe</div>
+      <div class="tone-row" id="tone-chips">
+        <div class="chip active" data-tone="Flirty & Fun">Flirty & Fun</div>
+        <div class="chip" data-tone="Boss Energy">Boss Energy</div>
+        <div class="chip" data-tone="Vulnerable & Real">Vulnerable & Real</div>
+        <div class="chip" data-tone="Hype & Hypnotic">Hype & Hypnotic</div>
+        <div class="chip" data-tone="Luxury & Editorial">Luxury & Editorial</div>
+        <div class="chip" data-tone="Advocate & Inform">Advocate & Inform</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">// Context (Optional)</div>
+      <div class="field">
+        <textarea id="context-input" rows="3" placeholder="e.g. just shot at Nintendo World, wearing Princess Peach cosplay, feeling iconic..."></textarea>
+      </div>
+      <div class="field">
+        <label>Number of Variations</label>
+        <select id="variation-count">
+          <option value="1">1 variation</option>
+          <option value="2" selected>2 variations</option>
+          <option value="3">3 variations</option>
+        </select>
+      </div>
+      <button class="gen-btn" id="gen-btn" onclick="generateContent()">
+        <span class="btn-text">✦ Generate Content</span>
+        <span class="spinner">⟳ Generating...</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- RIGHT: OUTPUT -->
+  <div>
+    <div class="card" style="min-height:300px">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>// Generated Content</span>
+        <button class="out-btn" id="copy-all-btn" onclick="copyAll()" style="display:none">Copy All</button>
+      </div>
+      <div class="output-area" id="output-area">
+        <div style="text-align:center;padding:2rem 1rem;color:rgba(255,255,255,.2)">
+          <div style="font-size:2rem;margin-bottom:.5rem">✨</div>
+          <div style="font-family:var(--fg);font-size:.5rem;letter-spacing:.15em">Select options and generate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+```
+
+  </div>
+
+  <!-- ── VIEW: BULK CREATE ── -->
+
+  <div class="view" id="view-bulk">
+    <div class="page-hdr">
+      <div>
+        <h1>Bulk <em>Create</em></h1>
+        <p>Generate a week of content for all platforms in one shot</p>
+      </div>
+      <div class="page-hdr-actions">
+        <button class="gen-btn" style="padding:.7rem 1.5rem;width:auto" onclick="generateBulkContent()">
+          <span class="btn-text">⚡ Generate Week</span>
+          <span class="spinner">⟳ Working...</span>
+        </button>
+      </div>
+    </div>
+
+```
+<div class="card" style="margin-bottom:1rem">
+  <div class="card-title">// Week Theme & Focus</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+    <div class="field">
+      <label>Week Theme</label>
+      <input type="text" id="bulk-theme" placeholder="e.g. Coachella aftermath, new stream launch, merch drop week..."/>
+    </div>
+    <div class="field">
+      <label>Posting Frequency</label>
+      <select id="bulk-freq">
+        <option value="1 post per day">1 post/day — 7 posts</option>
+        <option value="2 posts per day" selected>2 posts/day — 14 posts</option>
+        <option value="3 posts per day">3 posts/day — 21 posts</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label>Platforms to Cover</label>
+    <div class="platform-row" id="bulk-platforms">
+      <div class="chip active" data-platform="Instagram">📸 Instagram</div>
+      <div class="chip active" data-platform="TikTok">🎵 TikTok</div>
+      <div class="chip active" data-platform="Twitter/X">🐦 Twitter/X</div>
+      <div class="chip" data-platform="Facebook">📘 Facebook</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">// Bulk Output</div>
+  <div id="bulk-output">
+    <div class="queue-empty">Generate a week of content above ↑</div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ── VIEW: HASHTAGS ── -->
+
+  <div class="view" id="view-hashtags">
+    <div class="page-hdr">
+      <div>
+        <h1>Hashtag <em>Arsenal</em></h1>
+        <p>Curated hashtag sets for every content category. Click to copy sets.</p>
+      </div>
+    </div>
+
+```
+<div id="hashtag-sets-container">
+  <!-- Populated by JS -->
+</div>
+```
+
+  </div>
+
+  <!-- ── VIEW: TEMPLATES ── -->
+
+  <div class="view" id="view-templates">
+    <div class="page-hdr">
+      <div>
+        <h1>Caption <em>Templates</em></h1>
+        <p>Pre-written in Lexi's voice. Click Use to load into generator.</p>
+      </div>
+    </div>
+    <div class="template-list" id="templates-list">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- ── VIEW: QUEUE ── -->
+
+  <div class="view" id="view-queue">
+    <div class="page-hdr">
+      <div>
+        <h1>Post <em>Queue</em></h1>
+        <p>Your saved content ready to copy & post</p>
+      </div>
+      <div class="page-hdr-actions">
+        <button class="out-btn" onclick="clearQueue()">Clear Queue</button>
+        <button class="gen-btn" style="padding:.7rem 1.5rem;width:auto" onclick="copyAllQueue()">
+          <span class="btn-text">📋 Copy All</span>
+          <span class="spinner">⟳</span>
+        </button>
+      </div>
+    </div>
+    <div class="mini-stats">
+      <div class="mini-sc"><span class="mini-sc-num" id="stat-total">0</span><div class="mini-sc-lbl">Total Queued</div></div>
+      <div class="mini-sc"><span class="mini-sc-num" id="stat-ig">0</span><div class="mini-sc-lbl">Instagram</div></div>
+      <div class="mini-sc"><span class="mini-sc-num" id="stat-tk">0</span><div class="mini-sc-lbl">TikTok</div></div>
+      <div class="mini-sc"><span class="mini-sc-num" id="stat-tw">0</span><div class="mini-sc-lbl">Twitter/X</div></div>
+    </div>
+    <div class="card">
+      <div id="queue-list"><div class="queue-empty">No posts in queue yet — generate some content! ✨</div></div>
+    </div>
+  </div>
+
+  <!-- ── VIEW: CALENDAR ── -->
+
+  <div class="view" id="view-calendar">
+    <div class="page-hdr">
+      <div>
+        <h1>Content <em>Calendar</em></h1>
+        <p>Visual view of your posting schedule — <span id="cal-month-label"></span></p>
+      </div>
+      <div class="page-hdr-actions">
+        <button class="out-btn" onclick="prevMonth()">← Prev</button>
+        <button class="out-btn" onclick="nextMonth()">Next →</button>
+      </div>
+    </div>
+    <div class="cal-grid">
+      <div class="cal-day-header">SUN</div>
+      <div class="cal-day-header">MON</div>
+      <div class="cal-day-header">TUE</div>
+      <div class="cal-day-header">WED</div>
+      <div class="cal-day-header">THU</div>
+      <div class="cal-day-header">FRI</div>
+      <div class="cal-day-header">SAT</div>
+    </div>
+    <div class="cal-grid" id="cal-body" style="margin-top:.4rem">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- ── VIEW: BRAND VOICE ── -->
+
+  <div class="view" id="view-voicesettings">
+    <div class="page-hdr">
+      <div>
+        <h1>Brand <em>Voice</em> Settings</h1>
+        <p>How Lexi sounds. The AI uses these as its core instructions.</p>
+      </div>
+      <div class="page-hdr-actions">
+        <button class="gen-btn" style="padding:.7rem 1.5rem;width:auto" onclick="saveVoice()">
+          <span class="btn-text">💾 Save Voice</span>
+          <span class="spinner">⟳</span>
+        </button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+      <div class="card">
+        <div class="card-title">// Core Identity</div>
+        <div class="field"><label>Name / Handle</label><input id="v-name" type="text" value="Lexi Lucks (@lexilucksofficial)"/></div>
+        <div class="field"><label>Titles & Credentials</label><input id="v-titles" type="text" value="Miss West Hollywood USA, Trans Actress, Gaming Creator, Transcend Foundation Founder"/></div>
+        <div class="field"><label>Based In</label><input id="v-location" type="text" value="Los Angeles, CA (originally from Alaska)"/></div>
+      </div>
+      <div class="card">
+        <div class="card-title">// Voice Traits</div>
+        <div class="field"><label>Personality Keywords</label><input id="v-traits" type="text" value="confident, celebratory, inclusive, playful with edge, gamer, community-first, selective, authentic"/></div>
+        <div class="field"><label>Signature Phrases</label><textarea id="v-phrases" rows="3" placeholder="e.g. 'Join the team.' / 'Level UP!' / 'We belong here.'">Join the team. Level UP! LIVE with the fam. Safe space, good vibes. The crown is earned. We belong here.</textarea></div>
+      </div>
+      <div class="card" style="grid-column:1/-1">
+        <div class="card-title">// AI Instructions</div>
+        <div class="field">
+          <label>System Prompt (what the AI is told about you)</label>
+          <textarea id="v-system" rows="8">You are writing social media content for Lexi Lucks — actress, producer, gaming creator, Miss West Hollywood USA, and founder of Transcend Foundation. Her voice is confident, celebratory, inclusive, playful with edge, and authentic. She can be warm and insider-y for fans, selective and value-focused for brands, proud and welcoming for LGBTQ+ advocacy, and high-energy for gaming/streaming. Use emojis strategically, not chaotically. Use direct CTAs, community language like Team Lexi/fam/vibes, and gaming language like LIVE, Level UP, chat, Friday Play League when relevant. Avoid stiff PR language, vague copy, performative allyship, self-deprecation, and overly sexual professional messaging. Write copy that feels real, premium, community-first, and unmistakably Lexi.</textarea>
+        </div>
+      </div>
+    </div>
+    <div id="voice-saved-msg" style="display:none;color:#7FFFD4;font-family:var(--fg);font-size:.55rem;letter-spacing:.15em;text-align:center;margin-top:1rem">✓ VOICE SETTINGS SAVED</div>
+  </div>
+
+</main>
+</div>
+
+<script>
+// ── STATE ──
+let queue = JSON.parse(localStorage.getItem('ll-queue') || '[]');
+let postsToday = parseInt(localStorage.getItem('ll-posts-today') || '0');
+let calDate = new Date();
+let voiceSettings = JSON.parse(localStorage.getItem('ll-voice') || 'null');
+
+// ── DEFAULT VOICE ──
+const DEFAULT_VOICE = `You are writing social media content for Lexi Lucks — actress, producer, gaming creator, Miss West Hollywood USA, and founder of Transcend Foundation. Her voice is confident, celebratory, inclusive, playful with edge, professional when needed, and authentic. She owns her story without self-deprecation, lifts LGBTQ+ community, and mixes gaming/streaming culture with polished LA creator energy.
+
+Audience modes:
+- Fans/community: warm, insider-y, celebratory. Use team, fam, vibes, join the team.
+- Brands/sponsors: professional, selective, value-focused. Mention audience trust, alignment, authentic partnerships, and flexible deliverables.
+- Gaming/streaming: high-energy. Use LIVE, Level UP, chat, Friday Play League, clipped, Discord, let's go.
+- Transcend/advocacy: proud and welcoming. Use safe space, lifting the community, breaking molds, all are welcome, we belong here.
+
+Style rules: use emojis strategically, capitalize key words for emphasis, lead with value, include a clear CTA, and keep the copy direct. Avoid stiff PR language, performative allyship, vague copy, self-deprecating sympathy, or overly sexual professional messaging. Write content that feels genuinely like Lexi, not generic influencer copy.`;
+
+// ── NAVIGATION ──
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  if (name === 'calendar') renderCalendar();
+  if (name === 'hashtags') renderHashtags();
+  if (name === 'templates') renderTemplates();
+  if (name === 'queue') renderQueue();
+}
+
+// ── CHIP SELECTION ──
+document.querySelectorAll('#platform-chips .chip').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('active'));
+});
+document.querySelectorAll('#tone-chips .chip').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('#tone-chips .chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+  });
+});
+document.querySelectorAll('#type-cards .type-card').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('#type-cards .type-card').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+  });
+});
+document.querySelectorAll('#bulk-platforms .chip').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('active'));
+});
+
+// ── GET SELECTED VALUES ──
+function getSelectedPlatforms(containerId = 'platform-chips') {
+  return [...document.querySelectorAll(`#${containerId} .chip.active`)].map(c => c.dataset.platform);
+}
+function getSelectedType() {
+  const el = document.querySelector('#type-cards .type-card.active');
+  return el ? el.dataset.type : 'Glam & Fashion';
+}
+function getSelectedTone() {
+  const el = document.querySelector('#tone-chips .chip.active');
+  return el ? el.dataset.tone : 'Flirty & Fun';
+}
+function getVoicePrompt() {
+  const saved = localStorage.getItem('ll-voice');
+  if (saved) {
+    const v = JSON.parse(saved);
+    return v.system || DEFAULT_VOICE;
+  }
+  return DEFAULT_VOICE;
+}
+
+async function callStudioAI(systemPrompt, userPrompt, fallbackText, tool = 'content-studio') {
+  const endpoint = window.LEXI_STUDIO_ENDPOINT || '';
+  if (!endpoint) return fallbackText;
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      tool,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }]
+    })
+  });
+  if (!response.ok) throw new Error('Studio proxy failed');
+  const data = await response.json();
+  return data.text || data.reply || data.content?.[0]?.text || fallbackText;
+}
+
+function fallbackContent(platforms, type, tone, context, variations) {
+  const base = context || `${type} post in Lexi's confident, inclusive, community-first voice`;
+  const blocks = [];
+  for (let i = 1; i <= variations; i++) {
+    blocks.push(`[VARIATION ${i}]`);
+    platforms.forEach(platform => {
+      blocks.push(`[${platform}]`);
+      blocks.push(`${base}\n\nTone: ${tone}. Lead with a hook, add one real community or creator detail, and close with a clear CTA to follow, shop, join the team, RSVP, or DM for brand work. ✦`);
+      blocks.push('---');
+    });
+  }
+  return blocks.join('\n');
+}
+
+function fallbackBulk(theme, freq, platforms) {
+  const days = ['MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY'];
+  return days.map((day, idx) => {
+    const platformLines = platforms.map(platform => `[${platform}]: ${theme} angle ${idx + 1} - lead with a strong hook, add one personal Lexi or community detail, and close with a fan, event, shop, or brand CTA.`);
+    return `${day}\n${platformLines.join('\n')}`;
+  }).join('\n\n');
+}
+
+// ── GENERATE CONTENT ──
+async function generateContent() {
+  const platforms = getSelectedPlatforms();
+  const type = getSelectedType();
+  const tone = getSelectedTone();
+  const context = document.getElementById('context-input').value;
+  const variations = parseInt(document.getElementById('variation-count').value);
+
+  if (!platforms.length) { alert('Select at least one platform!'); return; }
+
+  const btn = document.getElementById('gen-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  const platformList = platforms.join(', ');
+  const userPrompt = `Create ${variations} variation(s) of social media content for the following:
+
+PLATFORMS: ${platformList}
+CONTENT TYPE: ${type}
+TONE: ${tone}
+CONTEXT: ${context || 'General content in her brand aesthetic'}
+
+For EACH variation, write a post for EACH platform. Format clearly:
+
+[VARIATION 1]
+[PLATFORM NAME]
+{caption text}
+---
+
+Important rules:
+- Instagram: 150-220 words max, include 15-20 hashtags at the end
+- TikTok: Short punchy hook in first line, 3-5 hashtags
+- Twitter/X: Under 280 chars, punchy and direct
+- Facebook: Slightly longer, more storytelling
+- Twitch/Discord: Casual, community-first
+- Keep her signature voice throughout`;
+
+  try {
+    const text = await callStudioAI(
+      getVoicePrompt(),
+      userPrompt,
+      fallbackContent(platforms, type, tone, context, variations)
+    );
+    renderOutput(text, platforms, variations);
+    postsToday += platforms.length * variations;
+    localStorage.setItem('ll-posts-today', postsToday);
+    document.getElementById('posts-generated').textContent = postsToday;
+  } catch (err) {
+    document.getElementById('output-area').innerHTML = `<div style="color:var(--hot);padding:1rem;font-size:.8rem">Error: ${err.message}.<br><br>Set window.LEXI_STUDIO_ENDPOINT to a secure backend route for AI generation.</div>`;
+  }
+
+  btn.classList.remove('loading');
+  btn.disabled = false;
+}
+
+// ── RENDER OUTPUT ──
+function renderOutput(text, platforms, variations) {
+  const container = document.getElementById('output-area');
+  document.getElementById('copy-all-btn').style.display = 'block';
+
+  // Parse sections by platform headers
+  const blocks = [];
+  const lines = text.split('\n');
+  let current = null;
+
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    const isPlatformHeader = platforms.some(p => trimmed.startsWith('[') && trimmed.includes(p));
+    const isVariationHeader = trimmed.startsWith('[VARIATION');
+
+    if (isVariationHeader) {
+      // New variation separator
+      blocks.push({ type: 'separator', text: trimmed.replace(/[\[\]]/g, '') });
+    } else if (isPlatformHeader) {
+      if (current) blocks.push(current);
+      const platform = trimmed.replace(/[\[\]]/g, '');
+      current = { type: 'post', platform, lines: [] };
+    } else if (current && trimmed !== '---') {
+      current.lines.push(line);
+    }
+  });
+  if (current) blocks.push(current);
+
+  if (!blocks.length) {
+    // Fallback: show raw text
+    container.innerHTML = `<div class="output-block"><div class="out-platform">Generated Content</div><div class="out-text">${escHtml(text)}</div><div class="out-actions"><button class="out-btn" onclick="copyText(this, ${JSON.stringify(text)})">📋 Copy</button><button class="out-btn" onclick="saveToQueue('All Platforms', ${JSON.stringify(text)})">+ Queue</button></div></div>`;
+    return;
+  }
+
+  container.innerHTML = blocks.map((b, i) => {
+    if (b.type === 'separator') {
+      return `<div style="font-family:var(--fg);font-size:.48rem;letter-spacing:.18em;color:rgba(255,105,180,.4);padding:.5rem 0;border-top:1px solid var(--border);margin:.5rem 0">${escHtml(b.text)}</div>`;
+    }
+    const postText = b.lines.join('\n').trim();
+    const safeText = JSON.stringify(postText);
+    return `<div class="output-block">
+      <div class="out-platform">${escHtml(b.platform)}</div>
+      <div class="out-text">${escHtml(postText)}</div>
+      <div class="out-actions">
+        <button class="out-btn" onclick="copyText(this, ${safeText})">📋 Copy</button>
+        <button class="out-btn" onclick="saveToQueue('${escHtml(b.platform)}', ${safeText})">+ Queue</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(t) {
+  return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── COPY ──
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+function copyAll() {
+  const all = [...document.querySelectorAll('.out-text')].map(el => el.textContent).join('\n\n---\n\n');
+  navigator.clipboard.writeText(all).then(() => {
+    const btn = document.getElementById('copy-all-btn');
+    btn.textContent = '✓ All Copied!';
+    setTimeout(() => btn.textContent = 'Copy All', 2000);
+  });
+}
+
+// ── QUEUE ──
+function saveToQueue(platform, text) {
+  queue.push({ platform, text, id: Date.now(), date: new Date().toLocaleDateString() });
+  localStorage.setItem('ll-queue', JSON.stringify(queue));
+  updateQueueCount();
+}
+function updateQueueCount() {
+  document.getElementById('queue-count').textContent = queue.length;
+  document.getElementById('queue-badge').textContent = queue.length;
+  document.getElementById('stat-total').textContent = queue.length;
+  document.getElementById('stat-ig').textContent = queue.filter(q => q.platform === 'Instagram').length;
+  document.getElementById('stat-tk').textContent = queue.filter(q => q.platform === 'TikTok').length;
+  document.getElementById('stat-tw').textContent = queue.filter(q => q.platform === 'Twitter/X').length;
+}
+function renderQueue() {
+  const list = document.getElementById('queue-list');
+  if (!queue.length) { list.innerHTML = '<div class="queue-empty">No posts in queue yet — generate some content! ✨</div>'; return; }
+  list.innerHTML = queue.map((item, i) => `
+    <div class="queue-item">
+      <div class="qi-platform">${escHtml(item.platform)}<br><span style="color:rgba(255,255,255,.25);font-size:.35rem">${item.date}</span></div>
+      <div class="qi-text">${escHtml(item.text.substring(0, 200))}${item.text.length > 200 ? '...' : ''}</div>
+      <div class="qi-actions">
+        <button class="out-btn" onclick="copyText(this, ${JSON.stringify(item.text)})">📋</button>
+        <button class="out-btn" onclick="removeFromQueue(${i})" style="color:rgba(255,80,80,.5)">✕</button>
+      </div>
+    </div>
+  `).join('');
+  updateQueueCount();
+}
+function removeFromQueue(i) {
+  queue.splice(i, 1);
+  localStorage.setItem('ll-queue', JSON.stringify(queue));
+  renderQueue();
+}
+function clearQueue() {
+  if (confirm('Clear all queued posts?')) {
+    queue = [];
+    localStorage.setItem('ll-queue', JSON.stringify(queue));
+    renderQueue();
+    updateQueueCount();
+  }
+}
+function copyAllQueue() {
+  const all = queue.map(q => `[${q.platform}]\n${q.text}`).join('\n\n═══\n\n');
+  navigator.clipboard.writeText(all);
+}
+
+// ── BULK GENERATE ──
+async function generateBulkContent() {
+  const theme = document.getElementById('bulk-theme').value || 'general content week';
+  const freq = document.getElementById('bulk-freq').value;
+  const platforms = getSelectedPlatforms('bulk-platforms');
+
+  const btn = document.querySelector('#view-bulk .gen-btn');
+  btn.classList.add('loading'); btn.disabled = true;
+
+  const prompt = `Create a full week of social media content for Lexi Lucks.
+
+WEEK THEME: ${theme}
+FREQUENCY: ${freq}
+PLATFORMS: ${platforms.join(', ')}
+
+Create a structured content plan covering Monday through Sunday. For each day, write actual ready-to-post captions for each platform listed. Include a mix of content types (glam, gaming, advocacy, lifestyle, community).
+
+Format:
+MONDAY
+[Platform]: {caption}
+
+TUESDAY
+...etc`;
+
+  try {
+    const text = await callStudioAI(
+      getVoicePrompt(),
+      prompt,
+      fallbackBulk(theme, freq, platforms),
+      'bulk-content-studio'
+    );
+    document.getElementById('bulk-output').innerHTML = `
+      <div style="display:flex;justify-content:flex-end;gap:.5rem;margin-bottom:1rem">
+        <button class="out-btn" onclick="copyAllBulk()">📋 Copy All</button>
+        <button class="out-btn" onclick="addBulkToQueue()">+ Add All to Queue</button>
+      </div>
+      <div id="bulk-text" class="output-block" style="border-left-color:var(--bubble)">
+        <div class="out-platform">Week of Content — ${theme}</div>
+        <div class="out-text" style="font-size:.82rem">${escHtml(text)}</div>
+      </div>`;
+    postsToday += 14;
+    document.getElementById('posts-generated').textContent = postsToday;
+    localStorage.setItem('ll-posts-today', postsToday);
+  } catch(err) {
+    document.getElementById('bulk-output').innerHTML = `<div style="color:var(--hot);padding:1rem;font-size:.8rem">Error generating bulk content: ${err.message}</div>`;
+  }
+  btn.classList.remove('loading'); btn.disabled = false;
+}
+function copyAllBulk() {
+  const el = document.querySelector('#bulk-text .out-text');
+  if (el) navigator.clipboard.writeText(el.textContent);
+}
+function addBulkToQueue() {
+  const el = document.querySelector('#bulk-text .out-text');
+  if (el) saveToQueue('Bulk Week', el.textContent);
+}
+
+// ── HASHTAG SETS ──
+const HASHTAG_SETS = [
+  { name: 'Glam & Fashion', tags: ['#LexiLucks','#PinkGlam','#LuxuryInfluencer','#GlamLife','#FashionIcon','#LAStyle','#BlondeBeauty','#FashionBlogger','#OOTDInspo','#StyleQueeen','#GlamQueen','#FeminineEnergy','#LuxuryFashion','#BombshellVibes','#WestHollywood'], color: 'var(--hot)' },
+  { name: 'Gaming', tags: ['#LexiLucks','#GamerGirl','#TwitchStreamer','#KickStreamer','#PrincessPeach','#GamingCommunity','#WomenWhoGame','#GamersOfInstagram','#StreamerLife','#GamingContent','#Nintendo','#Cosplay','#GamerAesthetic','#LiveStreaming','#NintendoWorld'], color: 'var(--bubble)' },
+  { name: 'Trans Pride & Advocacy', tags: ['#TransWoman','#TransPride','#TransRights','#TransBeauty','#TransVisibility','#TransCommunity','#LGBTQ','#Pride','#TransModel','#GenderAffirming','#TransJoy','#QueerCommunity','#TransAdvocate','#RepresentationMatters','#TransLivesMatter'], color: '#DA70D6' },
+  { name: 'Events & Parties', tags: ['#LexiLucks','#WestHollywood','#LANightlife','#ExclusiveEvent','#PartyGirl','#LAParty','#InviteOnly','#WeHo','#LAInfluencer','#TranscendFoundation','#LAEvents','#EventLife','#WeHoLife','#LAScene','#VIPAccess'], color: '#FFD700' },
+  { name: 'Miss West Hollywood', tags: ['#MissWestHollywood','#LexiLucks','#BeautyPageant','#PageantLife','#MissWestHollywoodUSA','#PageantQueen','#BeautyQueen','#CrownAndGown','#PageantWorld','#TitleHolder','#MissUSA','#BeautyAndBrains','#WeHo','#LosAngeles','#LAInfluencer'], color: 'var(--rose-gold)' },
+  { name: 'Streaming Announcements', tags: ['#LexiLucks','#LiveNow','#TwitchLive','#KickLive','#StreamerAlert','#GoingLive','#LiveStream','#TwitchStreamer','#KickStreamer','#GamingStream','#WatchMe','#Streamer','#ContentCreator','#LiveGaming','#StreamAlert'], color: '#7FFFD4' },
+];
+
+function renderHashtags() {
+  const c = document.getElementById('hashtag-sets-container');
+  c.innerHTML = HASHTAG_SETS.map(set => `
+    <div class="card" style="margin-bottom:1rem">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:${set.color}">${set.name}</span>
+        <button class="out-btn" onclick="copyHashtagSet('${set.name}')">📋 Copy Set</button>
+      </div>
+      <div class="hashtag-cloud" id="htag-${set.name.replace(/\s/g,'-')}">
+        ${set.tags.map(t => `<div class="htag" onclick="this.classList.toggle('selected')">${escHtml(t)}</div>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+function copyHashtagSet(name) {
+  const set = HASHTAG_SETS.find(s => s.name === name);
+  if (set) navigator.clipboard.writeText(set.tags.join(' '));
+}
+
+// ── TEMPLATES ──
+const TEMPLATES = [
+  { tag:'Glam Post', text:'She showed up and the whole vibe shifted ✦\n\n[describe outfit/moment]\n\nThe crown isn\'t given. It\'s earned. 👑\n\n#LexiLucks #GlamLife #LuxuryInfluencer' },
+  { tag:'Gaming Drop', text:'Your girl is LIVE 🎮👑\n\nDrop everything and come hang — we\'re playing [GAME] and the chaos has already started.\n\nTwitch & Kick: lexilucks ✦\n\n#LexiLucks #GamerGirl #LiveNow' },
+  { tag:'Party Invite', text:'If you know, you know. And now you know 🎉✨\n\nExclusive invite dropping for Kingdom members first.\n\nYou want in? The link is in bio. This one\'s going to be a moment.\n\n💗 @lexilucksofficial' },
+  { tag:'Trans Advocacy', text:'Behind the crown, behind the headlines — there\'s a community that deserves your protection and your love.\n\nTrans lives matter. Trans joy exists. Show up for us.\n\n🌈 #TransRights #TransVisibility #LexiLucks' },
+  { tag:'Merch Drop', text:'She designed it for YOU ✦\n\n[ITEM NAME] just dropped and it\'s giving exactly what I intended.\n\nLink in bio. First 24 hours are everything.\n\n👑 Shop: lexilucks.com' },
+  { tag:'Miss West Hollywood', text:'Miss West Hollywood USA reporting in 👑✨\n\nThis title isn\'t just a crown. It\'s a platform. And I intend to use every inch of it.\n\n[personal moment/reflection]\n\n#MissWestHollywoodUSA #LexiLucks #WeHo' },
+  { tag:'Lifestyle / Vulnerable', text:'Can we talk for a second? 💗\n\n[share something real]\n\nI\'m still figuring it out — publicly, loudly, in pink. And I think that\'s okay.\n\nThank you for being here. ✦' },
+  { tag:'Collab Announcement', text:'Something I\'ve been keeping quiet just got loud 👀✦\n\nCollaborating with [BRAND/PERSON] and I cannot wait to show you what we built.\n\n[drop date/tease]\n\nStay tuned, babe. 💗' },
+];
+function renderTemplates() {
+  document.getElementById('templates-list').innerHTML = TEMPLATES.map((t, i) => `
+    <div class="tpl">
+      <div class="tpl-tag">${escHtml(t.tag)}</div>
+      <div class="tpl-text">${escHtml(t.text)}</div>
+      <button class="tpl-use" onclick="loadTemplate(${i})">Use →</button>
+    </div>
+  `).join('');
+}
+function loadTemplate(i) {
+  const t = TEMPLATES[i];
+  document.getElementById('context-input').value = t.text;
+  showView('generate');
+}
+
+// ── CALENDAR ──
+function renderCalendar() {
+  const label = calDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  document.getElementById('cal-month-label').textContent = label;
+
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+
+  const calBody = document.getElementById('cal-body');
+  let html = '';
+
+  // Empty cells before first day
+  for (let i = 0; i < firstDay; i++) html += '<div class="cal-cell" style="opacity:.25"></div>';
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
+    const qPosts = queue.filter(q => {
+      const qd = new Date(q.date);
+      return qd.getDate() === d && qd.getMonth() === month && qd.getFullYear() === year;
+    });
+
+    const postDots = qPosts.slice(0, 3).map(p => {
+      const cls = p.platform === 'Instagram' ? 'ig' : p.platform === 'Twitter/X' ? 'tw' : p.platform === 'TikTok' ? 'tk' : '';
+      return `<div class="cal-post ${cls}">${p.platform.substring(0, 2)}: ${escHtml(p.text.substring(0, 20))}...</div>`;
+    }).join('');
+
+    html += `<div class="cal-cell${isToday ? ' today' : ''}">
+      <div class="cal-num">${d}</div>
+      ${postDots}
+    </div>`;
+  }
+  calBody.innerHTML = html;
+}
+function prevMonth() { calDate.setMonth(calDate.getMonth() - 1); renderCalendar(); }
+function nextMonth() { calDate.setMonth(calDate.getMonth() + 1); renderCalendar(); }
+
+// ── BRAND VOICE SAVE ──
+function saveVoice() {
+  const voice = {
+    name: document.getElementById('v-name').value,
+    titles: document.getElementById('v-titles').value,
+    location: document.getElementById('v-location').value,
+    traits: document.getElementById('v-traits').value,
+    phrases: document.getElementById('v-phrases').value,
+    system: document.getElementById('v-system').value,
+  };
+  localStorage.setItem('ll-voice', JSON.stringify(voice));
+  const msg = document.getElementById('voice-saved-msg');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 2000);
+}
+
+// ── INIT ──
+updateQueueCount();
+document.getElementById('posts-generated').textContent = postsToday;
+</script>
+
+  <script src="src/lib/analytics.js" defer></script>
+  <script src="src/lib/lead-capture.js" defer></script>
+  <script src="src/lib/site-enhancements.js" defer></script>
+  <script src="lexi-concierge.js" defer></script>
+</body>
+</html>

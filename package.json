@@ -1,0 +1,12 @@
+{
+  "name": "lexilucks-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static Lexi Lucks creator business funnel.",
+  "scripts": {
+    "lint": "node scripts/lint-site.mjs",
+    "test": "node --test",
+    "build": "node scripts/build-site.mjs"
+  },
+  "devDependencies": {}
+}

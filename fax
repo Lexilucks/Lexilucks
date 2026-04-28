@@ -1,0 +1,17 @@
+<form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+  <h1>Send a Free Fax Request</h1>
+
+  <label>Your Email</label>
+  <input type="email" name="email" required>
+
+  <label>Recipient Fax Number</label>
+  <input type="tel" name="fax_number" required>
+
+  <label>Document Link</label>
+  <input type="url" name="document_link" placeholder="Paste Google Drive / Dropbox file link" required>
+
+  <label>Cover Page Message</label>
+  <textarea name="message"></textarea>
+
+  <button type="submit">Submit Fax Request</button>
+</form>

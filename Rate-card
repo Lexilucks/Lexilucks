@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexi Lucks — Rate Card 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@200;300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #faf7f2;
+      --paper: #f4ede3;
+      --gold: #b8956a;
+      --gold-dark: #8a6a42;
+      --gold-light: #d4b896;
+      --ink: #1a1510;
+      --ink-mid: #4a3f35;
+      --ink-soft: #7a6e65;
+      --border: rgba(184,149,106,0.25);
+      --border-strong: rgba(184,149,106,0.5);
+      --rose: #c47a7a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 40px;
+      align-items: center;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border-strong);
+      margin-bottom: 48px;
+    }
+    .headshot-wrap {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--gold);
+      flex-shrink: 0;
+      position: relative;
+    }
+    .headshot-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .header-info { }
+    .header-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .header-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px; font-weight: 700;
+      line-height: 0.9; letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .header-name em { font-style: italic; color: var(--gold-dark); }
+    .header-title {
+      font-size: 12px; letter-spacing: 0.1em;
+      color: var(--ink-soft); text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .header-contacts {
+      display: flex; flex-wrap: wrap; gap: 16px;
+    }
+    .contact-chip {
+      display: flex; align-items: center; gap: 6px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; color: var(--ink-mid);
+    }
+    .contact-chip .icon { color: var(--gold); }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: var(--ink);
+      margin-bottom: 48px;
+    }
+    .stat {
+      padding: 20px 16px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 700;
+      color: var(--gold-light);
+      display: block; line-height: 1;
+    }
+    .stat-n .up {
+      font-size: 11px;
+      color: #7af5c0;
+      font-family: 'Space Mono', monospace;
+      vertical-align: super;
+    }
+    .stat-l {
+      font-size: 8px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      display: block; margin-top: 5px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .sec-head {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px;
+    }
+    .sec-head-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold);
+      white-space: nowrap;
+    }
+    .sec-head-line { flex: 1; height: 1px; background: var(--border-strong); }
+
+    /* ── RATE TABLES ── */
+    .rate-section { margin-bottom: 40px; }
+    .rate-table { width: 100%; border-collapse: collapse; }
+    .rate-table tr { border-bottom: 1px solid var(--border); }
+    .rate-table tr:last-child { border-bottom: none; }
+    .rate-table td {
+      padding: 13px 0;
+      vertical-align: middle;
+    }
+    .rate-table .item {
+      font-size: 14px; color: var(--ink-mid);
+      font-weight: 400;
+    }
+    .rate-table .item strong {
+      display: block;
+      font-size: 15px; font-weight: 500;
+      color: var(--ink); margin-bottom: 2px;
+    }
+    .rate-table .item .sub {
+      font-size: 11px; color: var(--ink-soft);
+      font-family: 'Space Mono', monospace;
+    }
+    .rate-table .price {
+      text-align: right;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600;
+      color: var(--gold-dark);
+      white-space: nowrap;
+    }
+    .rate-table .price .note {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: 10px; font-weight: 300;
+      color: var(--ink-soft);
+    }
+    .rate-table .badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      background: rgba(184,149,106,0.12);
+      color: var(--gold-dark);
+      border: 1px solid var(--border-strong);
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    /* ── TWO-COL LAYOUT ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+
+    /* ── BUNDLE CARDS ── */
+    .bundle-card {
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      padding: 24px;
+      position: relative;
+    }
+    .bundle-card.featured {
+      background: var(--ink);
+      border-color: var(--gold);
+    }
+    .bundle-featured-tag {
+      position: absolute; top: -1px; right: 20px;
+      background: var(--gold);
+      color: var(--ink);
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+    }
+    .bundle-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .bundle-card.featured .bundle-name { color: var(--cream); }
+    .bundle-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 700;
+      color: var(--gold);
+      line-height: 1; margin-bottom: 14px;
+    }
+    .bundle-items {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .bundle-items li {
+      font-size: 12px; color: var(--ink-soft);
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .bundle-card.featured .bundle-items li { color: rgba(250,247,242,0.6); }
+    .bundle-items li::before {
+      content: '✦'; color: var(--gold); font-size: 7px; margin-top: 3px; flex-shrink: 0;
+    }
+
+    /* ── SMALL TABLES ── */
+    .mini-table { width: 100%; border-collapse: collapse; }
+    .mini-table tr { border-bottom: 1px solid var(--border); }
+    .mini-table tr:last-child { border-bottom: none; }
+    .mini-table td { padding: 10px 0; font-size: 13px; vertical-align: middle; }
+    .mini-table .ml { color: var(--ink-mid); }
+    .mini-table .mr {
+      text-align: right;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 600;
+      color: var(--gold-dark);
+    }
+
+    /* ── RUSH / NOTES ── */
+    .note-box {
+      background: var(--paper);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .note-box p { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+    .note-box strong { color: var(--ink); font-weight: 500; }
+
+    /* ── FOOTER ── */
+    .footer-bar {
+      margin-top: 48px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border-strong);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 700;
+    }
+    .footer-brand em { font-style: italic; color: var(--gold); }
+    .footer-copy {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; color: var(--ink-soft);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; }
+      .page { padding: 30px 24px; }
+      .stats-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .page { padding: 32px 20px; }
+      .header { grid-template-columns: 1fr; text-align: center; }
+      .headshot-wrap { margin: 0 auto; }
+      .header-contacts { justify-content: center; }
+      .stats-bar { grid-template-columns: repeat(3, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="lexi-concierge.css"/>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div class="headshot-wrap">
+      <img src="lexi-lucks13.jpg" alt="Lexi Lucks" />
+    </div>
+    <div class="header-info">
+      <p class="header-eyebrow">Official Rate Card · 2026</p>
+      <h1 class="header-name">Lexi <em>Lucks</em></h1>
+      <p class="header-title">Miss West Hollywood USA · Actress · Gaming Creator · LGBTQ+ Advocate</p>
+      <div class="header-contacts">
+        <span class="contact-chip"><span class="icon">✉</span> lexi@lexilucks.com</span>
+        <span class="contact-chip"><span class="icon">📸</span> @lexilucksofficial</span>
+        <span class="contact-chip"><span class="icon">🌐</span> lexilucks.com</span>
+        <span class="contact-chip"><span class="icon">📞</span> (562) 754-2937</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── STATS BAR ── -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-n">55K<span class="up">+</span></span>
+      <span class="stat-l">Combined Followers</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">140K<span class="up">+</span></span>
+      <span class="stat-l">Cross-Platform Views</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">14.7K</span>
+      <span class="stat-l">Accounts Reached</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">+51<span class="up">%</span></span>
+      <span class="stat-l">Reach Growth (90d)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">53%</span>
+      <span class="stat-l">Discovery Views</span>
+    </div>
+  </div>
+
+  <!-- ── SOCIAL DELIVERABLES ── -->
+  <div class="rate-section">
+    <div class="sec-head">
+      <span class="sec-head-label">01 · Social Deliverables</span>
+      <div class="sec-head-line"></div>
+    </div>
+    <table class="rate-table">
+      <tr>
+        <td class="item">
+          <strong>Instagram Reel</strong>
+          <span class="sub">15–60 sec · original audio/music · permanent post</span>
+        </td>
+        <td class="price">$600</td>
+      </tr>
+      <tr>
+        <td class="item">
+          <strong>TikTok Video</strong>
+          <span class="sub">15–60 sec · trending audio · native TikTok format</span>
+        </td>
+        <td class="price">$550</td>
+      </tr>
+      <tr>
+        <td class="item">
+          <strong>Instagram Story Set</strong>
+          <span class="sub">3–5 frames · link sticker · poll / CTA included</span>
+        </td>
+        <td class="price">$150</td>
+      </tr>
+      <tr>
+        <td class="item">
+          <strong>Instagram Feed Post (Static)</strong>
+          <span class="sub">1 permanent photo post · branded caption · hashtag strategy</span>
+        </td>
+        <td class="price">$400</td>
+      </tr>
+      <tr>
+        <td class="item">
+          <strong>Cross-Platform Add-On</strong>
+          <span class="sub">Post same content to a second platform (IG → TikTok or reverse)</span>
+        </td>
+        <td class="price">+$75</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ── BUNDLES ── -->
+  <div class="rate-section">
+    <div class="sec-head">
+      <span class="sec-head-label">02 · Bundles</span>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="two-col">
+      <div class="bundle-card">
+        <div class="bundle-name">Reel + TikTok</div>
+        <div class="bundle-price">$1,000</div>
+        <ul class="bundle-items">
+          <li>1 Instagram Reel</li>
+          <li>1 TikTok Video</li>
+          <li>Same concept, platform-native edits</li>
+          <li>Save $150 vs. individual</li>
+        </ul>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">Reel + Stories</div>
+        <div class="bundle-price">$700</div>
+        <ul class="bundle-items">
+          <li>1 Instagram Reel</li>
+          <li>1 Instagram Story Set (3–5 frames)</li>
+          <li>CTA stories drive Reel views</li>
+          <li>Save $50 vs. individual</li>
+        </ul>
+      </div>
+      <div class="bundle-card">
+        <div class="bundle-name">TikTok + Stories</div>
+        <div class="bundle-price">$650</div>
+        <ul class="bundle-items">
+          <li>1 TikTok Video</li>
+          <li>1 Story Set promoting the TikTok</li>
+          <li>Cross-audience amplification</li>
+          <li>Save $50 vs. individual</li>
+        </ul>
+      </div>
+      <div class="bundle-card featured">
+        <div class="bundle-featured-tag">Best Value</div>
+        <div class="bundle-name">Full Bundle</div>
+        <div class="bundle-price">$1,150</div>
+        <ul class="bundle-items">
+          <li>1 Instagram Reel</li>
+          <li>1 TikTok Video</li>
+          <li>1 Story Set (3–5 frames)</li>
+          <li>Save $150 vs. individual rates</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── UGC ── -->
+  <div class="rate-section">
+    <div class="sec-head">
+      <span class="sec-head-label">03 · UGC Content (Brand Use)</span>
+      <div class="sec-head-line"></div>
+    </div>
+    <table class="rate-table">
+      <tr>
+        <td class="item">
+          <strong>Single UGC Video</strong>
+          <span class="sub">30–45 sec · delivered as raw file for brand's own channels</span>
+        </td>
+        <td class="price">$400</td>
+      </tr>
+      <tr>
+        <td class="item">
+          <strong>Two UGC Videos</strong>
+          <span class="sub">Two variations — A/B testing ready · different hooks or CTAs</span>
+        </td>
+        <td class="price">$750</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <!-- ── LICENSING ── -->
+    <div class="rate-section">
+      <div class="sec-head">
+        <span class="sec-head-label">04 · Usage Rights</span>
+        <div class="sec-head-line"></div>
+      </div>
+      <table class="mini-table">
+        <tr>
+          <td class="ml">Organic Usage</td>
+          <td class="mr">$150 <span style="font-size:10px;color:var(--ink-soft);font-family:'Jost'">/30 days</span></td>
+        </tr>
+        <tr>
+          <td class="ml">Paid Ad Usage</td>
+          <td class="mr">$300 <span style="font-size:10px;color:var(--ink-soft);font-family:'Jost'">/30 days</span></td>
+        </tr>
+        <tr>
+          <td class="ml">Whitelisting</td>
+          <td class="mr">$250 <span style="font-size:10px;color:var(--ink-soft);font-family:'Jost'">/30 days</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ── TRAVEL ── -->
+    <div class="rate-section">
+      <div class="sec-head">
+        <span class="sec-head-label">05 · Travel Content</span>
+        <div class="sec-head-line"></div>
+      </div>
+      <table class="mini-table">
+        <tr>
+          <td class="ml">On-Location Reel / TikTok</td>
+          <td class="mr">$1,200–$1,500</td>
+        </tr>
+        <tr>
+          <td class="ml">Full Day Rate</td>
+          <td class="mr">$2,000</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── RUSH FEES ── -->
+  <div class="rate-section">
+    <div class="sec-head">
+      <span class="sec-head-label">06 · Rush Fees</span>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="two-col" style="margin-bottom:0">
+      <div class="note-box">
+        <p><strong>48-Hour Turnaround</strong><br>+25% added to base rate</p>
+      </div>
+      <div class="note-box">
+        <p><strong>24-Hour Turnaround</strong><br>+40% added to base rate</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── PLATFORM NETWORK NOTE ── -->
+  <div class="note-box" style="margin-bottom:40px">
+    <p><strong>Multi-Account Network:</strong> Partnerships may also include reach across <strong>@transcendfoundation</strong> (15K · LGBTQ+ community) and/or <strong>@mslollypopz</strong> (15K · lifestyle) for expanded audience coverage. Cross-account pricing available on request.</p>
+  </div>
+
+  <!-- ── TERMS ── -->
+  <div class="rate-section">
+    <div class="sec-head">
+      <span class="sec-head-label">07 · Terms & Notes</span>
+      <div class="sec-head-line"></div>
+    </div>
+    <table class="rate-table">
+      <tr>
+        <td class="item"><strong>Payment</strong><span class="sub">50% deposit required to begin. Balance due upon delivery.</span></td>
+      </tr>
+      <tr>
+        <td class="item"><strong>Revisions</strong><span class="sub">2 rounds included. Additional revisions at $75/round.</span></td>
+      </tr>
+      <tr>
+        <td class="item"><strong>Exclusivity</strong><span class="sub">Category exclusivity available at 2× base rate for 30-day period.</span></td>
+      </tr>
+      <tr>
+        <td class="item"><strong>FTC Disclosure</strong><span class="sub">All paid partnerships disclosed per FTC guidelines (#ad / "Paid Partnership" label).</span></td>
+      </tr>
+      <tr>
+        <td class="item"><strong>Deliverable Timeline</strong><span class="sub">Standard turnaround: 5–7 business days from brief approval.</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer-bar">
+    <div class="footer-brand">Lexi <em>Lucks</em></div>
+    <div class="footer-copy">LEXI@LEXILUCKS.COM &nbsp;·&nbsp; LEXILUCKS.COM &nbsp;·&nbsp; @LEXILUCKSOFFICIAL &nbsp;·&nbsp; © 2026</div>
+  </div>
+
+</div>
+  <script src="src/lib/analytics.js" defer></script>
+  <script src="src/lib/lead-capture.js" defer></script>
+  <script src="src/lib/site-enhancements.js" defer></script>
+  <script src="lexi-concierge.js" defer></script>
+</body>
+</html>

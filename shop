@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shop | Lexi Lucks</title>
+<meta name="description" content="Shop Lexi Lucks' curated Amazon picks, book UGC and brand partnerships, explore travel faves, merch, and exclusive creator perks.">
+<meta property="og:title" content="Shop Lexi Lucks">
+<meta property="og:description" content="Curated Amazon picks, UGC bookings, travel, merch & more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lexilucks.com/shop">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--bg-2:#111;--gold:#d4af37;--gold-soft:#e8c870;--gold-dim:rgba(212,175,55,.25);--text:#f0ebe0;--muted:#9a9a9a;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7;overflow-x:hidden}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;letter-spacing:.02em}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;padding:20px 40px;background:rgba(10,10,10,.85);backdrop-filter:blur(12px);z-index:100;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--gold-dim)}
+nav .logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--gold);letter-spacing:.15em}
+nav ul{display:flex;gap:32px;list-style:none}
+nav ul a{font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text);transition:color .3s}
+nav ul a:hover,nav ul a.active{color:var(--gold)}
+@media(max-width:720px){nav{padding:16px 20px}nav ul{gap:18px}nav ul a{font-size:.72rem;letter-spacing:.1em}}
+
+/* HERO */
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 24px 60px;background:radial-gradient(ellipse at top,rgba(212,175,55,.08),transparent 60%)}
+.hero .eyebrow{color:var(--gold);letter-spacing:.4em;font-size:.75rem;text-transform:uppercase;margin-bottom:24px}
+.hero h1{font-size:clamp(2.8rem,7vw,5rem);line-height:1;margin-bottom:20px}
+.hero h1 .accent{font-style:italic;color:var(--gold)}
+.hero p{color:var(--muted);max-width:620px;font-size:1.05rem}
+
+/* SECTIONS */
+section{padding:80px 24px;max-width:1200px;margin:0 auto}
+.section-head{text-align:center;margin-bottom:48px}
+.section-head .num{color:var(--gold);letter-spacing:.4em;font-size:.7rem;text-transform:uppercase;margin-bottom:12px}
+.section-head h2{font-size:clamp(2rem,4vw,3rem)}
+.section-head p{color:var(--muted);margin-top:14px;max-width:560px;margin-left:auto;margin-right:auto}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--bg-2),#0d0d0d);border:1px solid var(--gold-dim);padding:40px;border-radius:2px;transition:all .4s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 20px 60px rgba(212,175,55,.12)}
+.card h3{font-size:1.8rem;color:var(--gold);margin-bottom:14px}
+.card p{color:var(--muted);margin-bottom:24px;font-size:.98rem}
+
+/* FEATURED AMAZON */
+.feature{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;background:linear-gradient(145deg,#141414,#0a0a0a);border:1px solid var(--gold);padding:56px;border-radius:2px;position:relative}
+.feature::before{content:'★ PRIORITY';position:absolute;top:20px;right:24px;color:var(--gold);font-size:.7rem;letter-spacing:.3em}
+.feature h3{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:var(--gold);margin-bottom:16px}
+.feature p{color:var(--text);margin-bottom:28px;font-size:1.05rem}
+.feature .tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.feature .tag{border:1px solid var(--gold-dim);padding:6px 14px;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.feature-visual{aspect-ratio:1;background:radial-gradient(circle,rgba(212,175,55,.15),transparent 70%);border:1px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:5rem;color:var(--gold);font-style:italic}
+@media(max-width:720px){.feature{grid-template-columns:1fr;padding:32px}.feature-visual{aspect-ratio:2}}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:14px 32px;border:1px solid var(--gold);color:var(--gold);letter-spacing:.2em;font-size:.8rem;text-transform:uppercase;transition:all .3s;cursor:pointer;background:transparent;font-family:inherit}
+.btn:hover{background:var(--gold);color:var(--bg)}
+.btn-solid{background:var(--gold);color:var(--bg)}
+.btn-solid:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:860px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* AFFILIATE TILE */
+.tile{background:var(--bg-2);border:1px solid var(--gold-dim);padding:28px;transition:all .3s;display:flex;flex-direction:column;gap:12px}
+.tile:hover{border-color:var(--gold);background:#141414}
+.tile .label{color:var(--gold);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase}
+.tile h4{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--text)}
+.tile p{color:var(--muted);font-size:.9rem;flex:1}
+.tile .arrow{color:var(--gold);font-size:.8rem;letter-spacing:.2em;margin-top:8px}
+
+/* DISCLOSURE */
+.disclosure{max-width:900px;margin:40px auto 0;padding:24px;border-top:1px solid var(--gold-dim);color:var(--muted);font-size:.8rem;text-align:center;line-height:1.7}
+.disclosure strong{color:var(--gold);letter-spacing:.1em}
+
+footer{padding:60px 24px;text-align:center;color:var(--muted);font-size:.8rem;letter-spacing:.15em;border-top:1px solid var(--gold-dim);margin-top:60px}
+footer a{color:var(--gold)}
+</style>
+
+  <link rel="stylesheet" href="lexi-concierge.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="logo">LEXI LUCKS</div>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="mailto:hello@lexilucks.com">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Curated · Vetted · Lexi-Approved</div>
+  <h1>The <span class="accent">Shop</span></h1>
+  <p>Everything I use, love, and recommend — plus the doors I open for brands, travelers, and my community. One page. All the links.</p>
+</header>
+
+<!-- 1. AMAZON FEATURED -->
+
+<section>
+  <div class="section-head">
+    <div class="num">01 — Shop My Picks</div>
+    <h2>Amazon Storefront</h2>
+    <p>Streaming gear, beauty essentials, pageant prep, lifestyle — the exact products behind the content.</p>
+  </div>
+  <div class="feature">
+    <div>
+      <h3>My Amazon Edit</h3>
+      <p>Hand-picked categories updated regularly. If you've seen it on my stream, my grid, or a press day — it's probably here.</p>
+      <div class="tags">
+        <span class="tag">Beauty</span>
+        <span class="tag">Streaming</span>
+        <span class="tag">Pageant</span>
+        <span class="tag">Lifestyle</span>
+      </div>
+      <a href="https://a.co/d/0gWWx0S0" target="_blank" rel="noopener sponsored" class="btn btn-solid" data-analytics-event="merch_click" data-analytics-label="Amazon Storefront">Shop The Storefront →</a>
+    </div>
+    <div class="feature-visual">Lx</div>
+  </div>
+</section>
+
+<!-- 2. UGC / BRAND WORK -->
+
+<section>
+  <div class="section-head">
+    <div class="num">02 — Work With Me</div>
+    <h2>Brand Partnerships & UGC</h2>
+    <p>Paid UGC, partnership ads, whitelisting, and campaign work. Press credits: TLC's <em>Hooked on the Look</em>, <em>DEVMO: Hollywood</em>.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>UGC Deliverables</h3>
+      <p>Raw, licensed content shot for your brand — not posted on my grid. Ideal for paid media and performance creative.</p>
+      <a href="mailto:hello@lexilucks.com?subject=UGC%20Inquiry" class="btn" data-analytics-event="brand_inquiry_click" data-analytics-label="Shop UGC Rate Card">Request Rate Card</a>
+    </div>
+    <div class="card">
+      <h3>Partnership Ads</h3>
+      <p>Run content as Partnership Ads from @lexilucksofficial. Usage fees scale with duration and spend.</p>
+      <a href="https://ig.me/u/lexilucksofficial/cp/_1VMH0XbK/" target="_blank" rel="noopener" class="btn" data-analytics-event="brand_inquiry_click" data-analytics-label="Instagram Collab Invite">DM Collab Invite</a>
+    </div>
+  </div>
+</section>
+
+<!-- 3. AFFILIATES & REFERRALS -->
+
+<section>
+  <div class="section-head">
+    <div class="num">03 — Travel & Affiliate Codes</div>
+    <h2>Referral Links</h2>
+    <p>Tools, stays, and platforms I actually use. Using these supports the work.</p>
+  </div>
+  <div class="grid-3">
+    <a href="https://www.airbnb.com/rp/lexib4318?p=experience" target="_blank" rel="noopener sponsored" class="tile" data-analytics-event="merch_click" data-analytics-label="Affiliate tile">
+      <span class="label">Travel</span>
+      <h4>Airbnb Experiences</h4>
+      <p>Sign up through my referral and unlock travel credit on your first stay or experience.</p>
+      <span class="arrow">Claim Credit →</span>
+    </a>
+    <a href="mailto:hello@lexilucks.com?subject=LTK%20Link%20Request" class="tile" data-note="LTK URL pending" data-analytics-event="merch_click" data-analytics-label="LTK request">
+      <span class="label">Fashion</span>
+      <h4>LTK</h4>
+      <p>Outfit links from my grid, pageant looks, and press day fits.</p>
+      <span class="arrow">Request Link →</span>
+    </a>
+    <a href="mailto:hello@lexilucks.com?subject=ShopMy%20Link%20Request" class="tile" data-note="ShopMy URL pending" data-analytics-event="merch_click" data-analytics-label="ShopMy request">
+      <span class="label">Beauty</span>
+      <h4>ShopMy</h4>
+      <p>My beauty, skincare, and wellness rotation with exclusive codes.</p>
+      <span class="arrow">Request Link →</span>
+    </a>
+  </div>
+</section>
+
+<!-- 4. MERCH -->
+
+<section>
+  <div class="section-head">
+    <div class="num">04 — Wear It</div>
+    <h2>Official Merch</h2>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Streamlabs Store</h3>
+      <p>Tees, hoodies, and drops designed for the stream community.</p>
+      <a href="https://streamlabs.com/lexilucks/merch" target="_blank" rel="noopener" class="btn" data-analytics-event="merch_click" data-analytics-label="Streamlabs merch">Shop Streamlabs →</a>
+    </div>
+    <div class="card">
+      <h3>TikTok Shop</h3>
+      <p>Exclusive drops available only through TikTok.</p>
+      <a href="https://www.tiktok.com/@lexilucksofficial" target="_blank" rel="noopener" class="btn" data-analytics-event="merch_click" data-analytics-label="TikTok shop">Shop TikTok →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. PATREON SOFT CTA -->
+
+<section>
+  <div class="section-head">
+    <div class="num">05 — Inner Circle</div>
+    <h2>Join Patreon</h2>
+    <p>Star $5 · Gold $15 · Crown $50 — behind-the-scenes, exclusive content, and members-first updates.</p>
+  </div>
+  <div style="text-align:center">
+    <a href="https://patreon.com/lexilucks" target="_blank" rel="noopener" class="btn btn-solid" data-analytics-event="patreon_tier_click" data-analytics-label="Shop page Patreon">Become a Patron →</a>
+  </div>
+
+  <div class="disclosure">
+    <strong>DISCLOSURE</strong><br>
+    This page contains affiliate and referral links. As an Amazon Associate and partner of Airbnb, LTK, ShopMy, and other programs, I may earn a commission from qualifying purchases and sign-ups at no additional cost to you. Thank you for supporting independent creator work.
+  </div>
+</section>
+
+<footer>
+  © 2026 LEXI LUCKS · <a href="/">lexilucks.com</a>
+</footer>
+
+  <script src="src/lib/analytics.js" defer></script>
+  <script src="src/lib/lead-capture.js" defer></script>
+  <script src="src/lib/site-enhancements.js" defer></script>
+  <script src="lexi-concierge.js" defer></script>
+</body>
+</html>

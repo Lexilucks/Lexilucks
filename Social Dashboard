@@ -1,0 +1,1208 @@
+cat > /home/claude/social-dashboard/public/index.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lexi Publish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06060e;--s1:#0d0d1a;--s2:#13132  0;--s3:#1c1c2e;--s4:#252538;
+  --b:#ffffff0d;--bh:#ffffff1a;--b2:#ffffff26;
+  --txt:#f0efff;--sub:#9898c0;--dim:#5a5a80;
+  --rose:#ff4d8d;--violet:#8b5cf6;--cyan:#22d3ee;--amber:#f59e0b;--green:#10b981;--red:#ef4444;
+  --grad:linear-gradient(135deg,#8b5cf6,#ff4d8d);
+  --grad2:linear-gradient(135deg,#22d3ee,#8b5cf6);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 10% 0%,#8b5cf620,transparent 50%),radial-gradient(ellipse 50% 35% at 90% 100%,#ff4d8d18,transparent 50%),radial-gradient(ellipse 40% 30% at 50% 50%,#22d3ee08,transparent 60%);pointer-events:none;z-index:0}
+
+/* ── LAYOUT ── */
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh;position:relative;z-index:1}
+@media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+/* ── SIDEBAR NAV ── */
+.sidenav{background:var(--s1);border-right:1px solid var(--b);display:flex;flex-direction:column;padding:0 0 24px;position:sticky;top:0;height:100vh;overflow-y:auto}
+@media(max-width:900px){.sidenav{display:none}}
+.brand{padding:28px 20px 24px;border-bottom:1px solid var(--b)}
+.brand-mark{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.brand-sub{font-size:10px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+.nav-section{padding:16px 12px 8px}
+.nav-label{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:0 8px;margin-bottom:4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--sub);transition:.15s;border:none;background:none;width:100%;text-align:left}
+.nav-item:hover{color:var(--txt);background:var(--b)}
+.nav-item.active{color:var(--txt);background:var(--s3)}
+.nav-item.active .nav-dot{background:var(--rose)}
+.nav-icon{width:16px;text-align:center;font-size:14px;flex-shrink:0}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:var(--dim);margin-left:auto;flex-shrink:0}
+.platform-status{padding:16px 20px;margin-top:auto;border-top:1px solid var(--b)}
+.ps-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.ps-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;color:var(--sub)}
+.ps-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:var(--dim)}
+.ps-dot.on{background:var(--green)}
+
+/* ── MAIN CONTENT ── */
+.main{flex:1;overflow-y:auto}
+.page{display:none;padding:32px 32px 80px;max-width:1100px;animation:fadeIn .2s ease}
+.page.active{display:block}
+@media(max-width:600px){.page{padding:20px 16px 80px}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MOBILE TOP BAR ── */
+.topbar{display:none;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--b);background:var(--s1);position:sticky;top:0;z-index:50}
+@media(max-width:900px){.topbar{display:flex}}
+.topbar-brand{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hamburger{background:none;border:none;color:var(--txt);font-size:20px;cursor:pointer;padding:4px}
+.mobile-nav{display:none;position:fixed;inset:0;background:#000000ee;z-index:200;flex-direction:column}
+.mobile-nav.open{display:flex}
+.mobile-nav-inner{background:var(--s1);width:260px;height:100%;padding:24px 16px;overflow-y:auto}
+.mobile-nav-close{background:none;border:none;color:var(--txt);font-size:20px;cursor:pointer;margin-bottom:16px}
+
+/* ── PAGE HEADERS ── */
+.page-header{margin-bottom:32px}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:1.5px;line-height:1;margin-bottom:4px}
+.page-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.page-sub{font-size:13px;color:var(--sub)}
+
+/* ── CARDS ── */
+.card{background:var(--s1);border:1px solid var(--b);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:var(--bh)}
+.card-head{padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.card-body{padding:16px 20px 20px}
+
+/* ── GRID LAYOUTS ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-compose{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+@media(max-width:900px){.grid-2,.grid-3,.grid-compose{grid-template-columns:1fr}}
+
+/* ── FORMS ── */
+textarea,input[type=text],input[type=datetime-local],input[type=url],select{width:100%;background:var(--s2);border:1px solid var(--b);border-radius:9px;padding:11px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--txt);transition:border-color .2s;outline:none}
+textarea{min-height:140px;resize:vertical;line-height:1.6}
+textarea:focus,input:focus,select:focus{border-color:var(--violet);box-shadow:0 0 0 3px #8b5cf618}
+textarea::placeholder,input::placeholder{color:var(--dim)}
+select option{background:var(--s2)}
+.form-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--sub);margin-bottom:7px;display:block}
+.char-count{font-size:11px;color:var(--dim);text-align:right;margin-top:4px}
+.char-count.warn{color:var(--amber)}.char-count.over{color:var(--red)}
+.input-row{margin-bottom:16px}
+
+/* ── PLATFORM GRID ── */
+.plt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.plt-card{display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:10px;border:1px solid var(--b);background:var(--s2);cursor:pointer;transition:all .15s;user-select:none}
+.plt-card:hover{border-color:var(--bh)}
+.plt-card.sel{border-color:var(--violet);background:#8b5cf610}
+.plt-card.dead{opacity:.35;cursor:not-allowed}
+.plt-card.live .plt-indicator{background:var(--green)}
+.plt-icon{font-size:18px;width:24px;text-align:center}
+.plt-name{font-size:12px;font-weight:600;flex:1;color:var(--txt)}
+.plt-indicator{width:5px;height:5px;border-radius:50%;background:var(--dim);flex-shrink:0}
+
+/* ── POST TYPE TABS ── */
+.type-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.type-pill{padding:5px 14px;border-radius:100px;font-size:12px;font-weight:600;border:1px solid var(--b);background:var(--s2);color:var(--sub);cursor:pointer;transition:.15s}
+.type-pill:hover{color:var(--txt)}
+.type-pill.active{background:var(--violet);border-color:var(--violet);color:#fff}
+
+/* ── MEDIA DROP ── */
+.media-zone{border:1.5px dashed var(--b);border-radius:10px;padding:28px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--s2);margin-bottom:12px}
+.media-zone:hover,.media-zone.over{border-color:var(--violet);background:#8b5cf608}
+.media-zone.loaded{border-style:solid;border-color:var(--green);background:#10b98108}
+.mz-icon{font-size:30px;margin-bottom:8px}
+.mz-hint{font-size:12px;color:var(--sub)}.mz-hint strong{color:var(--txt)}
+.mz-preview{display:none;flex-direction:column;align-items:center;gap:6px}
+.mz-preview.show{display:flex}
+.mz-thumb{max-width:100%;max-height:110px;border-radius:7px;object-fit:cover}
+.mz-rm{font-size:11px;color:var(--red);cursor:pointer;margin-top:2px}
+#file-in{display:none}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 18px;border-radius:9px;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;letter-spacing:.01em}
+.btn-grad{background:var(--grad);color:#fff;box-shadow:0 4px 20px #8b5cf640;width:100%;padding:14px;font-size:14px}
+.btn-grad:hover{transform:translateY(-1px);box-shadow:0 6px 28px #8b5cf660}
+.btn-grad:active{transform:translateY(0)}
+.btn-grad:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-outline{background:none;border:1px solid var(--b);color:var(--sub)}
+.btn-outline:hover{border-color:var(--bh);color:var(--txt)}
+.btn-ghost{background:var(--s2);border:1px solid var(--b);color:var(--txt)}
+.btn-ghost:hover{border-color:var(--bh)}
+.btn-violet{background:#8b5cf620;border:1px solid #8b5cf640;color:var(--violet)}
+.btn-violet:hover{background:#8b5cf630}
+.btn-rose{background:#ff4d8d18;border:1px solid #ff4d8d33;color:var(--rose)}
+.btn-rose:hover{background:#ff4d8d25}
+.btn-danger{background:#ef444415;border:1px solid #ef444430;color:var(--red)}
+.btn-danger:hover{background:#ef444422}
+.btn-sm{padding:6px 12px;font-size:11px;border-radius:7px}
+.btn-full{width:100%}
+.btn-row{display:flex;gap:8px}
+
+/* ── INLINE TABS ── */
+.itabs{display:flex;background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:3px;margin-bottom:20px}
+.itab{flex:1;padding:8px;border:none;background:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:600;color:var(--sub);border-radius:8px;transition:.15s}
+.itab.active{background:var(--s4);color:var(--txt)}
+.itab-content{display:none}.itab-content.active{display:block}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+@media(max-width:700px){.stat-row{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--s1);border:1px solid var(--b);border-radius:12px;padding:16px}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;line-height:1}
+.stat-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-top:3px}
+.stat-card.rose .stat-num{color:var(--rose)}
+.stat-card.violet .stat-num{color:var(--violet)}
+.stat-card.cyan .stat-num{color:var(--cyan)}
+.stat-card.green .stat-num{color:var(--green)}
+
+/* ── QUEUE ITEMS ── */
+.q-item{background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:14px 16px;margin-bottom:8px;transition:border-color .15s}
+.q-item:hover{border-color:var(--bh)}
+.q-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.q-time{font-size:11px;color:var(--violet);font-weight:600;flex-shrink:0}
+.q-plats{display:flex;gap:4px;flex-wrap:wrap}
+.q-tag{font-size:10px;padding:2px 7px;border-radius:100px;background:var(--s3);color:var(--sub);font-weight:500}
+.q-caption{font-size:13px;color:var(--txt);margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.q-footer{display:flex;align-items:center;gap:8px}
+.q-badge{font-size:10px;font-weight:600;padding:3px 9px;border-radius:100px;letter-spacing:.03em}
+.q-badge.scheduled{background:#8b5cf618;color:var(--violet)}
+.q-badge.published{background:#10b98118;color:var(--green)}
+.q-badge.failed{background:#ef444418;color:var(--red)}
+.q-badge.cancelled{background:var(--s3);color:var(--dim)}
+.q-badge.publishing{background:#f59e0b18;color:var(--amber)}
+
+/* ── CALENDAR ── */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-month{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-dow{text-align:center;font-size:10px;font-weight:600;color:var(--dim);padding:4px 0;letter-spacing:.06em;text-transform:uppercase}
+.cal-day{min-height:64px;background:var(--s2);border:1px solid var(--b);border-radius:7px;padding:6px;cursor:pointer;transition:.15s}
+.cal-day:hover{border-color:var(--bh)}
+.cal-day.today{border-color:var(--violet)}
+.cal-day.other-month{opacity:.3}
+.cal-day-num{font-size:11px;font-weight:600;color:var(--sub);margin-bottom:3px}
+.cal-day.today .cal-day-num{color:var(--violet)}
+.cal-post-dot{font-size:9px;background:var(--violet);border-radius:3px;padding:1px 4px;color:#fff;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal-post-dot.published{background:var(--green)}
+.cal-post-dot.failed{background:var(--red)}
+
+/* ── MEDIA LIBRARY ── */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.media-item{position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--b);aspect-ratio:1;background:var(--s2);cursor:pointer}
+.media-thumb{width:100%;height:100%;object-fit:cover}
+.media-overlay{position:absolute;inset:0;background:#000000aa;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s}
+.media-item:hover .media-overlay{opacity:1}
+.media-filename{position:absolute;bottom:0;left:0;right:0;padding:4px 6px;background:#000000cc;font-size:9px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.media-no-thumb{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;font-size:24px;gap:4px}
+.media-no-thumb span{font-size:9px;color:var(--dim)}
+
+/* ── HASHTAG SETS ── */
+.tag-set{background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:14px;margin-bottom:10px}
+.tag-set-name{font-size:13px;font-weight:600;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.tag-chips{display:flex;flex-wrap:wrap;gap:4px}
+.tag-chip{font-size:11px;padding:3px 8px;border-radius:100px;background:var(--s3);color:var(--cyan)}
+
+/* ── HISTORY ── */
+.hist-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--b)}
+.hist-item:last-child{border-bottom:none}
+.hist-time{font-size:10px;color:var(--dim);flex-shrink:0;width:80px;padding-top:2px}
+.hist-body{flex:1}
+.hist-caption{font-size:13px;color:var(--txt);margin-bottom:6px;line-height:1.5}
+.hist-results{display:flex;gap:6px;flex-wrap:wrap}
+.hist-result{font-size:10px;padding:2px 8px;border-radius:100px}
+.hist-result.ok{background:#10b98118;color:var(--green)}
+.hist-result.fail{background:#ef444418;color:var(--red)}
+
+/* ── VOICE PROFILE ── */
+.voice-card{background:linear-gradient(135deg,#8b5cf608,#ff4d8d08);border:1px solid var(--b);border-radius:14px;padding:20px}
+
+/* ── BEST TIMES ── */
+.bt-platform{margin-bottom:20px}
+.bt-name{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.bt-pills{display:flex;gap:6px;flex-wrap:wrap}
+.bt-pill{background:var(--s3);border:1px solid var(--b);border-radius:7px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--cyan)}
+.bt-note{font-size:11px;color:var(--dim);margin-top:6px}
+
+/* ── ANALYTICS ── */
+.analytics-platform{background:var(--s2);border:1px solid var(--b);border-radius:12px;padding:16px;margin-bottom:12px}
+.ap-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ap-icon{font-size:22px}
+.ap-name{font-size:14px;font-weight:600}
+.ap-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;margin-left:auto}
+.ap-badge.connected{background:#10b98118;color:var(--green)}
+.ap-badge.disconnected{background:var(--s3);color:var(--dim)}
+.ap-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:10px}
+.ap-stat{text-align:center}
+.ap-stat-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--txt)}
+.ap-stat-lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;z-index:999;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;background:var(--s2);border:1px solid var(--b);box-shadow:0 8px 40px #000000bb;transform:translateY(16px);opacity:0;transition:all .25s;pointer-events:none;max-width:300px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:var(--green);color:var(--green)}
+.toast.error{border-color:var(--red);color:var(--red)}
+.toast.info{border-color:var(--violet);color:var(--violet)}
+
+/* ── MODAL ── */
+.modal-bg{position:fixed;inset:0;background:#000000cc;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--b);border-radius:16px;padding:24px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;margin-bottom:16px}
+
+/* ── SPINNER ── */
+.spin{width:15px;height:15px;border:2px solid #ffffff22;border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ── MISC ── */
+hr{border:none;border-top:1px solid var(--b);margin:16px 0}
+.empty-state{text-align:center;padding:40px 20px;color:var(--dim);font-size:13px}
+.empty-state .es-icon{font-size:36px;margin-bottom:8px}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--dim);font-size:15px;padding:3px;transition:.15s;line-height:1}
+.icon-btn:hover{color:var(--txt)}
+.result-item{display:flex;gap:10px;padding:10px 12px;border-radius:8px;background:var(--s2);margin-bottom:7px;font-size:12px;border-left:2px solid var(--dim)}
+.result-item.ok{border-left-color:var(--green)}
+.result-item.fail{border-left-color:var(--red)}
+.result-link{color:var(--violet);text-decoration:none;font-size:11px;display:block;margin-top:3px}
+.result-link:hover{text-decoration:underline}
+.draft-item{background:var(--s2);border:1px solid var(--b);border-radius:10px;padding:14px;margin-bottom:8px;cursor:pointer;transition:.15s}
+.draft-item:hover{border-color:var(--bh)}
+.draft-caption{font-size:13px;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px}
+.draft-meta{font-size:10px;color:var(--dim)}
+.setup-banner{background:linear-gradient(135deg,#f59e0b10,#ff4d8d10);border:1px solid #f59e0b30;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:12px;color:var(--amber);display:none}
+.setup-banner.show{display:block}
+.setup-banner a{color:var(--amber)}
+</style>
+</head>
+<body>
+
+<!-- Mobile top bar -->
+<div class="topbar">
+  <div class="topbar-brand">LEXI PUBLISH</div>
+  <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+</div>
+
+<!-- Mobile nav overlay -->
+<div class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-inner">
+    <button class="mobile-nav-close" onclick="toggleMobileNav()">✕ Close</button>
+    <div id="mobile-nav-items"></div>
+  </div>
+</div>
+
+<div class="shell">
+  <!-- Sidebar -->
+  <nav class="sidenav">
+    <div class="brand">
+      <div class="brand-mark">LEXI PUBLISH</div>
+      <div class="brand-sub">Social Command Center</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Create</div>
+      <button class="nav-item active" onclick="nav('compose')"><span class="nav-icon">✍️</span>Compose<span class="nav-dot"></span></button>
+      <button class="nav-item" onclick="nav('media')"><span class="nav-icon">🗂</span>Media Library<span class="nav-dot"></span></button>
+      <button class="nav-item" onclick="nav('drafts')"><span class="nav-icon">📝</span>Drafts<span class="nav-dot"></span></button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Manage</div>
+      <button class="nav-item" onclick="nav('queue')"><span class="nav-icon">📅</span>Queue<span class="nav-dot"></span></button>
+      <button class="nav-item" onclick="nav('calendar')"><span class="nav-icon">🗓</span>Calendar<span class="nav-dot"></span></button>
+      <button class="nav-item" onclick="nav('history')"><span class="nav-icon">📬</span>History<span class="nav-dot"></span></button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Insights</div>
+      <button class="nav-item" onclick="nav('analytics')"><span class="nav-icon">📊</span>Analytics<span class="nav-dot"></span></button>
+      <button class="nav-item" onclick="nav('best-times')"><span class="nav-icon">⏰</span>Best Times<span class="nav-dot"></span></button>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Settings</div>
+      <button class="nav-item" onclick="nav('hashtags')"><span class="nav-icon">#</span>Hashtag Sets<span class="nav-dot"></span></button>
+      <button class="nav-item" onclick="nav('templates')"><span class="nav-icon">📋</span>Templates<span class="nav-dot"></span></button>
+      <button class="nav-item" onclick="nav('voice')"><span class="nav-icon">🎙</span>Voice Profile<span class="nav-dot"></span></button>
+    </div>
+    <div class="platform-status">
+      <div class="ps-title">Platforms</div>
+      <div id="nav-platform-status"></div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- ═══ COMPOSE ═══════════════════════════════════════════════════════════ -->
+    <div class="page active" id="page-compose">
+      <div class="page-header">
+        <div class="page-title">New <span>Post</span></div>
+        <div class="page-sub">Write once, publish everywhere</div>
+      </div>
+
+      <div id="setup-banner" class="setup-banner">
+        ⚠️ Some platforms still need API tokens — <a onclick="nav('voice')">check platform status</a>
+      </div>
+
+      <div class="grid-compose">
+        <!-- LEFT: Composer -->
+        <div>
+          <div class="card">
+            <div class="itabs">
+              <button class="itab active" onclick="cTab('write',this)">✍️ Write</button>
+              <button class="itab" onclick="cTab('ai',this)">✨ AI Caption</button>
+              <button class="itab" onclick="cTab('results',this)">📡 Results</button>
+            </div>
+
+            <!-- WRITE -->
+            <div class="itab-content active" id="ct-write">
+              <div class="form-label">Post to</div>
+              <div class="plt-grid" id="plt-grid"></div>
+
+              <div class="form-label">Content type</div>
+              <div class="type-pills" id="type-pills">
+                <button class="type-pill active" onclick="setType('feed',this)">📷 Feed</button>
+                <button class="type-pill" onclick="setType('reel',this)">🎬 Reel</button>
+                <button class="type-pill" onclick="setType('carousel',this)">🗂 Carousel</button>
+                <button class="type-pill" onclick="setType('story',this)">⭕ Story</button>
+                <button class="type-pill" onclick="setType('video',this)">📹 Video</button>
+              </div>
+
+              <div class="input-row">
+                <label class="form-label">Caption</label>
+                <textarea id="caption" placeholder="What's the vibe? Drop your caption here...&#10;&#10;Or hit the AI tab for generated options ✨"></textarea>
+                <div class="char-count" id="char-count">0 / 280</div>
+              </div>
+
+              <div class="input-row">
+                <label class="form-label">Media — drag & drop or click</label>
+                <div class="media-zone" id="mz" onclick="document.getElementById('file-in').click()">
+                  <div id="mz-def"><div class="mz-icon">🎬</div><div class="mz-hint"><strong>Drop file</strong> or click to browse</div><div class="mz-hint" style="margin-top:3px;font-size:10px">JPG PNG MP4 MOV · 8MB max for Discord</div></div>
+                  <div class="mz-preview" id="mz-prev"><img class="mz-thumb" id="mz-img" src="" alt=""><div id="mz-name" style="font-size:11px;color:var(--sub)"></div><div class="mz-rm" onclick="rmMedia(event)">✕ Remove</div></div>
+                </div>
+                <input type="file" id="file-in" accept="image/*,video/*">
+              </div>
+
+              <div class="input-row">
+                <label class="form-label">Or paste media URL (for IG/TikTok CDN links)</label>
+                <input type="url" id="media-url" placeholder="https://your-cdn.com/video.mp4">
+              </div>
+
+              <div class="btn-row" style="margin-bottom:0">
+                <button class="btn btn-grad" id="pub-btn" onclick="publish()" style="flex:3">🚀 Publish Now</button>
+                <button class="btn btn-ghost" onclick="openScheduler()" style="flex:2">📅 Schedule</button>
+                <button class="btn btn-outline btn-sm" onclick="saveDraft()" title="Save draft">💾</button>
+              </div>
+            </div>
+
+            <!-- AI CAPTIONS -->
+            <div class="itab-content" id="ct-ai">
+              <div class="input-row">
+                <label class="form-label">Describe your content</label>
+                <input type="text" id="brief" placeholder="e.g. beach vlog with chaotic energy, showing new fit, vibes only...">
+              </div>
+              <div class="grid-2" style="gap:10px;margin-bottom:12px">
+                <div>
+                  <label class="form-label">Tone</label>
+                  <select id="tone">
+                    <option value="">Default (Lexi voice)</option>
+                    <option value="extra funny">Extra funny 😂</option>
+                    <option value="hype energy">Hype ⚡</option>
+                    <option value="chill and lowkey">Chill & lowkey</option>
+                    <option value="mysterious">Mysterious</option>
+                    <option value="no hashtags">No hashtags</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label">Variations</label>
+                  <select id="cap-count">
+                    <option value="1">1 per platform</option>
+                    <option value="3">3 per platform</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-violet btn-full" id="gen-btn" onclick="genCaptions()" style="margin-bottom:16px">✨ Generate Captions</button>
+              <div id="ai-out"></div>
+              <div id="ai-hint" class="empty-state" style="padding:20px 0"><div class="es-icon">✨</div>Generate captions above, click one to use it</div>
+            </div>
+
+            <!-- RESULTS -->
+            <div class="itab-content" id="ct-results">
+              <div id="results-out"><div class="empty-state"><div class="es-icon">📡</div>No posts yet — publish something!</div></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT: Sidebar widgets -->
+        <div>
+          <!-- Platform status -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-head"><div class="card-title">Platform Status</div><button class="icon-btn" onclick="refreshStatus()">↻</button></div>
+            <div class="card-body" id="compose-status"></div>
+          </div>
+
+          <!-- Queue stats mini -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-head"><div class="card-title">Queue</div><button class="icon-btn" onclick="nav('queue')">→</button></div>
+            <div class="card-body" id="compose-queue"></div>
+          </div>
+
+          <!-- Hashtag sets quick insert -->
+          <div class="card">
+            <div class="card-head"><div class="card-title">Hashtag Sets</div><button class="icon-btn" onclick="nav('hashtags')">+</button></div>
+            <div class="card-body" id="compose-hashtags"><div style="color:var(--dim);font-size:12px">No hashtag sets saved yet</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MEDIA LIBRARY ════════════════════════════════════════════════════ -->
+    <div class="page" id="page-media">
+      <div class="page-header">
+        <div class="page-title">Media <span>Library</span></div>
+        <div class="page-sub">All your uploaded assets in one place</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+        <label class="btn btn-violet" style="cursor:pointer">📁 Upload File<input type="file" accept="image/*,video/*" style="display:none" onchange="uploadMedia(this)"></label>
+      </div>
+      <div class="media-grid" id="media-grid"><div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🗂</div>No media uploaded yet</div></div>
+    </div>
+
+    <!-- ═══ DRAFTS ═══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-drafts">
+      <div class="page-header">
+        <div class="page-title">Your <span>Drafts</span></div>
+        <div class="page-sub">Saved work in progress</div>
+      </div>
+      <div id="drafts-list"><div class="empty-state"><div class="es-icon">📝</div>No drafts saved yet — hit 💾 in Compose to save one</div></div>
+    </div>
+
+    <!-- ═══ QUEUE ════════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-queue">
+      <div class="page-header">
+        <div class="page-title">Post <span>Queue</span></div>
+        <div class="page-sub">30-day scheduled publishing pipeline</div>
+      </div>
+      <div class="stat-row" id="queue-stat-row"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+        <button class="type-pill active" onclick="filterQ(null,this)">All</button>
+        <button class="type-pill" onclick="filterQ('scheduled',this)">Scheduled</button>
+        <button class="type-pill" onclick="filterQ('published',this)">Published</button>
+        <button class="type-pill" onclick="filterQ('failed',this)">Failed</button>
+      </div>
+      <div id="queue-list"><div class="empty-state"><div class="es-icon">📅</div>Queue is empty — schedule something!</div></div>
+    </div>
+
+    <!-- ═══ CALENDAR ═════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-calendar">
+      <div class="page-header">
+        <div class="page-title">Content <span>Calendar</span></div>
+        <div class="page-sub">30-day publishing overview</div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="cal-header">
+            <button class="btn btn-outline btn-sm" onclick="calNav(-1)">←</button>
+            <div class="cal-month" id="cal-month-label"></div>
+            <button class="btn btn-outline btn-sm" onclick="calNav(1)">→</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ HISTORY ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-history">
+      <div class="page-header">
+        <div class="page-title">Post <span>History</span></div>
+        <div class="page-sub">Everything you've published</div>
+      </div>
+      <div class="card">
+        <div class="card-body" id="history-list"><div class="empty-state"><div class="es-icon">📬</div>No posts yet</div></div>
+      </div>
+    </div>
+
+    <!-- ═══ ANALYTICS ════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-analytics">
+      <div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div><div class="page-title">Analytics <span>Dashboard</span></div><div class="page-sub">Live stats from all connected platforms</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="loadAnalytics()">↻ Refresh</button>
+      </div>
+      <div class="stat-row" id="analytics-summary"></div>
+      <div id="analytics-platforms"></div>
+    </div>
+
+    <!-- ═══ BEST TIMES ════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-best-times">
+      <div class="page-header">
+        <div class="page-title">Best <span>Times</span></div>
+        <div class="page-sub">Optimal posting windows per platform</div>
+      </div>
+      <div class="grid-2" id="best-times-grid"></div>
+    </div>
+
+    <!-- ═══ HASHTAG SETS ══════════════════════════════════════════════════════ -->
+    <div class="page" id="page-hashtags">
+      <div class="page-header">
+        <div class="page-title">Hashtag <span>Sets</span></div>
+        <div class="page-sub">Save and reuse your hashtag groups</div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head"><div class="card-title">New Set</div></div>
+        <div class="card-body">
+          <div class="input-row"><label class="form-label">Set Name</label><input type="text" id="ht-name" placeholder="e.g. Fitness, Travel, General"></div>
+          <div class="input-row"><label class="form-label">Hashtags (space or comma separated)</label><textarea id="ht-tags" placeholder="#fitness #workout #gym #gains..." style="min-height:80px"></textarea></div>
+          <button class="btn btn-violet btn-full" onclick="saveHashtagSet()">Save Set</button>
+        </div>
+      </div>
+      <div id="hashtag-sets-list"></div>
+    </div>
+
+    <!-- ═══ TEMPLATES ═════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-templates">
+      <div class="page-header">
+        <div class="page-title">Caption <span>Templates</span></div>
+        <div class="page-sub">Reusable caption formats in your voice</div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head"><div class="card-title">New Template</div></div>
+        <div class="card-body">
+          <div class="input-row"><label class="form-label">Template Name</label><input type="text" id="tpl-name" placeholder="e.g. New Video Drop, Collab Announcement"></div>
+          <div class="input-row"><label class="form-label">Caption Template</label><textarea id="tpl-body" placeholder="Use [TOPIC], [LINK], [COLLAB] as placeholders..." style="min-height:100px"></textarea></div>
+          <div class="input-row"><label class="form-label">Platform</label><select id="tpl-platform"><option value="all">All platforms</option><option value="twitter">Twitter/X</option><option value="tiktok">TikTok</option><option value="instagram">Instagram</option><option value="discord">Discord</option><option value="onlyfans">OnlyFans</option></select></div>
+          <button class="btn btn-violet btn-full" onclick="saveTemplate()">Save Template</button>
+        </div>
+      </div>
+      <div id="templates-list"></div>
+    </div>
+
+    <!-- ═══ VOICE PROFILE ═════════════════════════════════════════════════════ -->
+    <div class="page" id="page-voice">
+      <div class="page-header">
+        <div class="page-title">Voice <span>Profile</span></div>
+        <div class="page-sub">How Claude writes your captions</div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Your Voice</div></div>
+        <div class="card-body">
+          <div class="input-row"><label class="form-label">Name</label><input type="text" id="vp-name" placeholder="Your name"></div>
+          <div class="input-row"><label class="form-label">Voice Description — Claude uses this to write in your style</label><textarea id="vp-desc" style="min-height:100px" placeholder="Describe how you talk, your tone, what to avoid..."></textarea></div>
+          <hr>
+          <div class="form-label" style="margin-bottom:12px">Per-Platform Overrides</div>
+          <div id="vp-overrides"></div>
+          <button class="btn btn-grad btn-full" onclick="saveVoice()" style="margin-top:8px">Save Voice Profile</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Schedule Modal -->
+<div class="modal-bg" id="sched-modal">
+  <div class="modal">
+    <div class="modal-title">📅 Schedule Post</div>
+    <div class="input-row"><label class="form-label">Date & Time</label><input type="datetime-local" id="sched-dt"></div>
+    <div class="input-row"><label class="form-label">Note (optional)</label><input type="text" id="sched-note" placeholder="e.g. Friday promo drop"></div>
+    <div class="btn-row">
+      <button class="btn btn-grad" onclick="schedulePost()" style="flex:2">Add to Queue</button>
+      <button class="btn btn-outline" onclick="closeModal('sched-modal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Constants ──────────────────────────────────────────────────────────────────
+const PINFO = {
+  twitter:   { icon:'𝕏',  label:'Twitter/X',  color:'#1da1f2' },
+  tiktok:    { icon:'♪',  label:'TikTok',     color:'#fe2c55' },
+  discord:   { icon:'💬', label:'Discord',    color:'#7289da' },
+  instagram: { icon:'📸', label:'Instagram',  color:'#e1306c' },
+  onlyfans:  { icon:'🔞', label:'OnlyFans',   color:'#00aff0' },
+};
+
+// ── State ──────────────────────────────────────────────────────────────────────
+let platformStatus = {};
+let selectedPlatforms = new Set();
+let mediaFile = null;
+let postType = 'feed';
+let queueFilter = null;
+let calDate = new Date();
+
+// ── Init ───────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  await refreshStatus();
+  setupDrop();
+  setupCharCount();
+  const d = new Date(Date.now()+3600000);
+  document.getElementById('sched-dt').value = d.toISOString().slice(0,16);
+  loadComposeWidgets();
+});
+
+// ── Navigation ─────────────────────────────────────────────────────────────────
+const PAGE_LOADERS = {
+  queue:       loadQueue,
+  calendar:    renderCalendar,
+  history:     loadHistory,
+  analytics:   loadAnalytics,
+  'best-times':loadBestTimes,
+  hashtags:    loadHashtagSets,
+  templates:   loadTemplates,
+  voice:       loadVoiceProfile,
+  media:       loadMediaLibrary,
+  drafts:      loadDrafts,
+};
+
+function nav(page) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active', b.getAttribute('onclick')===`nav('${page}')`));
+  if (PAGE_LOADERS[page]) PAGE_LOADERS[page]();
+  document.getElementById('mobile-nav')?.classList.remove('open');
+}
+
+function toggleMobileNav() {
+  const mn = document.getElementById('mobile-nav');
+  mn.classList.toggle('open');
+  // Populate mobile nav
+  document.getElementById('mobile-nav-items').innerHTML = document.querySelector('.sidenav').innerHTML;
+}
+
+// ── Compose tabs ──────────────────────────────────────────────────────────────
+function cTab(t, btn) {
+  ['write','ai','results'].forEach(x=>{
+    document.getElementById('ct-'+x).classList.toggle('active', x===t);
+  });
+  btn.closest('.itabs').querySelectorAll('.itab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setType(t, btn) {
+  postType = t;
+  document.querySelectorAll('.type-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Platform status ────────────────────────────────────────────────────────────
+async function refreshStatus() {
+  try {
+    const res = await fetch('/api/status');
+    platformStatus = await res.json();
+    renderPlatformUI();
+    loadComposeWidgets();
+  } catch { toast('Server not reachable','error'); }
+}
+
+function renderPlatformUI() {
+  // Main platform grid
+  const pg = document.getElementById('plt-grid');
+  if (pg) pg.innerHTML = Object.entries(PINFO).map(([p,info])=>{
+    const on=platformStatus[p], sel=selectedPlatforms.has(p);
+    return `<div class="plt-card ${on?'live':''} ${sel?'sel':''} ${!on?'dead':''}" onclick="togglePlt('${p}',${!!on})">
+      <div class="plt-icon">${info.icon}</div>
+      <div class="plt-name">${info.label}</div>
+      <div class="plt-indicator"></div>
+    </div>`;
+  }).join('');
+
+  // Sidebar compose status
+  const cs = document.getElementById('compose-status');
+  if (cs) cs.innerHTML = Object.entries(PINFO).map(([p,info])=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px">
+      <span>${info.icon}</span>
+      <span style="flex:1;color:var(--sub)">${info.label}</span>
+      <span style="font-size:10px;font-weight:600;color:${platformStatus[p]?'var(--green)':'var(--dim)'}">${platformStatus[p]?'✅':'⏳'}</span>
+    </div>`).join('');
+
+  // Sidebar nav status
+  const ns = document.getElementById('nav-platform-status');
+  if (ns) ns.innerHTML = Object.entries(PINFO).map(([p,info])=>`
+    <div class="ps-item"><div class="ps-dot ${platformStatus[p]?'on':''}"></div>${info.label}</div>`).join('');
+
+  // Setup banner
+  const anyInactive = Object.values(platformStatus).some(v=>!v);
+  const banner = document.getElementById('setup-banner');
+  if (banner) banner.classList.toggle('show', anyInactive);
+}
+
+function togglePlt(p, on) {
+  if (!on) { toast(`${PINFO[p]?.label} needs API tokens first`,'error'); return; }
+  selectedPlatforms.has(p) ? selectedPlatforms.delete(p) : selectedPlatforms.add(p);
+  renderPlatformUI();
+}
+
+// ── Load compose sidebar widgets ───────────────────────────────────────────────
+async function loadComposeWidgets() {
+  // Queue stats mini
+  try {
+    const res = await fetch('/api/queue');
+    const data = await res.json();
+    const s = data.stats;
+    const cq = document.getElementById('compose-queue');
+    if (cq) cq.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${[['Scheduled',s.scheduled,'var(--violet)'],['Published',s.published,'var(--green)']].map(([l,v,c])=>`
+          <div style="background:var(--s3);border-radius:7px;padding:10px;text-align:center">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:${c}">${v}</div>
+            <div style="font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em">${l}</div>
+          </div>`).join('')}
+      </div>`;
+  } catch {}
+
+  // Hashtag sets quick insert
+  try {
+    const sets = await fetch('/api/hashtags').then(r=>r.json());
+    const ch = document.getElementById('compose-hashtags');
+    if (ch) {
+      if (!sets.length) { ch.innerHTML = '<div style="color:var(--dim);font-size:12px">No hashtag sets — <a onclick="nav(\'hashtags\')" style="color:var(--violet);cursor:pointer">create one</a></div>'; return; }
+      ch.innerHTML = sets.map(s=>`<div class="tag-set" style="cursor:pointer" onclick="insertHashtags('${esc(s.tags)}')">
+        <div style="font-size:11px;font-weight:600;margin-bottom:4px">${esc(s.name)} <span style="font-size:9px;color:var(--dim);font-weight:400">— click to insert</span></div>
+        <div class="tag-chips">${s.tags.split(/[\s,]+/).filter(Boolean).slice(0,6).map(t=>`<span class="tag-chip">${esc(t)}</span>`).join('')}</div>
+      </div>`).join('');
+    }
+  } catch {}
+}
+
+function insertHashtags(tags) {
+  const ta = document.getElementById('caption');
+  ta.value = (ta.value.trim() + '\n\n' + tags).trim();
+  toast('Hashtags added ✓','success');
+}
+
+// ── Char count ─────────────────────────────────────────────────────────────────
+function setupCharCount() {
+  const ta = document.getElementById('caption');
+  const cc = document.getElementById('char-count');
+  if (!ta||!cc) return;
+  ta.addEventListener('input',()=>{
+    const l=ta.value.length;
+    cc.textContent=`${l} / 280`;
+    cc.className='char-count'+(l>280?' over':l>240?' warn':'');
+  });
+}
+
+// ── Media drop ─────────────────────────────────────────────────────────────────
+function setupDrop() {
+  const zone = document.getElementById('mz');
+  if (!zone) return;
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('over');if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);});
+  document.getElementById('file-in').addEventListener('change',e=>{if(e.target.files[0])handleFile(e.target.files[0]);});
+}
+
+function handleFile(f) {
+  mediaFile=f;
+  document.getElementById('mz').classList.add('loaded');
+  document.getElementById('mz-def').style.display='none';
+  const p=document.getElementById('mz-prev'); p.classList.add('show');
+  document.getElementById('mz-name').textContent=`${f.name} (${(f.size/1024/1024).toFixed(1)}MB)`;
+  const img=document.getElementById('mz-img');
+  if(f.type.startsWith('image/')){img.src=URL.createObjectURL(f);img.style.display='block';}
+  else img.style.display='none';
+}
+
+function rmMedia(e) {
+  e.stopPropagation(); mediaFile=null;
+  document.getElementById('mz').classList.remove('loaded');
+  document.getElementById('mz-def').style.display='block';
+  document.getElementById('mz-prev').classList.remove('show');
+  document.getElementById('file-in').value='';
+}
+
+// ── Publish ────────────────────────────────────────────────────────────────────
+async function publish() {
+  const caption=document.getElementById('caption').value.trim();
+  const mediaUrl=document.getElementById('media-url').value.trim();
+  const platforms=[...selectedPlatforms];
+  if(!platforms.length){toast('Select at least one platform','error');return;}
+  if(!caption&&!mediaFile&&!mediaUrl){toast('Add a caption or media','error');return;}
+  const btn=document.getElementById('pub-btn');
+  btn.disabled=true; btn.innerHTML='<div class="spin"></div> Publishing...';
+  const form=new FormData();
+  form.append('caption',caption);
+  form.append('platforms',JSON.stringify(platforms));
+  form.append('postType',postType);
+  if(mediaUrl)form.append('mediaUrl',mediaUrl);
+  if(mediaFile)form.append('media',mediaFile);
+  try {
+    const res=await fetch('/api/publish',{method:'POST',body:form});
+    const data=await res.json();
+    if(!res.ok){toast(data.error||'Publish failed','error');}
+    else{toast('Published! 🎉','success');renderResults(data);cTab('results',document.querySelector('.itab:last-child'));}
+  } catch(e){toast('Network error: '+e.message,'error');}
+  finally{btn.disabled=false;btn.innerHTML='🚀 Publish Now';}
+}
+
+// ── Schedule ───────────────────────────────────────────────────────────────────
+function openScheduler() {
+  if(![...selectedPlatforms].length){toast('Select platforms first','error');return;}
+  if(!document.getElementById('caption').value.trim()){toast('Add a caption first','error');return;}
+  document.getElementById('sched-modal').classList.add('open');
+}
+
+async function schedulePost() {
+  const caption=document.getElementById('caption').value.trim();
+  const mediaUrl=document.getElementById('media-url').value.trim();
+  const platforms=[...selectedPlatforms];
+  const scheduleTime=new Date(document.getElementById('sched-dt').value).toISOString();
+  const note=document.getElementById('sched-note').value.trim();
+  const form=new FormData();
+  form.append('caption',caption); form.append('platforms',JSON.stringify(platforms));
+  form.append('postType',postType); form.append('scheduleTime',scheduleTime);
+  if(mediaUrl)form.append('mediaUrl',mediaUrl);
+  if(mediaFile)form.append('media',mediaFile);
+  if(note)form.append('note',note);
+  try {
+    const res=await fetch('/api/schedule',{method:'POST',body:form});
+    const data=await res.json();
+    if(!res.ok){toast(data.error||'Schedule failed','error');}
+    else{toast('Scheduled! 📅','success');closeModal('sched-modal');document.getElementById('caption').value='';loadComposeWidgets();}
+  } catch(e){toast('Error: '+e.message,'error');}
+}
+
+// ── Draft ──────────────────────────────────────────────────────────────────────
+async function saveDraft() {
+  const caption=document.getElementById('caption').value.trim();
+  if(!caption){toast('Nothing to save','error');return;}
+  await fetch('/api/drafts',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({caption,platforms:[...selectedPlatforms],postType,mediaUrl:document.getElementById('media-url').value})});
+  toast('Draft saved 💾','success');
+}
+
+async function loadDrafts() {
+  const res=await fetch('/api/drafts');
+  const draftsData=await res.json();
+  const el=document.getElementById('drafts-list');
+  if(!draftsData.length){el.innerHTML='<div class="empty-state"><div class="es-icon">📝</div>No drafts yet</div>';return;}
+  el.innerHTML=draftsData.map(d=>`<div class="draft-item" onclick="loadDraft('${d.id}')">
+    <div class="draft-caption">${esc(d.caption||'(no caption)')}</div>
+    <div class="draft-meta">${new Date(d.updatedAt).toLocaleString()} · ${(d.platforms||[]).join(', ')||'no platforms'}</div>
+    <div style="margin-top:6px"><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();delDraft('${d.id}')">Delete</button></div>
+  </div>`).join('');
+}
+
+async function loadDraft(id) {
+  const res=await fetch('/api/drafts');
+  const all=await res.json();
+  const d=all.find(x=>x.id===id);
+  if(!d)return;
+  document.getElementById('caption').value=d.caption||'';
+  document.getElementById('media-url').value=d.mediaUrl||'';
+  selectedPlatforms=new Set(d.platforms||[]);
+  renderPlatformUI();
+  nav('compose');
+  toast('Draft loaded ✓','success');
+}
+
+async function delDraft(id) {
+  await fetch(`/api/drafts/${id}`,{method:'DELETE'});
+  loadDrafts();
+  toast('Draft deleted','info');
+}
+
+// ── Results ────────────────────────────────────────────────────────────────────
+function renderResults(data) {
+  const el=document.getElementById('results-out');
+  const ts=new Date(data.timestamp).toLocaleString();
+  let html=`<div style="font-size:10px;color:var(--dim);margin-bottom:12px">${ts}</div>`;
+  for(const [p,r] of Object.entries(data.results||{})){
+    html+=`<div class="result-item ${r.success?'ok':'fail'}">
+      <div>${r.success?'✅':'❌'}</div>
+      <div><div style="font-weight:600;font-size:13px">${PINFO[p]?.label||p}</div>
+      ${r.success&&r.postUrl?`<a href="${r.postUrl}" target="_blank" class="result-link">View post →</a>`:''}
+      ${!r.success?`<div style="color:var(--red);font-size:11px;margin-top:2px">${r.error}</div>`:''}
+      ${r.note?`<div style="color:var(--sub);font-size:11px;margin-top:2px">${r.note}</div>`:''}</div>
+    </div>`;
+  }
+  if(data.inactivePlatforms?.length)html+=`<div style="font-size:11px;color:var(--dim);margin-top:6px">Skipped: ${data.inactivePlatforms.join(', ')}</div>`;
+  el.innerHTML=html;
+}
+
+// ── AI Captions ────────────────────────────────────────────────────────────────
+async function genCaptions() {
+  const brief=document.getElementById('brief').value.trim();
+  const tone=document.getElementById('tone').value;
+  const count=parseInt(document.getElementById('cap-count').value);
+  if(!brief){toast('Describe your content first','error');return;}
+  const btn=document.getElementById('gen-btn');
+  btn.innerHTML='<div class="spin" style="border-top-color:var(--violet)"></div> Generating...'; btn.disabled=true;
+  const activePlats=Object.entries(platformStatus).filter(([,v])=>v).map(([k])=>k);
+  try {
+    const res=await fetch('/api/caption',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({brief,platforms:activePlats,tone,count})});
+    const data=await res.json();
+    if(!res.ok){toast(data.error,'error');return;}
+    document.getElementById('ai-hint').style.display='none';
+    document.getElementById('ai-out').innerHTML=Object.entries(data.captions).map(([p,cap])=>{
+      const caps=Array.isArray(cap)?cap:[cap];
+      return `<div style="margin-bottom:14px">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:6px">${PINFO[p]?.icon} ${PINFO[p]?.label||p}</div>
+        ${caps.map(c=>`<div style="font-size:13px;line-height:1.5;background:var(--s2);border:1px solid var(--b);border-radius:8px;padding:10px 12px;cursor:pointer;margin-bottom:4px;transition:.15s" onmouseover="this.style.borderColor='var(--violet)'" onmouseout="this.style.borderColor='var(--b)'" onclick="useCap('${esc(c)}')">${esc(c)}</div>`).join('')}
+      </div>`;
+    }).join('');
+  } catch(e){toast('Error: '+e.message,'error');}
+  finally{btn.innerHTML='✨ Generate Captions';btn.disabled=false;}
+}
+
+function useCap(c) {
+  document.getElementById('caption').value=c;
+  cTab('write',document.querySelector('.itab'));
+  toast('Caption applied ✓','success');
+}
+
+// ── Queue ──────────────────────────────────────────────────────────────────────
+async function loadQueue() {
+  try {
+    const res=await fetch('/api/queue'+(queueFilter?`?status=${queueFilter}`:''));
+    const data=await res.json();
+    renderQueueStats(data.stats);
+    renderQueueList(data.queue);
+  } catch{document.getElementById('queue-list').innerHTML='<div class="empty-state">Failed to load</div>';}
+}
+
+function filterQ(f,btn) {
+  queueFilter=f;
+  document.querySelectorAll('#page-queue .type-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); loadQueue();
+}
+
+function renderQueueStats(s) {
+  document.getElementById('queue-stat-row').innerHTML=[
+    ['Scheduled',s.scheduled,'rose'],['Published',s.published,'green'],
+    ['Failed',s.failed,'violet'],['Total',s.total,'cyan']
+  ].map(([l,v,c])=>`<div class="stat-card ${c}"><div class="stat-num">${v}</div><div class="stat-lbl">${l}</div></div>`).join('');
+}
+
+function renderQueueList(queue) {
+  if(!queue.length){document.getElementById('queue-list').innerHTML='<div class="empty-state"><div class="es-icon">📅</div>Nothing here</div>';return;}
+  document.getElementById('queue-list').innerHTML=queue.map(e=>{
+    const t=new Date(e.scheduleTime).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+    return `<div class="q-item">
+      <div class="q-row">
+        <div class="q-time">📅 ${t}</div>
+        <div class="q-plats">${(e.platforms||[]).map(p=>`<span class="q-tag">${PINFO[p]?.label||p}</span>`).join('')}</div>
+        <span class="q-badge ${e.status}" style="margin-left:auto">${e.status}</span>
+      </div>
+      <div class="q-caption">${esc(e.caption||'(no caption)')}</div>
+      <div class="q-footer">
+        ${e.note?`<span style="font-size:10px;color:var(--dim)">${esc(e.note)}</span>`:''}
+        ${e.status==='scheduled'?`<button class="btn btn-danger btn-sm" style="margin-left:auto" onclick="cancelQ('${e.id}')">Cancel</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function cancelQ(id) {
+  if(!confirm('Cancel this post?'))return;
+  await fetch(`/api/queue/${id}`,{method:'DELETE'});
+  toast('Post cancelled','info'); loadQueue();
+}
+
+// ── Calendar ───────────────────────────────────────────────────────────────────
+async function renderCalendar() {
+  const qres=await fetch('/api/queue');
+  const {queue}=await qres.json();
+  const year=calDate.getFullYear(), month=calDate.getMonth();
+  document.getElementById('cal-month-label').textContent=calDate.toLocaleString('en-US',{month:'long',year:'numeric'});
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const today=new Date();
+  const grid=document.getElementById('cal-grid');
+  const dows=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day other-month"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const isToday=today.getDate()===d&&today.getMonth()===month&&today.getFullYear()===year;
+    const dayPosts=queue.filter(e=>{const ed=new Date(e.scheduleTime);return ed.getDate()===d&&ed.getMonth()===month&&ed.getFullYear()===year;});
+    html+=`<div class="cal-day${isToday?' today':''}">
+      <div class="cal-day-num">${d}</div>
+      ${dayPosts.slice(0,3).map(e=>`<div class="cal-post-dot ${e.status}" title="${esc(e.caption?.slice(0,40)||'')}">${e.platforms?.[0]||'•'}</div>`).join('')}
+      ${dayPosts.length>3?`<div style="font-size:9px;color:var(--dim)">+${dayPosts.length-3} more</div>`:''}
+    </div>`;
+  }
+  grid.innerHTML=html;
+}
+
+function calNav(dir) { calDate.setMonth(calDate.getMonth()+dir); renderCalendar(); }
+
+// ── History ────────────────────────────────────────────────────────────────────
+async function loadHistory() {
+  const res=await fetch('/api/history');
+  const history=await res.json();
+  const el=document.getElementById('history-list');
+  if(!history.length){el.innerHTML='<div class="empty-state"><div class="es-icon">📬</div>No posts yet</div>';return;}
+  el.innerHTML=history.map(e=>`<div class="hist-item">
+    <div class="hist-time">${new Date(e.publishedAt).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</div>
+    <div class="hist-body">
+      <div class="hist-caption">${esc((e.caption||'').slice(0,120))}${e.caption?.length>120?'…':''}</div>
+      <div class="hist-results">${Object.entries(e.results||{}).map(([p,r])=>`<span class="hist-result ${r.success?'ok':'fail'}">${PINFO[p]?.icon||''} ${PINFO[p]?.label||p}</span>`).join('')}</div>
+    </div>
+  </div>`).join('');
+}
+
+// ── Analytics ──────────────────────────────────────────────────────────────────
+async function loadAnalytics() {
+  document.getElementById('analytics-summary').innerHTML='<div style="grid-column:1/-1;color:var(--dim);font-size:12px">Loading...</div>';
+  try {
+    const [aRes,qRes]=await Promise.all([fetch('/api/analytics'),fetch('/api/queue')]);
+    const analytics=await aRes.json();
+    const {stats}=await qRes.json();
+    document.getElementById('analytics-summary').innerHTML=[
+      ['Posts Published',stats.published,'rose'],['Scheduled',stats.scheduled,'violet'],
+      ['Platforms',Object.values(platformStatus).filter(Boolean).length,'cyan'],['Failed',stats.failed,'green']
+    ].map(([l,v,c])=>`<div class="stat-card ${c}"><div class="stat-num">${v}</div><div class="stat-lbl">${l}</div></div>`).join('');
+    document.getElementById('analytics-platforms').innerHTML=Object.entries(PINFO).map(([p,info])=>{
+      const d=analytics.platforms?.[p];
+      const connected=d?.active&&d?.data;
+      return `<div class="analytics-platform">
+        <div class="ap-header">
+          <div class="ap-icon">${info.icon}</div>
+          <div class="ap-name">${info.label}</div>
+          <span class="ap-badge ${platformStatus[p]?'connected':'disconnected'}">${platformStatus[p]?'Connected':'Setup needed'}</span>
+        </div>
+        ${connected&&d.data?`<div class="ap-stats">${Object.entries(d.data).slice(0,4).map(([k,v])=>`<div class="ap-stat"><div class="ap-stat-num">${typeof v==='number'?v.toLocaleString():v}</div><div class="ap-stat-lbl">${k.replace(/_/g,' ')}</div></div>`).join('')}</div>`:'<div style="font-size:12px;color:var(--dim)">Connect this platform to see stats</div>'}
+      </div>`;
+    }).join('');
+  } catch{document.getElementById('analytics-summary').innerHTML='<div style="grid-column:1/-1;color:var(--red);font-size:12px">Failed to load analytics</div>';}
+}
+
+// ── Best Times ─────────────────────────────────────────────────────────────────
+async function loadBestTimes() {
+  const res=await fetch('/api/best-times');
+  const data=await res.json();
+  document.getElementById('best-times-grid').innerHTML=Object.entries(data).map(([p,info])=>`
+    <div class="card"><div class="card-head"><div class="card-title">${PINFO[p]?.icon} ${PINFO[p]?.label}</div></div>
+    <div class="card-body">
+      <div class="bt-pills">${info.best.map(t=>`<div class="bt-pill">${t}</div>`).join('')}</div>
+      <div class="bt-note" style="margin-top:8px">${info.note}</div>
+    </div></div>`).join('');
+}
+
+// ── Hashtag Sets ───────────────────────────────────────────────────────────────
+async function loadHashtagSets() {
+  const sets=await fetch('/api/hashtags').then(r=>r.json());
+  const el=document.getElementById('hashtag-sets-list');
+  if(!sets.length){el.innerHTML='<div class="empty-state"><div class="es-icon">#</div>No hashtag sets yet</div>';return;}
+  el.innerHTML=sets.map(s=>`<div class="tag-set">
+    <div class="tag-set-name">${esc(s.name)}<button class="btn btn-danger btn-sm" onclick="delHashtagSet('${s.id}')">Delete</button></div>
+    <div class="tag-chips">${s.tags.split(/[\s,]+/).filter(Boolean).map(t=>`<span class="tag-chip">${esc(t)}</span>`).join('')}</div>
+  </div>`).join('');
+}
+
+async function saveHashtagSet() {
+  const name=document.getElementById('ht-name').value.trim();
+  const tags=document.getElementById('ht-tags').value.trim();
+  if(!name||!tags){toast('Name and tags required','error');return;}
+  await fetch('/api/hashtags',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,tags})});
+  document.getElementById('ht-name').value=''; document.getElementById('ht-tags').value='';
+  toast('Hashtag set saved','success'); loadHashtagSets(); loadComposeWidgets();
+}
+
+async function delHashtagSet(id) {
+  await fetch(`/api/hashtags/${id}`,{method:'DELETE'}); loadHashtagSets(); loadComposeWidgets();
+}
+
+// ── Templates ──────────────────────────────────────────────────────────────────
+async function loadTemplates() {
+  const tmpl=await fetch('/api/templates').then(r=>r.json());
+  const el=document.getElementById('templates-list');
+  if(!tmpl.length){el.innerHTML='<div class="empty-state"><div class="es-icon">📋</div>No templates yet</div>';return;}
+  el.innerHTML=tmpl.map(t=>`<div class="draft-item" onclick="useTemplate('${esc(t.body)}')">
+    <div class="draft-caption">${esc(t.name)}</div>
+    <div class="draft-meta">${esc(t.platform)} · Click to use</div>
+    <div style="font-size:12px;color:var(--sub);margin-top:4px;white-space:normal">${esc(t.body?.slice(0,100))}${t.body?.length>100?'…':''}</div>
+    <div style="margin-top:6px"><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();delTemplate('${t.id}')">Delete</button></div>
+  </div>`).join('');
+}
+
+function useTemplate(body) {
+  document.getElementById('caption').value=body;
+  nav('compose'); toast('Template applied ✓','success');
+}
+
+async function saveTemplate() {
+  const name=document.getElementById('tpl-name').value.trim();
+  const body=document.getElementById('tpl-body').value.trim();
+  const platform=document.getElementById('tpl-platform').value;
+  if(!name||!body){toast('Name and body required','error');return;}
+  await fetch('/api/templates',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,body,platform})});
+  document.getElementById('tpl-name').value=''; document.getElementById('tpl-body').value='';
+  toast('Template saved','success'); loadTemplates();
+}
+
+async function delTemplate(id) {
+  await fetch(`/api/templates/${id}`,{method:'DELETE'}); loadTemplates();
+}
+
+// ── Voice Profile ──────────────────────────────────────────────────────────────
+async function loadVoiceProfile() {
+  const v=await fetch('/api/voice').then(r=>r.json());
+  document.getElementById('vp-name').value=v.name||'';
+  document.getElementById('vp-desc').value=v.description||'';
+  const overrides=document.getElementById('vp-overrides');
+  overrides.innerHTML=Object.entries(v.platform_overrides||{}).map(([p,val])=>`
+    <div class="input-row">
+      <label class="form-label">${PINFO[p]?.icon} ${PINFO[p]?.label||p}</label>
+      <textarea id="vpo-${p}" style="min-height:60px">${esc(val)}</textarea>
+    </div>`).join('');
+}
+
+async function saveVoice() {
+  const name=document.getElementById('vp-name').value.trim();
+  const description=document.getElementById('vp-desc').value.trim();
+  const platform_overrides={};
+  for(const p of Object.keys(PINFO)){const el=document.getElementById(`vpo-${p}`);if(el)platform_overrides[p]=el.value.trim();}
+  await fetch('/api/voice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description,platform_overrides})});
+  toast('Voice profile saved ✓','success');
+}
+
+// ── Media Library ──────────────────────────────────────────────────────────────
+async function loadMediaLibrary() {
+  const media=await fetch('/api/media').then(r=>r.json());
+  const el=document.getElementById('media-grid');
+  if(!media.length){el.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🗂</div>No media uploaded yet</div>';return;}
+  el.innerHTML=media.map(m=>{
+    const isImg=m.mimetype?.startsWith('image/');
+    return `<div class="media-item">
+      ${isImg?`<img class="media-thumb" src="${m.url}" loading="lazy">`:`<div class="media-no-thumb">🎬<span>${m.mimetype?.split('/')[1]||'video'}</span></div>`}
+      <div class="media-overlay"><button class="btn btn-danger btn-sm" onclick="delMedia('${m.id}')">Delete</button></div>
+      <div class="media-filename">${esc(m.originalName)}</div>
+    </div>`;
+  }).join('');
+}
+
+async function uploadMedia(input) {
+  const f=input.files[0]; if(!f)return;
+  const form=new FormData(); form.append('file',f);
+  const res=await fetch('/api/media',{method:'POST',body:form});
+  if(res.ok){toast('Uploaded! 📁','success');loadMediaLibrary();}
+  else toast('Upload failed','error');
+}
+
+async function delMedia(id) {
+  await fetch(`/api/media/${id}`,{method:'DELETE'}); loadMediaLibrary(); toast('Deleted','info');
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────────
+function closeModal(id){document.getElementById(id)?.classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+function toast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`toast ${type} show`;
+  clearTimeout(t._to); t._to=setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
+HTMLEOF
+echo "done"
+Output
+
+done
+

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexi Lucks — Party Network Dashboard</title>
+  <meta name="description" content="Preview dashboard for Lexi Lucks Party Network lead routing, guest-list status, AI insights, and future SMS/Discord/community automation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #080706;
+      --surface: #0e0c0a;
+      --surface2: #141210;
+      --surface3: #1a1714;
+      --border: rgba(201,169,110,0.15);
+      --border-bright: rgba(201,169,110,0.35);
+      --gold: #c9a96e;
+      --gold-light: #e8d0a0;
+      --rose: #c2847a;
+      --green: #5eba8a;
+      --red: #c26a6a;
+      --amber: #d4a44c;
+      --off-white: #f0ebe3;
+      --text-muted: rgba(240,235,227,0.45);
+      --text-mid: rgba(240,235,227,0.7);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--black);
+      color: var(--off-white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      height: 60px; padding: 0 28px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .topbar-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700; color: var(--gold);
+      text-decoration: none;
+    }
+    .topbar-logo span { font-style: italic; font-weight: 400; font-size: 13px; color: var(--text-muted); margin-left: 10px; }
+    .topbar-tabs { display: flex; gap: 4px; }
+    .tab-btn {
+      padding: 8px 20px;
+      background: transparent; border: 1px solid transparent;
+      color: var(--text-muted); font-family: 'Montserrat', sans-serif;
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s; border-radius: 4px;
+    }
+    .tab-btn.active { border-color: var(--border-bright); color: var(--gold); background: rgba(201,169,110,0.07); }
+    .tab-btn:hover:not(.active) { color: var(--gold-light); border-color: var(--border); }
+    .topbar-back { font-size: 10px; letter-spacing: 0.18em; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .topbar-back:hover { color: var(--gold); }
+
+    /* ── MAIN LAYOUT ── */
+    .main-wrap { flex: 1; display: flex; overflow: hidden; }
+
+    /* ── SIDEBAR (admin only) ── */
+    .sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 0; overflow-y: auto;
+    }
+    .sidebar-section { padding: 0 16px; margin-bottom: 28px; }
+    .sidebar-label {
+      font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px; display: block; padding: 0 8px;
+    }
+    .sidebar-btn {
+      width: 100%; padding: 10px 12px;
+      background: transparent; border: none;
+      color: var(--text-mid); font-family: 'Montserrat', sans-serif;
+      font-size: 12px; text-align: left; cursor: pointer;
+      border-radius: 6px; transition: all 0.2s;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-btn:hover { background: rgba(201,169,110,0.07); color: var(--gold-light); }
+    .sidebar-btn.active { background: rgba(201,169,110,0.1); color: var(--gold); }
+    .sidebar-icon { font-size: 14px; width: 20px; text-align: center; }
+    .event-pill {
+      padding: 6px 12px; margin: 4px 8px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 6px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .event-pill:hover { border-color: var(--gold); background: rgba(201,169,110,0.06); }
+    .event-pill.active { border-color: var(--gold); background: rgba(201,169,110,0.1); }
+    .event-pill-name { font-size: 12px; color: var(--off-white); }
+    .event-pill-date { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── CONTENT AREA ── */
+    .content { flex: 1; overflow-y: auto; padding: 32px 36px; }
+
+    /* ── STATS ROW ── */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 22px 24px;
+      position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold); opacity: 0.3;
+    }
+    .stat-card.green::before { background: var(--green); }
+    .stat-card.rose::before { background: var(--rose); }
+    .stat-card.amber::before { background: var(--amber); }
+    .stat-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .stat-value { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; line-height: 1; }
+    .stat-value.gold { color: var(--gold); }
+    .stat-value.green { color: var(--green); }
+    .stat-value.rose { color: var(--rose); }
+    .stat-value.amber { color: var(--amber); }
+    .stat-sub { font-size: 10px; color: var(--text-muted); margin-top: 6px; }
+
+    /* ── TABLE ── */
+    .table-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px;
+    }
+    .table-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+    .table-title em { font-style: italic; color: var(--rose); }
+    .table-controls { display: flex; gap: 10px; align-items: center; }
+    .search-input {
+      background: var(--surface2); border: 1px solid var(--border);
+      padding: 8px 14px; color: var(--off-white);
+      font-family: 'Montserrat', sans-serif; font-size: 12px; outline: none;
+      width: 200px; transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--gold); }
+    .search-input::placeholder { color: var(--text-muted); }
+    .filter-select {
+      background: var(--surface2); border: 1px solid var(--border);
+      padding: 8px 14px; color: var(--text-mid);
+      font-family: 'Montserrat', sans-serif; font-size: 11px; outline: none;
+      cursor: pointer; appearance: none;
+    }
+    .filter-select option { background: var(--surface2); }
+
+    .waitlist-table { width: 100%; border-collapse: collapse; }
+    .waitlist-table th {
+      text-align: left; padding: 10px 14px;
+      font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-muted); border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .waitlist-table td {
+      padding: 14px; border-bottom: 1px solid rgba(201,169,110,0.07);
+      font-size: 13px; vertical-align: middle;
+    }
+    .waitlist-table tr:hover td { background: rgba(201,169,110,0.04); }
+    .rank-badge {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700;
+    }
+    .rank-1 { background: var(--gold); color: var(--black); }
+    .rank-2 { background: rgba(201,169,110,0.2); color: var(--gold); border: 1px solid var(--gold); }
+    .rank-3 { background: rgba(201,169,110,0.1); color: var(--gold-light); border: 1px solid var(--border); }
+    .rank-other { background: var(--surface3); color: var(--text-muted); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; font-size: 12px; }
+    .name-cell { font-weight: 400; color: var(--off-white); }
+    .email-cell { color: var(--text-muted); font-size: 11px; }
+    .score-bar-wrap { display: flex; align-items: center; gap: 10px; min-width: 140px; }
+    .score-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
+    .score-fill { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
+    .score-fill.high { background: var(--green); }
+    .score-fill.mid { background: var(--amber); }
+    .score-fill.low { background: var(--rose); }
+    .score-num { font-size: 11px; color: var(--text-muted); width: 28px; text-align: right; }
+    .status-badge {
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+    }
+    .status-invited { background: rgba(94,186,138,0.15); color: var(--green); border: 1px solid rgba(94,186,138,0.3); }
+    .status-waiting { background: rgba(212,164,76,0.12); color: var(--amber); border: 1px solid rgba(212,164,76,0.25); }
+    .status-vip { background: rgba(201,169,110,0.15); color: var(--gold); border: 1px solid var(--border-bright); }
+    .status-declined { background: rgba(194,106,106,0.12); color: var(--red); border: 1px solid rgba(194,106,106,0.25); }
+    .action-btn {
+      padding: 5px 12px; border: 1px solid var(--border);
+      background: transparent; color: var(--text-muted);
+      font-size: 10px; cursor: pointer; border-radius: 3px;
+      transition: all 0.2s; font-family: 'Montserrat', sans-serif;
+    }
+    .action-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.07); }
+    .action-btn.promote { border-color: rgba(94,186,138,0.3); color: var(--green); }
+    .action-btn.promote:hover { background: rgba(94,186,138,0.1); }
+
+    /* ── FAN STATUS VIEW ── */
+    .fan-lookup { max-width: 600px; margin: 0 auto; }
+    .fan-lookup-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      padding: 48px; text-align: center; margin-bottom: 28px;
+    }
+    .fan-lookup-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 700; margin-bottom: 10px;
+    }
+    .fan-lookup-card h2 em { font-style: italic; color: var(--gold); }
+    .fan-lookup-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; font-style: italic; color: var(--text-muted);
+      margin-bottom: 28px; line-height: 1.7;
+    }
+    .lookup-row { display: flex; gap: 10px; }
+    .lookup-row input {
+      flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      padding: 14px 18px; color: var(--off-white);
+      font-family: 'Montserrat', sans-serif; font-size: 13px; outline: none;
+      transition: border-color 0.25s;
+    }
+    .lookup-row input:focus { border-color: var(--gold); }
+    .lookup-row input::placeholder { color: var(--text-muted); }
+    .btn-gold {
+      padding: 14px 28px; background: var(--gold); color: var(--black);
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
+      border: none; cursor: pointer; font-family: 'Montserrat', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .fan-result { display: none; }
+    .fan-result.visible { display: block; }
+    .fan-status-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      padding: 40px; text-align: center;
+    }
+    .fan-rank-circle {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold) 0%, #b8935a 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 40px rgba(201,169,110,0.3);
+    }
+    .fan-rank-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 900; color: var(--black); line-height: 1;
+    }
+    .fan-rank-label { font-size: 9px; letter-spacing: 0.15em; color: rgba(0,0,0,0.6); text-transform: uppercase; }
+    .fan-name { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 8px; }
+    .fan-event { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; color: var(--text-muted); margin-bottom: 28px; }
+    .fan-details { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; text-align: left; margin-top: 28px; }
+    .fan-detail-box { background: var(--surface3); padding: 18px; border: 1px solid var(--border); }
+    .fan-detail-label { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .fan-detail-val { font-size: 15px; color: var(--off-white); }
+    .fan-progress-wrap { margin-top: 24px; }
+    .fan-progress-label { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-bottom: 8px; }
+    .fan-progress-bar { height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+    .fan-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--rose)); border-radius: 3px; transition: width 1s ease; }
+    .fan-tip {
+      margin-top: 16px; padding: 14px 18px;
+      background: rgba(201,169,110,0.07); border: 1px solid var(--border);
+      font-size: 12px; color: var(--text-muted); line-height: 1.6; text-align: left;
+    }
+    .fan-tip strong { color: var(--gold); }
+
+    /* ── AI INSIGHTS PANEL ── */
+    .insights-panel {
+      background: var(--surface2); border: 1px solid var(--border);
+      padding: 24px; margin-top: 28px;
+    }
+    .insights-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+    }
+    .insights-header h3 {
+      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+    }
+    .ai-badge {
+      padding: 3px 10px; background: rgba(201,169,110,0.12);
+      border: 1px solid var(--border-bright); border-radius: 20px;
+      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+    }
+    .insights-content { color: var(--text-mid); font-size: 13px; line-height: 1.8; }
+    .insights-content.loading { color: var(--text-muted); font-style: italic; }
+    .insight-bullet {
+      display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px;
+    }
+    .insight-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+
+    /* ── PROMOTE MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75); z-index: 9000;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface2); border: 1px solid var(--border-bright);
+      padding: 40px; width: 420px; max-width: 90vw;
+      animation: fadeUp 0.3s ease;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .modal h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px; }
+    .modal p { color: var(--text-muted); font-size: 13px; line-height: 1.7; margin-bottom: 24px; }
+    .modal-btns { display: flex; gap: 12px; }
+    .btn-cancel { padding: 12px 24px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); font-family: 'Montserrat', sans-serif; font-size: 11px; cursor: pointer; transition: all 0.2s; }
+    .btn-cancel:hover { border-color: var(--border-bright); color: var(--off-white); }
+    .btn-confirm { padding: 12px 24px; background: var(--gold); color: var(--black); border: none; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+    .btn-confirm:hover { background: var(--gold-light); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--surface2); border: 1px solid var(--border-bright);
+      padding: 12px 24px; font-size: 12px; color: var(--gold);
+      opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 9999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .content { padding: 20px; }
+      .topbar { padding: 0 16px; }
+      .fan-details { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="lexi-concierge.css"/>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a href="index.html" class="topbar-back">← Back to Site</a>
+      <span class="topbar-logo">Lexi Luck <span>Party Network</span></span>
+    </div>
+    <div class="topbar-tabs">
+      <button class="tab-btn active" onclick="switchView('admin')" id="tab-admin">✦ Admin View</button>
+      <button class="tab-btn" onclick="switchView('fan')" id="tab-fan">👤 Fan Status</button>
+    </div>
+    <div style="font-size:11px;color:var(--text-muted);">AI-Powered</div>
+  </div>
+
+  <div class="main-wrap">
+
+    <!-- SIDEBAR (admin) -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <span class="sidebar-label">Navigation</span>
+        <button class="sidebar-btn active" onclick="setActive(this)"><span class="sidebar-icon">📋</span>Guest Lists</button>
+        <button class="sidebar-btn" onclick="setActive(this)"><span class="sidebar-icon">📊</span>Analytics</button>
+        <button class="sidebar-btn" onclick="setActive(this)"><span class="sidebar-icon">📨</span>Invitations</button>
+        <button class="sidebar-btn" onclick="setActive(this)"><span class="sidebar-icon">⚙️</span>Settings</button>
+      </div>
+      <div class="sidebar-section">
+        <span class="sidebar-label">Upcoming Events</span>
+        <div class="event-pill active" onclick="selectEvent(this,'rooftop')">
+          <div class="event-pill-name">Rooftop Soirée</div>
+          <div class="event-pill-date">April 19 · West Hollywood</div>
+        </div>
+        <div class="event-pill" onclick="selectEvent(this,'pop')">
+          <div class="event-pill-name">Fashion Pop-Up</div>
+          <div class="event-pill-date">May 3 · Beverly Hills</div>
+        </div>
+        <div class="event-pill" onclick="selectEvent(this,'beach')">
+          <div class="event-pill-name">Beach Edit Party</div>
+          <div class="event-pill-date">May 24 · Malibu</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ── ADMIN VIEW ── -->
+      <div id="adminView">
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Total on List</div>
+            <div class="stat-value gold" id="statTotal">247</div>
+            <div class="stat-sub">Rooftop Soirée · Apr 19</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Confirmed VIPs</div>
+            <div class="stat-value green" id="statVip">38</div>
+            <div class="stat-sub">Invites sent &amp; accepted</div>
+          </div>
+          <div class="stat-card rose">
+            <div class="stat-label">Slots Remaining</div>
+            <div class="stat-value rose" id="statSlots">62</div>
+            <div class="stat-sub">Venue cap: 100</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-label">Avg AI Score</div>
+            <div class="stat-value amber">74</div>
+            <div class="stat-sub">Out of 100</div>
+          </div>
+        </div>
+
+        <!-- AI Insights -->
+        <div class="insights-panel" style="margin-bottom:28px;">
+          <div class="insights-header">
+            <h3>AI Guest Intelligence</h3>
+            <span class="ai-badge">✦ Concierge Ready</span>
+            <button class="action-btn" onclick="loadInsights()" style="margin-left:auto;">Refresh Analysis</button>
+          </div>
+          <div class="insights-content" id="insightsContent">
+            <div style="color:var(--text-muted);font-style:italic;font-size:13px;">Click "Refresh Analysis" to generate guest-list insights for the current view.</div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-header">
+          <h2 class="table-title">Guest <em>Waitlist</em></h2>
+          <div class="table-controls">
+            <input type="text" class="search-input" placeholder="Search guests…" oninput="filterTable(this.value)" />
+            <select class="filter-select" onchange="filterStatus(this.value)">
+              <option value="all">All Status</option>
+              <option value="vip">VIP</option>
+              <option value="invited">Invited</option>
+              <option value="waiting">Waiting</option>
+              <option value="declined">Declined</option>
+            </select>
+            <button class="action-btn promote" onclick="autoPromote()">⚡ Auto-Promote Top 10</button>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table class="waitlist-table" id="guestTable">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>City</th>
+                <th>AI Score</th>
+                <th>Status</th>
+                <th>Response</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="guestTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── FAN VIEW ── -->
+      <div id="fanView" style="display:none;">
+        <div class="fan-lookup">
+          <div class="fan-lookup-card">
+            <h2>Check Your <em>Status</em></h2>
+            <p>Enter your email to preview the Party Network status experience. Live ranks require the backend connection.</p>
+            <div class="lookup-row">
+              <input type="email" id="lookupEmail" placeholder="your@email.com" onkeydown="if(event.key==='Enter')lookupFan()" />
+              <button class="btn-gold" onclick="lookupFan()">Check Status</button>
+            </div>
+          </div>
+
+          <div class="fan-result" id="fanResult">
+            <div class="fan-status-card">
+              <div class="fan-rank-circle">
+                <div class="fan-rank-num" id="fanRankNum">12</div>
+                <div class="fan-rank-label">preview</div>
+              </div>
+              <div class="fan-name" id="fanName">Sofia Montrose</div>
+              <div class="fan-event" id="fanEventLabel">Rooftop Soirée · April 19 · West Hollywood</div>
+              <span class="status-badge status-waiting" id="fanStatusBadge">Waitlisted</span>
+
+              <div class="fan-progress-wrap">
+                <div class="fan-progress-label">
+                  <span>Your position</span>
+                  <span id="fanProgressLabel">12 of 247</span>
+                </div>
+                <div class="fan-progress-bar">
+                  <div class="fan-progress-fill" id="fanProgressFill" style="width:0%"></div>
+                </div>
+              </div>
+
+              <div class="fan-details">
+                <div class="fan-detail-box">
+                  <div class="fan-detail-label">AI Score</div>
+                  <div class="fan-detail-val" id="fanScore" style="color:var(--gold);">82 / 100</div>
+                </div>
+                <div class="fan-detail-box">
+                  <div class="fan-detail-label">Engagement Tier</div>
+                  <div class="fan-detail-val" id="fanTier">Gold ✦</div>
+                </div>
+                <div class="fan-detail-box">
+                  <div class="fan-detail-label">Joined Network</div>
+                  <div class="fan-detail-val" id="fanJoined">March 14, 2025</div>
+                </div>
+                <div class="fan-detail-box">
+                  <div class="fan-detail-label">Events Attended</div>
+                  <div class="fan-detail-val" id="fanEvents">2 events</div>
+                </div>
+              </div>
+
+              <div class="fan-tip" id="fanTip">
+                <strong>✦ Lexi's AI tip:</strong> This preview shows how fan guidance will work once the live list is connected. It does not confirm admission or a real waitlist rank.
+              </div>
+            </div>
+
+            <!-- AI Concierge prompt -->
+            <div style="text-align:center;margin-top:24px;padding:28px;background:var(--surface2);border:1px solid var(--border);">
+              <div style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:8px;">Have questions? <em style="color:var(--gold);">Ask Lexi's AI</em></div>
+              <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--text-muted);margin-bottom:20px;">The concierge can answer anything about your status, the event, or what to wear.</div>
+              <button class="btn-gold" onclick="window.LexiConcierge ? window.LexiConcierge.open() : alert('Concierge is loading. Try again in a moment.')">Open AI Concierge ✦</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROMOTE MODAL -->
+  <div class="modal-overlay" id="promoteModal">
+    <div class="modal">
+      <h3>Promote to <em style="font-style:italic;color:var(--gold);">VIP?</em></h3>
+      <p id="modalText">Move this guest to VIP status in the local preview. SMS sends only after a messaging provider is connected.</p>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-confirm" onclick="confirmPromote()">Yes, Promote ✦</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+  // ─── GUEST DATA ──────────────────────────────────────────────
+  const guests = [
+    { id:1, name:'Chloe Beaumont',  email:'chloe@email.com',  city:'Los Angeles',   score:96, status:'vip',     response:'Fast',   joined:'Jan 10', events:4 },
+    { id:2, name:'Mia Valentina',   email:'mia@email.com',    city:'Beverly Hills', score:93, status:'vip',     response:'Fast',   joined:'Jan 22', events:3 },
+    { id:3, name:'Zara Collins',    email:'zara@email.com',   city:'West Hollywood',score:91, status:'invited', response:'Fast',   joined:'Feb 3',  events:2 },
+    { id:4, name:'Jade Morrison',   email:'jade@email.com',   city:'Malibu',        score:88, status:'invited', response:'Medium', joined:'Feb 14', events:2 },
+    { id:5, name:'Sienna Rhodes',   email:'sienna@email.com', city:'Santa Monica',  score:85, status:'invited', response:'Fast',   joined:'Feb 20', events:1 },
+    { id:6, name:'Luna Park',       email:'luna@email.com',   city:'Calabasas',     score:83, status:'waiting', response:'Medium', joined:'Mar 1',  events:1 },
+    { id:7, name:'Ava Sterling',    email:'ava@email.com',    city:'Hollywood',     score:81, status:'waiting', response:'Fast',   joined:'Mar 5',  events:0 },
+    { id:8, name:'Isla Monroe',     email:'isla@email.com',   city:'Venice',        score:79, status:'waiting', response:'Slow',   joined:'Mar 8',  events:1 },
+    { id:9, name:'Sofia Montrose',  email:'sofia@email.com',  city:'Pasadena',      score:82, status:'waiting', response:'Fast',   joined:'Mar 14', events:2 },
+    { id:10,'name':'Nadia Voss',    email:'nadia@email.com',  city:'Burbank',       score:74, status:'waiting', response:'Medium', joined:'Mar 18', events:0 },
+    { id:11, name:'Elle Kimura',    email:'elle@email.com',   city:'Studio City',   score:70, status:'waiting', response:'Slow',   joined:'Mar 20', events:0 },
+    { id:12, name:'Roxanne Blair',  email:'roxanne@email.com',city:'Culver City',   score:66, status:'waiting', response:'Slow',   joined:'Mar 25', events:0 },
+    { id:13, name:'Piper Davis',    email:'piper@email.com',  city:'Long Beach',    score:62, status:'waiting', response:'Medium', joined:'Mar 28', events:0 },
+    { id:14, name:'Harper Wells',   email:'harper@email.com', city:'Glendale',      score:58, status:'declined',response:'—',     joined:'Apr 1',  events:0 },
+    { id:15, name:'Willow Chase',   email:'willow@email.com', city:'Torrance',      score:54, status:'waiting', response:'Slow',   joined:'Apr 2',  events:0 },
+  ];
+
+  let filteredGuests = [...guests];
+  let pendingPromoteId = null;
+
+  // ─── RENDER TABLE ─────────────────────────────────────────────
+  function renderTable(data) {
+    const tbody = document.getElementById('guestTableBody');
+    tbody.innerHTML = '';
+    data.forEach((g, i) => {
+      const rank = i + 1;
+      const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-other';
+      const scoreClass = g.score >= 80 ? 'high' : g.score >= 65 ? 'mid' : 'low';
+      const statusMap = { vip:'status-vip', invited:'status-invited', waiting:'status-waiting', declined:'status-declined' };
+      const statusLabel = { vip:'VIP ✦', invited:'Invited', waiting:'Waitlisted', declined:'Declined' };
+      tbody.innerHTML += `
+        <tr data-id="${g.id}" data-status="${g.status}">
+          <td><div class="rank-badge ${rankClass}">${rank}</div></td>
+          <td><div class="name-cell">${g.name}</div></td>
+          <td><div class="email-cell">${g.email}</div></td>
+          <td style="color:var(--text-muted);font-size:12px;">${g.city}</td>
+          <td>
+            <div class="score-bar-wrap">
+              <div class="score-bar"><div class="score-fill ${scoreClass}" style="width:${g.score}%"></div></div>
+              <span class="score-num">${g.score}</span>
+            </div>
+          </td>
+          <td><span class="status-badge ${statusMap[g.status]}">${statusLabel[g.status]}</span></td>
+          <td style="color:var(--text-muted);font-size:11px;">${g.response}</td>
+          <td style="display:flex;gap:6px;">
+            ${g.status !== 'vip' && g.status !== 'declined' ? `<button class="action-btn promote" onclick="openPromote(${g.id},'${g.name}')">Promote</button>` : ''}
+            <button class="action-btn" onclick="viewGuest(${g.id})">View</button>
+          </td>
+        </tr>`;
+    });
+  }
+
+  renderTable(filteredGuests);
+
+  function filterTable(q) {
+    q = q.toLowerCase();
+    filteredGuests = guests.filter(g =>
+      g.name.toLowerCase().includes(q) ||
+      g.email.toLowerCase().includes(q) ||
+      g.city.toLowerCase().includes(q)
+    );
+    renderTable(filteredGuests);
+  }
+
+  function filterStatus(val) {
+    filteredGuests = val === 'all' ? [...guests] : guests.filter(g => g.status === val);
+    renderTable(filteredGuests);
+  }
+
+  // ─── PROMOTE ──────────────────────────────────────────────────
+  function openPromote(id, name) {
+    pendingPromoteId = id;
+    document.getElementById('modalText').textContent =
+      `Move ${name} to VIP status in the local preview. SMS sends only after a messaging provider is connected.`;
+    document.getElementById('promoteModal').classList.add('open');
+  }
+  function closeModal() {
+    document.getElementById('promoteModal').classList.remove('open');
+    pendingPromoteId = null;
+  }
+  function confirmPromote() {
+    if (!pendingPromoteId) return;
+    const g = guests.find(x => x.id === pendingPromoteId);
+    if (g) { g.status = 'vip'; }
+    closeModal();
+    renderTable(filteredGuests);
+    showToast(`✦ ${g?.name} promoted to VIP — preview updated`);
+  }
+  function autoPromote() {
+    const eligible = guests.filter(g => g.status === 'waiting').sort((a,b) => b.score - a.score).slice(0,10);
+    eligible.forEach(g => g.status = 'invited');
+    renderTable(filteredGuests);
+    showToast(`⚡ Top ${eligible.length} guests auto-promoted to Invited`);
+  }
+  function viewGuest(id) {
+    const g = guests.find(x => x.id === id);
+    showToast(`Viewing ${g?.name} — full profile panel is the next backend step`);
+  }
+  function setActive(btn) {
+    document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  function selectEvent(el, key) {
+    document.querySelectorAll('.event-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // ─── AI INSIGHTS ──────────────────────────────────────────────
+  async function loadInsights() {
+    const el = document.getElementById('insightsContent');
+    el.innerHTML = '<div class="insights-content loading">✦ Analyzing guest list...</div>';
+
+    const summary = guests.map(g =>
+      `${g.name} (${g.city}) — score: ${g.score}, status: ${g.status}, response: ${g.response}`
+    ).join('\n');
+
+    const renderInsights = (lines) => {
+      el.innerHTML = lines.map(line => {
+        const clean = line.replace(/^[-•*]\s*/, '');
+        return `<div class="insight-bullet"><span class="insight-dot"></span><span>${clean}</span></div>`;
+      }).join('');
+    };
+
+    try {
+      const endpoint = window.LEXI_INSIGHTS_ENDPOINT || '';
+      if (endpoint) {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ guests, summary })
+        });
+        if (!res.ok) throw new Error('Insight proxy failed');
+        const data = await res.json();
+        renderInsights(data.insights || data.lines || []);
+        return;
+      }
+
+      const waiting = guests.filter(g => g.status === 'waiting').sort((a,b) => b.score - a.score);
+      const ready = waiting.filter(g => g.score >= 80);
+      const slow = guests.filter(g => g.response === 'Slow' && g.status === 'waiting');
+      const vip = guests.filter(g => g.status === 'vip' || g.status === 'invited');
+      const topCities = [...new Set(guests.map(g => g.city))].slice(0, 4).join(', ');
+
+      renderInsights([
+        `<strong>Promote now:</strong> ${ready.length} waitlisted guests score 80+; ${ready.slice(0, 3).map(g => g.name).join(', ') || 'no immediate candidates'} should be reviewed first.`,
+        `<strong>Response risk:</strong> ${slow.length} waitlisted guests are slow responders; send a shorter RSVP prompt before moving them higher.`,
+        `<strong>VIP density:</strong> ${vip.length} guests are already VIP or invited, so the next drop can stay selective without starving the room.`,
+        `<strong>Geo signal:</strong> Demand is clustered around ${topCities}; West Hollywood and LA copy should stay first in the invite language.`,
+        `<strong>Concierge action:</strong> Route fan questions through the new concierge so status checks, dress code, and event intent get tracked in one profile.`
+      ]);
+    } catch(e) {
+      renderInsights([
+        '<strong>Insight fallback:</strong> Local analysis is available, but the optional AI proxy did not respond.',
+        '<strong>Next step:</strong> Set window.LEXI_INSIGHTS_ENDPOINT to a secure backend route when the Claude layer is ready.'
+      ]);
+    }
+  }
+
+  // ─── FAN LOOKUP ───────────────────────────────────────────────
+  function lookupFan() {
+    const email = document.getElementById('lookupEmail').value.trim().toLowerCase();
+    if (!email) return;
+
+    // Find by sample email or render a preview-only result.
+    const found = guests.find(g => g.email === email);
+    const g = found || {
+      name: email.split('@')[0].replace(/\./g,' ').replace(/\b\w/g,c=>c.toUpperCase()),
+      score: Math.floor(Math.random()*30)+60,
+      status: 'waiting',
+      joined: 'Recently',
+      events: 0
+    };
+    const rank = found ? (guests.indexOf(found) + 1) : 'Preview';
+    const total = 247;
+
+    document.getElementById('fanRankNum').textContent = rank;
+    document.getElementById('fanName').textContent = g.name;
+    document.getElementById('fanScore').textContent = `${g.score} / 100`;
+    document.getElementById('fanJoined').textContent = g.joined || 'Recently';
+    document.getElementById('fanEvents').textContent = `${g.events || 0} event${g.events === 1 ? '' : 's'}`;
+    document.getElementById('fanProgressLabel').textContent = found ? `${rank} of ${total}` : 'Preview only';
+    document.getElementById('fanTier').textContent = g.score >= 85 ? 'Platinum ✦✦' : g.score >= 70 ? 'Gold ✦' : 'Silver';
+
+    const statusBadge = document.getElementById('fanStatusBadge');
+    const statusMap = { vip:'status-vip', invited:'status-invited', waiting:'status-waiting', declined:'status-declined' };
+    const statusLabel = { vip:'VIP ✦', invited:'Invited ✓', waiting:'Waitlisted', declined:'Not Available' };
+    statusBadge.className = `status-badge ${statusMap[g.status] || 'status-waiting'}`;
+    statusBadge.textContent = statusLabel[g.status] || 'Waitlisted';
+
+    const fillPct = found ? Math.max(5, Math.min(95, 100 - (rank / total * 100))) : 35;
+    setTimeout(() => document.getElementById('fanProgressFill').style.width = fillPct + '%', 100);
+
+    const tips = [
+      `Preview mode: sharing content and quick RSVP responses can become scoring signals once the live list is connected.`,
+      `Preview mode: engagement, RSVP speed, and consented contact preferences can help route future invitations.`,
+      `Preview mode: this does not guarantee admission, but it shows the kind of guidance the live dashboard can provide.`,
+    ];
+    document.getElementById('fanTip').innerHTML = `<strong>✦ Lexi's AI tip:</strong> ${tips[Math.floor(Math.random()*tips.length)]}`;
+
+    document.getElementById('fanResult').classList.add('visible');
+    document.getElementById('fanResult').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ─── VIEW SWITCHING ───────────────────────────────────────────
+  function switchView(view) {
+    document.getElementById('adminView').style.display = view === 'admin' ? 'block' : 'none';
+    document.getElementById('fanView').style.display = view === 'fan' ? 'block' : 'none';
+    document.getElementById('sidebar').style.display = view === 'admin' ? 'flex' : 'none';
+    document.getElementById('tab-admin').classList.toggle('active', view === 'admin');
+    document.getElementById('tab-fan').classList.toggle('active', view === 'fan');
+  }
+
+  // ─── TOAST ────────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+  </script>
+  <script src="src/lib/analytics.js" defer></script>
+  <script src="src/lib/lead-capture.js" defer></script>
+  <script src="src/lib/site-enhancements.js" defer></script>
+  <script src="lexi-concierge.js" defer></script>
+</body>
+</html>

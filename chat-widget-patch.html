@@ -1,0 +1,515 @@
+<!-- ============================================================
+     LEXI LUCK — AI CHAT WIDGET + CONCIERGE SECTION
+     Drop this code into index.html:
+       1. Paste the section block before the footer
+       2. Paste the style block into your main style tag
+       3. Paste the widget HTML before </body>
+       4. Paste the script block before </body>
+     Connect this only through a secure backend endpoint. Never put API keys in browser code.
+     ============================================================ -->
+
+<!-- ── CONCIERGE TEASER SECTION (add before footer in index.html) ── -->
+<section class="concierge-teaser" id="concierge">
+  <div class="ct-inner">
+    <div class="ct-text">
+      <span class="ct-label">✦ &nbsp; Powered by AI</span>
+      <h2 class="ct-title">Meet <em>Lexi's</em><br />AI Concierge</h2>
+      <p class="ct-desc">
+        Got questions about the party network? Want to know if you made the guest list? 
+        Need event details? Lexi's AI is on call 24/7 — and she speaks fluent Lexi.
+      </p>
+      <div class="ct-features">
+        <div class="ct-feat"><span class="ct-dot"></span>Check your waitlist rank in real time</div>
+        <div class="ct-feat"><span class="ct-dot"></span>Get event details &amp; RSVP instantly</div>
+        <div class="ct-feat"><span class="ct-dot"></span>Ask anything — answered in Lexi's voice</div>
+      </div>
+      <button class="btn-primary" onclick="openChat()" style="margin-top:36px;">
+        Chat with Lexi's AI ✦
+      </button>
+    </div>
+    <div class="ct-visual">
+      <div class="ct-phone-mock">
+        <div class="ct-phone-bar"></div>
+        <div class="ct-phone-msgs">
+          <div class="ct-msg ct-msg--lexi">
+            <div class="ct-avatar">L</div>
+            <div class="ct-bubble">Hey babe! You're #12 on the VIP list for Saturday 🥂 Want me to send the venue details?</div>
+          </div>
+          <div class="ct-msg ct-msg--user">
+            <div class="ct-bubble ct-bubble--user">Yes please! And what should I wear?</div>
+          </div>
+          <div class="ct-msg ct-msg--lexi">
+            <div class="ct-avatar">L</div>
+            <div class="ct-bubble">Dress code is cocktail-glam. Think silk, heels, gold accents — very us ✨ I'll DM you the address now!</div>
+          </div>
+        </div>
+        <div class="ct-phone-input">
+          <span>Ask Lexi anything…</span>
+        </div>
+      </div>
+      <div class="ct-glow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FLOATING CHAT WIDGET ── -->
+<div id="chatWidget" class="chat-widget">
+  <!-- Bubble toggle button -->
+  <button class="chat-bubble-btn" id="chatToggle" onclick="toggleChat()" aria-label="Chat with Lexi's AI">
+    <span class="chat-bubble-icon chat-bubble-open">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </span>
+    <span class="chat-bubble-icon chat-bubble-close" style="display:none;">✕</span>
+    <span class="chat-unread-badge" id="unreadBadge">1</span>
+  </button>
+
+  <!-- Chat panel -->
+  <div class="chat-panel" id="chatPanel">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-avatar">L</div>
+      <div class="chat-header-info">
+        <strong>Lexi's AI Concierge</strong>
+        <span class="chat-status"><span class="status-dot"></span>Online now</span>
+      </div>
+      <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-date-divider">Today</div>
+      <div class="chat-msg chat-msg--lexi" id="welcomeMsg">
+        <div class="chat-msg-avatar">L</div>
+        <div class="chat-msg-bubble">
+          Hey gorgeous! 👋 I'm Lexi's AI — I can check your spot on the guest list, share event details, or just vibe with you. What do you need, babe?
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick replies -->
+    <div class="chat-quick-replies" id="quickReplies">
+      <button onclick="sendQuick('What events are coming up?')">🗓 Upcoming events</button>
+      <button onclick="sendQuick('Check my waitlist status')">📋 My status</button>
+      <button onclick="sendQuick('What should I wear?')">👗 Dress code</button>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Ask Lexi anything…" onkeydown="handleKey(event)" />
+      <button class="chat-send-btn" onclick="sendMessage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     STYLES — paste into your main <style> block
+═══════════════════════════════════════════════ -->
+<style>
+/* ── CONCIERGE TEASER ── */
+.concierge-teaser {
+  padding: 110px 64px;
+  background: linear-gradient(150deg, #0c0a08 0%, #110e0b 60%, #0a0908 100%);
+  position: relative; overflow: hidden;
+}
+.concierge-teaser::before {
+  content: '';
+  position: absolute; top: -100px; left: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ct-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  max-width: 1200px; margin: 0 auto;
+}
+.ct-label {
+  font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); display: block; margin-bottom: 18px;
+}
+.ct-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 3.5vw, 58px); font-weight: 700; line-height: 1.1;
+  margin-bottom: 22px;
+}
+.ct-title em { font-style: italic; color: var(--rose); }
+.ct-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-style: italic; line-height: 1.8;
+  color: rgba(245,240,234,0.65); margin-bottom: 32px;
+}
+.ct-features { display: flex; flex-direction: column; gap: 12px; }
+.ct-feat {
+  display: flex; gap: 12px; align-items: center;
+  font-size: 13px; color: rgba(245,240,234,0.6);
+}
+.ct-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+/* phone mock */
+.ct-visual { position: relative; display: flex; justify-content: center; }
+.ct-glow {
+  position: absolute; inset: -40px;
+  background: radial-gradient(circle at center, rgba(194,132,122,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+.ct-phone-mock {
+  width: 300px;
+  background: #0f0d0c;
+  border: 1px solid rgba(201,169,110,0.25);
+  border-radius: 24px;
+  padding: 20px 0 0;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  position: relative; z-index: 1;
+}
+.ct-phone-bar {
+  width: 60px; height: 4px; background: rgba(201,169,110,0.3);
+  border-radius: 2px; margin: 0 auto 20px;
+}
+.ct-phone-msgs { padding: 0 16px; display: flex; flex-direction: column; gap: 14px; }
+.ct-msg { display: flex; gap: 10px; align-items: flex-end; }
+.ct-msg--user { flex-direction: row-reverse; }
+.ct-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--gold); color: var(--black);
+  font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ct-bubble {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(201,169,110,0.15);
+  border-radius: 16px 16px 16px 4px;
+  padding: 10px 14px;
+  font-size: 12px; line-height: 1.6;
+  color: rgba(245,240,234,0.85);
+  max-width: 200px;
+}
+.ct-bubble--user {
+  background: rgba(201,169,110,0.15);
+  border-color: rgba(201,169,110,0.3);
+  border-radius: 16px 16px 4px 16px;
+  color: var(--gold-light);
+}
+.ct-phone-input {
+  margin-top: 20px; padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(201,169,110,0.1);
+  font-size: 12px; color: rgba(245,240,234,0.25);
+}
+
+/* ── FLOATING CHAT WIDGET ── */
+.chat-widget {
+  position: fixed; bottom: 28px; right: 28px; z-index: 8000;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+}
+.chat-bubble-btn {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #b8935a 100%);
+  border: none; cursor: pointer; color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 32px rgba(201,169,110,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.chat-bubble-btn:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(201,169,110,0.55); }
+.chat-unread-badge {
+  position: absolute; top: -4px; right: -4px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--rose); color: white;
+  font-size: 10px; font-weight: 600; font-family: 'Montserrat', sans-serif;
+  display: flex; align-items: center; justify-content: center;
+  animation: pulseBadge 2s ease-in-out infinite;
+}
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Chat panel */
+.chat-panel {
+  width: 360px;
+  background: #0e0c0a;
+  border: 1px solid rgba(201,169,110,0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+  display: none; flex-direction: column;
+  max-height: 520px;
+  animation: slideUpChat 0.3s ease;
+}
+.chat-panel.open { display: flex; }
+@keyframes slideUpChat {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.chat-header {
+  padding: 16px 18px; background: #13100d;
+  border-bottom: 1px solid rgba(201,169,110,0.12);
+  display: flex; align-items: center; gap: 12px;
+}
+.chat-header-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gold); color: var(--black);
+  font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.chat-header-info { flex: 1; }
+.chat-header-info strong { display: block; font-size: 13px; color: var(--off-white); font-weight: 500; }
+.chat-status { font-size: 10px; color: rgba(245,240,234,0.4); display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; display: inline-block; }
+.chat-close-btn { background: none; border: none; color: rgba(245,240,234,0.35); font-size: 14px; cursor: pointer; padding: 4px; transition: color 0.2s; }
+.chat-close-btn:hover { color: var(--gold); }
+
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+  scrollbar-width: thin; scrollbar-color: rgba(201,169,110,0.2) transparent;
+}
+.chat-date-divider {
+  text-align: center; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(245,240,234,0.22); margin: 4px 0 8px;
+}
+.chat-msg { display: flex; gap: 8px; align-items: flex-end; }
+.chat-msg--user { flex-direction: row-reverse; }
+.chat-msg-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gold); color: var(--black);
+  font-family: 'Playfair Display', serif; font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.chat-msg-bubble {
+  max-width: 240px; padding: 10px 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(201,169,110,0.12);
+  border-radius: 16px 16px 16px 4px;
+  font-size: 13px; line-height: 1.6;
+  color: rgba(245,240,234,0.88);
+}
+.chat-msg--user .chat-msg-bubble {
+  background: rgba(201,169,110,0.14);
+  border-color: rgba(201,169,110,0.28);
+  border-radius: 16px 16px 4px 16px;
+  color: var(--gold-light);
+}
+.chat-typing { display: flex; gap: 4px; align-items: center; padding: 10px 14px; }
+.chat-typing span {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+.chat-quick-replies {
+  padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 6px;
+  border-top: 1px solid rgba(201,169,110,0.08);
+}
+.chat-quick-replies button {
+  padding: 6px 12px;
+  border: 1px solid rgba(201,169,110,0.25);
+  background: transparent; color: rgba(245,240,234,0.6);
+  font-size: 11px; border-radius: 20px; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  font-family: 'Montserrat', sans-serif;
+}
+.chat-quick-replies button:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.07); }
+
+.chat-input-row {
+  padding: 12px 14px; display: flex; gap: 8px; align-items: center;
+  border-top: 1px solid rgba(201,169,110,0.12);
+}
+.chat-input-row input {
+  flex: 1; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,169,110,0.18);
+  padding: 10px 14px; color: var(--off-white);
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300;
+  outline: none; border-radius: 20px;
+  transition: border-color 0.25s;
+}
+.chat-input-row input::placeholder { color: rgba(245,240,234,0.25); }
+.chat-input-row input:focus { border-color: var(--gold); }
+.chat-send-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gold); border: none; cursor: pointer; color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.chat-send-btn:hover { background: var(--gold-light); transform: scale(1.08); }
+
+@media (max-width: 900px) {
+  .ct-inner { grid-template-columns: 1fr; padding: 0; }
+  .concierge-teaser { padding: 60px 28px; }
+  .chat-panel { width: 320px; }
+  .ct-phone-mock { width: 260px; }
+}
+</style>
+
+
+<!-- ══════════════════════════════════════════════
+     SCRIPT — paste before </body>
+═══════════════════════════════════════════════ -->
+<script>
+// ── CHAT STATE
+let chatOpen = false;
+const SYSTEM_PROMPT = `You are Lexi Lucks' AI Concierge — an assistant in Lexi's style, not Lexi herself. Lexi is an actress, producer, gaming creator, Miss West Hollywood USA, and founder of Transcend Foundation.
+
+Your personality:
+- Confident, celebratory, inclusive, playful with edge, and authentic
+- Warm and insider-y for fans; professional and selective for brands
+- Use community language: Team Lexi, fam, vibes, join the team
+- Use gaming/streaming language when relevant: LIVE, Level UP, chat, Friday Play League, Discord
+- Use advocacy language when relevant: safe space, lifting the community, breaking molds, we belong here
+- Use emojis strategically, never chaotically
+- Keep responses concise unless asked for detail
+
+You help fans with:
+- Checking party network / waitlist status
+- Upcoming events, RSVP paths, and dress code guidance
+- RSVP confirmation and event logistics
+- Patreon, shop, merch, Discord, gaming/streaming, and brand partnership routing
+
+Rules:
+- Never claim to be Lexi or promise a personal response she has not approved
+- Avoid stiff PR language, performative allyship, vague answers, and overly sexual professional messaging
+- Lead with value, give one clear next step, and close with gratitude or a CTA.`;
+
+async function callLexiAI(userMessage, history) {
+  const endpoint = window.LEXI_CONCIERGE_ENDPOINT || '';
+  if (endpoint) {
+    const messages = history.map(m => ({ role: m.role, content: m.content }));
+    messages.push({ role: 'user', content: userMessage });
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ system: SYSTEM_PROMPT, messages })
+    });
+    const data = await response.json();
+    return data.reply || data.message || "Quick refresh moment. Try again in a sec and I will route you. ✨";
+  }
+
+  const text = userMessage.toLowerCase();
+  if (/event|party|waitlist|vip|rsvp|status/.test(text)) {
+    return "Event lane unlocked. Use the Party Network form for RSVPs, then the dashboard fan view for status and priority. Safe space, amazing people, good vibes. 🎉";
+  }
+  if (/wear|dress|outfit|style/.test(text)) {
+    return "Dress it cocktail-glam: polished, camera-ready, and confident. Gold accents play well, and the energy is elevated, not overdone.";
+  }
+  if (/brand|collab|media|rate|ugc|sponsor/.test(text)) {
+    return "For brand work, start with the media kit, then the rate card. Lexi's lane is selective, values-aligned, and built around audience trust.";
+  }
+  if (/live|game|gaming|twitch|kick|discord/.test(text)) {
+    return "Gaming lane: LIVE links, Discord, chat, and community vibes first. Then Level UP into merch or membership when the fam is ready.";
+  }
+  return "I can help with events, status, dress code, shop, Patreon, gaming, community, or brand partnerships. Tell me which lane you want. 💕";
+}
+
+// conversation history
+let history = [];
+
+function openChat() {
+  chatOpen = true;
+  document.getElementById('chatPanel').classList.add('open');
+  document.querySelector('.chat-bubble-icon.chat-bubble-open').style.display = 'none';
+  document.querySelector('.chat-bubble-icon.chat-bubble-close').style.display = 'flex';
+  document.getElementById('unreadBadge').style.display = 'none';
+  document.getElementById('chatInput').focus();
+}
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const panel = document.getElementById('chatPanel');
+  const openIcon = document.querySelector('.chat-bubble-icon.chat-bubble-open');
+  const closeIcon = document.querySelector('.chat-bubble-icon.chat-bubble-close');
+  if (chatOpen) {
+    panel.classList.add('open');
+    openIcon.style.display = 'none';
+    closeIcon.style.display = 'flex';
+    document.getElementById('unreadBadge').style.display = 'none';
+    setTimeout(() => document.getElementById('chatInput').focus(), 100);
+  } else {
+    panel.classList.remove('open');
+    openIcon.style.display = 'flex';
+    closeIcon.style.display = 'none';
+  }
+}
+
+function handleKey(e) { if (e.key === 'Enter') sendMessage(); }
+
+function sendQuick(text) {
+  document.getElementById('chatInput').value = text;
+  document.getElementById('quickReplies').style.display = 'none';
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  // Add user bubble
+  appendMessage('user', text);
+  history.push({ role: 'user', content: text });
+
+  // Typing indicator
+  const typingId = appendTyping();
+
+  try {
+    const reply = await callLexiAI(text, history.slice(0, -1));
+    removeTyping(typingId);
+    appendMessage('lexi', reply);
+    history.push({ role: 'assistant', content: reply });
+  } catch (err) {
+    removeTyping(typingId);
+    appendMessage('lexi', "Oops babe — my AI had a moment! Refresh and try again? 💛");
+  }
+}
+
+function appendMessage(role, text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `chat-msg chat-msg--${role === 'user' ? 'user' : 'lexi'}`;
+  div.innerHTML = role === 'user'
+    ? `<div class="chat-msg-bubble">${escHtml(text)}</div>`
+    : `<div class="chat-msg-avatar">L</div><div class="chat-msg-bubble">${escHtml(text)}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function appendTyping() {
+  const msgs = document.getElementById('chatMessages');
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'chat-msg chat-msg--lexi';
+  div.id = id;
+  div.innerHTML = `<div class="chat-msg-avatar">L</div>
+    <div class="chat-msg-bubble chat-typing"><span></span><span></span><span></span></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>

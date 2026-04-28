@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexi Lucks × Celine Med Spa — Collaboration Proposal</title>
+  <meta name="description" content="Lexi Lucks collaboration proposal for Celine Med Spa covering beauty, aesthetics, UGC deliverables, and creator partnership opportunities." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@200;300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #030303;
+      --bg: #080808;
+      --s1: #0f0f0f;
+      --s2: #151515;
+      --s3: #1c1c1c;
+      --border: rgba(212,190,150,0.12);
+      --border-m: rgba(212,190,150,0.28);
+      --gold: #d4be96;
+      --gold2: #e8d8b8;
+      --gold3: #f0e8d0;
+      --rose: #e8b4b4;
+      --teal: #a8e0d8;
+      --white: #f8f4ee;
+      --mid: rgba(248,244,238,0.65);
+      --soft: rgba(248,244,238,0.38);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--void);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 50%, rgba(212,190,150,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(168,224,216,0.04) 0%, transparent 60%);
+    }
+    .hero-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 24px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .hero-tag::before {
+      content: ''; width: 48px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .hero-pre {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(14px, 2vw, 18px);
+      font-style: italic; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 900; line-height: 0.88;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+    .hero-title .outline {
+      -webkit-text-stroke: 1px var(--gold2);
+      color: transparent;
+    }
+    .hero-sub {
+      font-size: 15px; color: var(--mid);
+      max-width: 520px; line-height: 1.7;
+      margin-bottom: 40px;
+    }
+    .hero-chips {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .chip {
+      padding: 8px 16px;
+      border: 1px solid var(--border-m);
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    /* diagonal rule */
+    .hero-rule {
+      position: absolute; right: 80px; top: 50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: rgba(212,190,150,0.25);
+    }
+
+    /* ── SECTION ── */
+    .section { padding: 80px; }
+    .inner { max-width: 1100px; margin: 0 auto; }
+    .sec-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 14px;
+    }
+    .sec-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to right, var(--border-m), transparent);
+      max-width: 160px;
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700; line-height: 1.05;
+      margin-bottom: 40px;
+    }
+    .sec-title em { font-style: italic; color: var(--gold); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+    .strip-stat {
+      background: var(--s1);
+      padding: 28px 24px; text-align: center;
+    }
+    .strip-n {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 900;
+      color: var(--gold2); display: block; line-height: 1;
+    }
+    .strip-n .up {
+      font-size: 14px; color: var(--teal);
+      font-family: 'Space Mono', monospace;
+      vertical-align: super;
+    }
+    .strip-l {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--soft); display: block; margin-top: 6px;
+    }
+
+    /* ── AUDIENCE PANEL ── */
+    .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
+    .aud-panel {
+      background: var(--s1); border: 1px solid var(--border);
+      padding: 32px;
+    }
+    .aud-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .aud-row {
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .aud-row:last-child { border-bottom: none; }
+    .aud-label { font-size: 12px; color: var(--mid); }
+    .aud-val { font-size: 14px; font-weight: 500; color: var(--white); }
+    .aud-val .badge-g {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; padding: 2px 7px;
+      background: rgba(168,224,216,0.1);
+      color: var(--teal);
+      border: 1px solid rgba(168,224,216,0.2);
+      margin-left: 6px;
+    }
+    .platform-row { display: flex; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .platform-row:last-child { border-bottom: none; }
+    .p-icon { font-size: 18px; width: 28px; }
+    .p-info { flex: 1; }
+    .p-name { font-size: 12px; font-weight: 500; }
+    .p-handle { font-size: 10px; color: var(--soft); font-family: 'Space Mono', monospace; }
+    .p-count { font-size: 12px; color: var(--gold); font-family: 'Space Mono', monospace; }
+
+    /* ── TREATMENT SECTION ── */
+    .treatment-bg { background: var(--s1); }
+    .treatment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .treatment-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 28px;
+      position: relative; overflow: hidden;
+    }
+    .treatment-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+    .tc-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+    .tc-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .tc-desc { font-size: 12px; color: var(--mid); line-height: 1.6; }
+    .tc-tag {
+      display: inline-block; margin-top: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 3px 10px;
+      background: rgba(212,190,150,0.07);
+      border: 1px solid var(--border-m);
+      color: var(--gold);
+    }
+
+    /* ── DELIVERABLES ── */
+    .deliverables-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .del-card {
+      background: var(--s1); border: 1px solid var(--border);
+      padding: 24px; text-align: center;
+    }
+    .del-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 900;
+      color: var(--gold2); line-height: 1;
+    }
+    .del-label { font-size: 13px; font-weight: 500; margin: 8px 0 6px; }
+    .del-desc { font-size: 11px; color: var(--soft); line-height: 1.5; }
+
+    /* ── PHASES ── */
+    .phase-flow { display: flex; flex-direction: column; gap: 0; }
+    .phase {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 0; position: relative;
+    }
+    .phase-num-col {
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .phase-circle {
+      width: 48px; height: 48px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--gold); flex-shrink: 0;
+      background: var(--bg);
+      position: relative; z-index: 1;
+    }
+    .phase-line {
+      flex: 1; width: 2px;
+      background: var(--border);
+      margin: 4px 0;
+    }
+    .phase:last-child .phase-line { display: none; }
+    .phase-content {
+      padding: 0 0 40px 24px;
+    }
+    .phase-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700;
+      margin-bottom: 8px; padding-top: 8px;
+    }
+    .phase-body { font-size: 13px; color: var(--mid); line-height: 1.7; }
+    .phase-body ul { padding-left: 16px; margin-top: 10px; }
+    .phase-body ul li { margin-bottom: 6px; }
+    .phase-tag {
+      display: inline-block; margin-top: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 4px 12px;
+      border: 1px solid var(--border-m);
+      color: var(--gold);
+    }
+
+    /* ── VALUE TABLE ── */
+    .value-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .value-cell {
+      background: var(--s1); padding: 32px;
+    }
+    .vc-head {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .vc-list { display: flex; flex-direction: column; gap: 10px; }
+    .vc-item {
+      display: flex; gap: 10px; font-size: 13px; color: var(--mid);
+    }
+    .vc-item::before { content: '✦'; color: var(--gold); font-size: 8px; margin-top: 4px; flex-shrink: 0; }
+
+    /* ── TARGET BOX ── */
+    .target-box {
+      background: var(--s2);
+      border: 1px solid var(--gold);
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .target-box::before {
+      content: '★';
+      position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+      font-size: 40px; color: var(--gold); opacity: 0.1;
+    }
+    .target-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .target-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px; font-weight: 900;
+      color: var(--gold2); line-height: 1;
+    }
+    .target-sub { font-size: 14px; color: var(--mid); margin-top: 8px; }
+    .target-or {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; color: var(--soft);
+      margin: 16px 0;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-m), transparent);
+      margin: 0 80px;
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      padding: 80px;
+      text-align: center;
+    }
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 4vw, 60px);
+      font-weight: 900; margin-bottom: 16px;
+    }
+    .cta-title em { font-style: italic; color: var(--gold); }
+    .cta-sub { font-size: 15px; color: var(--mid); margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-g {
+      padding: 16px 36px;
+      background: var(--gold);
+      color: var(--void);
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-g:hover { background: var(--gold2); transform: translateY(-2px); }
+    .btn-o {
+      padding: 15px 36px;
+      border: 1px solid var(--border-m);
+      color: var(--gold);
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-o:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 80px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+    }
+    .footer-brand em { font-style: italic; color: var(--gold); }
+    .footer-copy { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--soft); letter-spacing: 0.1em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero, .section, .cta-section { padding: 60px 32px; }
+      footer { padding: 32px; }
+      .divider { margin: 0 32px; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .audience-grid, .treatment-grid, .value-grid { grid-template-columns: 1fr; }
+      .deliverables-grid { grid-template-columns: 1fr 1fr; }
+      .phase { grid-template-columns: 60px 1fr; }
+    }
+    @media (max-width: 540px) {
+      .hero, .section, .cta-section { padding: 48px 20px; }
+      footer { padding: 24px 20px; }
+      .divider { margin: 0 20px; }
+      .deliverables-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="lexi-concierge.css"/>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <p class="hero-tag">Collaboration Proposal · Confidential</p>
+  <p class="hero-pre">Lexi Lucks × Celine Med Spa</p>
+  <h1 class="hero-title">
+    Performance-Based<br>
+    <span class="outline">Aesthetic</span><br>
+    Partnership
+  </h1>
+  <p class="hero-sub">A results-first collaboration model that removes upfront risk, aligns incentives with measurable outcomes, and builds evergreen content that drives bookings long after the campaign ends.</p>
+  <div class="hero-chips">
+    <span class="chip">CO₂ Laser Resurfacing</span>
+    <span class="chip">Transformation Series</span>
+    <span class="chip">140K+ Cross-Platform Views (90d)</span>
+    <span class="chip">+51.2% Reach Growth · 10K Accounts</span>
+    <span class="chip">55K+ Combined Followers</span>
+  </div>
+  <div class="hero-rule">Confidential Partnership Proposal · 2026</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ REACH & AUDIENCE ══ -->
+<section class="section">
+  <div class="inner">
+    <p class="sec-label">01 · Audience + Reach</p>
+    <h2 class="sec-title">Why This <em>Audience</em> Converts</h2>
+
+    <div class="stats-strip">
+      <div class="strip-stat">
+        <span class="strip-n">55K<span class="up">+</span></span>
+        <span class="strip-l">Combined Followers</span>
+      </div>
+      <div class="strip-stat">
+        <span class="strip-n">140K<span class="up">+</span></span>
+        <span class="strip-l">Cross-Platform Views (90d)</span>
+      </div>
+      <div class="strip-stat">
+        <span class="strip-n">10,052</span>
+        <span class="strip-l">Accounts Reached</span>
+      </div>
+      <div class="strip-stat">
+        <span class="strip-n">+51<span class="up">%</span></span>
+        <span class="strip-l">Reach Growth (90d)</span>
+      </div>
+    </div>
+
+    <!-- 90-day framing callout -->
+    <div style="background:rgba(212,190,150,0.07);border:1px solid rgba(212,190,150,0.3);padding:24px 32px;margin-bottom:32px;display:flex;gap:24px;align-items:center">
+      <div style="font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--gold2);line-height:1;flex-shrink:0">90</div>
+      <div>
+        <p style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Why 90-Day Data Matters More</p>
+        <p style="font-size:13px;color:var(--mid);line-height:1.7">These aren't spike numbers from a single viral post — this is <strong style="color:var(--white)">sustained, consistent reach over 90 days</strong> showing that Lexi's audience is real, growing, and engaged month after month. A CO₂ transformation series will compound on top of this baseline, not replace it.</p>
+      </div>
+    </div>
+    <div class="audience-grid">
+      <div class="aud-panel">
+        <p class="aud-title">Instagram · @lexilucksofficial · Jan–Apr 2026 (90 Days)</p>
+        <div class="aud-row">
+          <span class="aud-label">Total Views (90 days)</span>
+          <span class="aud-val">69,205</span>
+        </div>
+        <div class="aud-row">
+          <span class="aud-label">Accounts Reached</span>
+          <span class="aud-val">10,052 <span class="badge-g">+51.2%</span></span>
+        </div>
+        <div class="aud-row">
+          <span class="aud-label">Non-Follower Discovery</span>
+          <span class="aud-val">53.4%</span>
+        </div>
+        <div class="aud-row">
+          <span class="aud-label">Top Content Format</span>
+          <span class="aud-val">Posts (52.2%)</span>
+        </div>
+        <div class="aud-row">
+          <span class="aud-label">Stories Reach</span>
+          <span class="aud-val">37.2%</span>
+        </div>
+        <div class="aud-row" style="background:rgba(212,190,150,0.05);margin-top:8px;padding:10px 0">
+          <span class="aud-label" style="color:var(--gold)">All-Platform Views (90 days)</span>
+          <span class="aud-val" style="color:var(--gold2)">140K+</span>
+        </div>
+      </div>
+      <div class="aud-panel">
+        <p class="aud-title">Full Platform Network</p>
+        <div class="platform-row">
+          <span class="p-icon">📸</span>
+          <div class="p-info">
+            <div class="p-name">@lexilucksofficial</div>
+            <div class="p-handle">Main creator · Beauty, Lifestyle, Gaming</div>
+          </div>
+          <span class="p-count">Growing</span>
+        </div>
+        <div class="platform-row">
+          <span class="p-icon">🌈</span>
+          <div class="p-info">
+            <div class="p-name">@transcendfoundation</div>
+            <div class="p-handle">LGBTQ+ nonprofit community</div>
+          </div>
+          <span class="p-count">15K</span>
+        </div>
+        <div class="platform-row">
+          <span class="p-icon">💋</span>
+          <div class="p-info">
+            <div class="p-name">@mslollypopz</div>
+            <div class="p-handle">Lifestyle & entertainment</div>
+          </div>
+          <span class="p-count">15K</span>
+        </div>
+        <div class="platform-row">
+          <span class="p-icon">🎵</span>
+          <div class="p-info">
+            <div class="p-name">TikTok @lexilucksofficial</div>
+            <div class="p-handle">Short-form & viral content</div>
+          </div>
+          <span class="p-count">10K</span>
+        </div>
+        <div class="platform-row">
+          <span class="p-icon">🎮</span>
+          <div class="p-info">
+            <div class="p-name">Twitch / Kick</div>
+            <div class="p-handle">Live gaming · engaged niche community</div>
+          </div>
+          <span class="p-count">Active</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="aud-panel" style="background:rgba(212,190,150,0.04);border-color:var(--border-m)">
+      <p style="font-size:13px;color:var(--mid);line-height:1.8">
+        <strong style="color:var(--white)">Audience alignment:</strong> Lexi's core audience skews female, 25–42, LA metro and Southern California, with demonstrated interest in beauty, aesthetics, body transformation, luxury lifestyle, and self-improvement. <strong style="color:var(--gold)">53% of views come from non-followers</strong> — meaning the CO₂ transformation series would reach new potential patients, not just Lexi's existing base. This is the highest-leverage ad format for a local med spa: authentic, documented, and geo-targeted.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ TREATMENT FOCUS ══ -->
+<section class="section treatment-bg">
+  <div class="inner">
+    <p class="sec-label">02 · Treatment Focus</p>
+    <h2 class="sec-title">The <em>Transformation</em> Series</h2>
+    <div class="treatment-grid">
+      <div class="treatment-card">
+        <span class="tc-icon">⚡</span>
+        <div class="tc-name">CO₂ Laser Resurfacing</div>
+        <div class="tc-desc">Primary treatment — scar revision near hairline. A documented healing journey from consultation through final results at 3–6 months. Collagen remodeling, immediate brightening, progressive tightening.</div>
+        <span class="tc-tag">Primary Series Treatment</span>
+      </div>
+      <div class="treatment-card">
+        <span class="tc-icon">✨</span>
+        <div class="tc-name">Décolletage Rejuvenation</div>
+        <div class="tc-desc">Highly visual, dramatically photographable results. Chest skin tightening and texture improvement. Ideal for lifestyle creator content in bikini, fashion, and beach contexts.</div>
+        <span class="tc-tag">High Visual Impact</span>
+      </div>
+      <div class="treatment-card">
+        <span class="tc-icon">💎</span>
+        <div class="tc-name">Temple Sculpting</div>
+        <div class="tc-desc">Subtle but transformative. Before/after content that highlights facial contouring in a responsible, natural-looking way. Educates audience on non-surgical options.</div>
+        <span class="tc-tag">Contouring Series</span>
+      </div>
+      <div class="treatment-card">
+        <span class="tc-icon">👁️</span>
+        <div class="tc-name">Under-Eye Refinement</div>
+        <div class="tc-desc">If clinically appropriate — under-eye tightening and brightening. One of the most-searched aesthetic treatments on TikTok. Educational content drives high engagement.</div>
+        <span class="tc-tag">If Clinically Appropriate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CONTENT DELIVERABLES ══ -->
+<section class="section">
+  <div class="inner">
+    <p class="sec-label">03 · Content Deliverables</p>
+    <h2 class="sec-title">What <em>Gets Created</em></h2>
+    <div class="deliverables-grid">
+      <div class="del-card">
+        <div class="del-num">8–12</div>
+        <div class="del-label">Short-Form Videos</div>
+        <div class="del-desc">TikTok + Instagram Reels — before, during, healing, and final results</div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">15–25</div>
+        <div class="del-label">Story Frames</div>
+        <div class="del-desc">Instagram Stories with direct tags, polls, booking CTAs, and real-time healing updates</div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">3–6</div>
+        <div class="del-label">Phase Chapters</div>
+        <div class="del-desc">"Day 1 → Healing → Month 1 → Month 3 → Final Results" documentary-style series</div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">1</div>
+        <div class="del-label">Dedicated Highlight</div>
+        <div class="del-desc">"Skin Journey" permanent highlight — evergreen lead generator on Lexi's profile</div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">∞</div>
+        <div class="del-label">Evergreen Content</div>
+        <div class="del-desc">Transformation content continues to surface in search and Reels algorithm for months post-campaign</div>
+      </div>
+      <div class="del-card">
+        <div class="del-num">+</div>
+        <div class="del-label">Optional Livestream</div>
+        <div class="del-desc">Live Q&A discussion to drive deeper engagement and direct consultation bookings</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ PHASES ══ -->
+<section class="section treatment-bg">
+  <div class="inner">
+    <p class="sec-label">04 · Collaboration Structure</p>
+    <h2 class="sec-title">The <em>Three Phases</em></h2>
+    <div class="phase-flow">
+      <div class="phase">
+        <div class="phase-num-col">
+          <div class="phase-circle">1</div>
+          <div class="phase-line"></div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Initial Treatment</div>
+          <div class="phase-body">
+            Celine Med Spa provides the CO₂ resurfacing and agreed treatments at a partial or full discount. Lexi documents the full consultation and treatment day — walk-through of the clinic, pre-treatment assessment, the procedure itself (as appropriate), and immediate post-care.
+            <ul>
+              <li>Clinic tour + provider introduction content</li>
+              <li>Pre-treatment consultation walkthrough</li>
+              <li>Day-of documentation (tasteful, educational)</li>
+              <li>Immediate aftercare instructions post</li>
+            </ul>
+          </div>
+          <span class="phase-tag">Low Clinic Risk · High Content Volume</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num-col">
+          <div class="phase-circle">2</div>
+          <div class="phase-line"></div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Content Rollout + Performance Tracking</div>
+          <div class="phase-body">
+            Content is released in timed waves over 3–6 months to align with the natural healing timeline of CO₂ (immediate → 1–3 months → peak results). Each post includes direct Celine Med Spa tag, geo-targeting for local audience, and trackable booking CTA.
+            <ul>
+              <li>Week 1–2: Healing documentary (high curiosity content)</li>
+              <li>Month 1: First results check-in</li>
+              <li>Month 3: Visible transformation reveal</li>
+              <li>Month 6: Final before/after comparison</li>
+              <li>Booking link or referral code tracked throughout</li>
+            </ul>
+          </div>
+          <span class="phase-tag">Timed Release · Trackable Results</span>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-num-col">
+          <div class="phase-circle">3</div>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Performance Unlock</div>
+          <div class="phase-body">
+            Upon hitting agreed performance targets, remaining treatments (décolletage, temple, under-eye) are fully comped. Optional bonus content deliverables if performance exceeds targets. If targets aren't hit within the campaign window, we discuss extension or partial value exchange — never zero outcome for the clinic.
+          </div>
+          <div class="phase-tag">Risk Removed for Clinic</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY 50K IS EASILY ACHIEVABLE -->
+    <div style="background:rgba(212,190,150,0.05);border-left:3px solid var(--gold);padding:20px 28px;margin-bottom:32px">
+      <p style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Performance Target Analysis</p>
+      <p style="font-size:13px;color:var(--mid);line-height:1.7">At the current 90-day pace of <strong style="color:var(--white)">140,000+ views across all platforms combined (Instagram, TikTok, Twitch, YouTube)</strong>, the 50,000-view target represents less than the last 90 days of organic reach — before a transformation series, which consistently outperforms lifestyle content by 2–4× due to high curiosity and shareability. <strong style="color:var(--gold2)">This target is conservative by design.</strong></p>
+    </div>
+    <!-- TARGET BOX -->
+    <div class="target-box">
+      <p class="target-label">Performance Targets to Unlock Full Treatment Plan</p>
+      <div class="target-num">50,000</div>
+      <p class="target-sub">Total views across all campaign content</p>
+      <p class="target-or">— OR —</p>
+      <p style="font-size:16px;font-weight:500;color:var(--gold2)">Measurable booking inquiries / consultations generated</p>
+      <p style="font-size:12px;color:var(--soft);margin-top:12px">Tracked via referral code, booking link, or self-reported "heard from Lexi" at consultation</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ VALUE EXCHANGE ══ -->
+<section class="section">
+  <div class="inner">
+    <p class="sec-label">05 · Value Exchange</p>
+    <h2 class="sec-title">What Each Party <em>Receives</em></h2>
+    <div class="value-grid">
+      <div class="value-cell">
+        <div class="vc-head">Celine Med Spa Receives</div>
+        <div class="vc-list">
+          <div class="vc-item">8–12 short-form videos distributed across TikTok + Instagram Reels</div>
+          <div class="vc-item">15–25 Instagram Story frames with direct booking CTAs</div>
+          <div class="vc-item">Permanent highlight archive ("Skin Journey") on Lexi's profile</div>
+          <div class="vc-item">Direct tags in every post driving local LA / SoCal audience</div>
+          <div class="vc-item">Testimonial-grade authentic content (not scripted ads — real results)</div>
+          <div class="vc-item">Evergreen algorithm reach continuing post-campaign</div>
+          <div class="vc-item">Optional referral tracking for direct consultation attribution</div>
+          <div class="vc-item">Local client acquisition through targeted beauty/lifestyle audience</div>
+        </div>
+      </div>
+      <div class="value-cell">
+        <div class="vc-head">Lexi Lucks Receives</div>
+        <div class="vc-list">
+          <div class="vc-item">CO₂ laser resurfacing (scar revision, full or partial phase 1)</div>
+          <div class="vc-item">Décolletage rejuvenation (phase 3 unlock)</div>
+          <div class="vc-item">Temple sculpting (phase 3 unlock)</div>
+          <div class="vc-item">Under-eye refinement if clinically appropriate (phase 3 unlock)</div>
+          <div class="vc-item">High-production content from documented transformation</div>
+          <div class="vc-item">Authentic brand partnership that aligns with her personal journey</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aud-panel" style="margin-top:32px;background:rgba(212,190,150,0.04);border-color:var(--border-m)">
+      <p class="aud-title" style="margin-bottom:12px">Why This Model Works</p>
+      <p style="font-size:13px;color:var(--mid);line-height:1.8">
+        Transformation content is the <strong style="color:var(--white)">highest-trust content category in aesthetic medicine</strong> — viewers follow the full journey, not just the end result. Unlike a single sponsored post, a 6-month series creates compound algorithm reach, repeat touchpoints, and genuine community trust. The performance-based structure removes upfront financial risk for Celine while incentivizing Lexi to maximize distribution and engagement. Evergreen transformation content continues generating consultation leads 12–24 months after the campaign ends.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ CTA ══ -->
+<section class="cta-section">
+  <h2 class="cta-title">Ready to <em>Begin?</em></h2>
+  <p class="cta-sub">Let's schedule a consultation call to align on treatment timeline, content calendar, and performance tracking structure.</p>
+  <div class="cta-buttons">
+    <a href="mailto:lexi@lexilucks.com?subject=Celine Med Spa x Lexi Lucks Collaboration" class="btn-g">✦ Schedule a Call</a>
+    <a href="https://lexilucks.com/media-kit.html" target="_blank" class="btn-o">View Full Media Kit</a>
+  </div>
+  <p style="font-family:'Space Mono',monospace;font-size:9px;color:var(--soft);margin-top:28px;letter-spacing:0.15em">LEXI@LEXILUCKS.COM &nbsp;·&nbsp; (562) 754-2937 &nbsp;·&nbsp; @LEXILUCKSOFFICIAL</p>
+</section>
+
+<footer>
+  <div class="footer-brand">Lexi <em>Lucks</em> × Celine Med Spa</div>
+  <div class="footer-copy">CONFIDENTIAL PROPOSAL · 2026 · LEXILUCKS.COM</div>
+</footer>
+
+  <script src="src/lib/analytics.js" defer></script>
+  <script src="src/lib/lead-capture.js" defer></script>
+  <script src="src/lib/site-enhancements.js" defer></script>
+  <script src="lexi-concierge.js" defer></script>
+</body>
+</html>
