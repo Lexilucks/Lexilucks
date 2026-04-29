@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,700&family=Orbitron:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --hot:#FF0080;--bubble:#FF69B4;--blush:#FFB6C1;--rose-gold:#E8A0B8;
+  --hot:#FF0080;--bubble:#FF69B4;--blush:#FFB6C1;--rose-gold:#E8A0B8;--gold:#FFD700;
   --dark:#08000A;--mid:#120010;--panel:#1A001A;--border:rgba(255,105,180,.18);
   --fg:'Orbitron',monospace;--fd:'Cormorant Garamond',serif;--fb:'Raleway',sans-serif;
   --glow:0 0 25px #FF008060,0 0 60px #FF008025;
@@ -199,18 +199,133 @@ color:var(--blush);cursor:pointer;transition:all .22s;
 .qi-text{font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.5;flex:1}
 .qi-actions{display:flex;gap:.4rem;flex-shrink:0}
 
+/* ── MEDIA STUDIO PANELS ── */
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.8rem 2rem;font-family:var(--fg);font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border:none;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .3s}
+.btn-hot{background:linear-gradient(135deg,var(--hot),var(--bubble));color:#fff;box-shadow:var(--glow)}
+.btn-hot:hover{transform:translateY(-1px);box-shadow:0 0 40px #FF008080}
+.btn-hot:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-ghost{background:transparent;color:var(--blush);border:1px solid rgba(255,105,180,.35);clip-path:none}
+.btn-ghost:hover{border-color:var(--hot);color:#fff;background:rgba(255,0,128,.07)}
+.spinner{animation:spin .7s linear infinite;display:inline-block}
+.upload-zone{border:2px dashed rgba(255,105,180,.3);padding:3rem 2rem;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;background:rgba(255,0,128,.02)}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--hot);background:rgba(255,0,128,.07);box-shadow:var(--glow)}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:100px}
+.uz-icon{font-size:3rem;display:block;margin-bottom:.8rem;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.uz-title{font-family:var(--fd);font-size:1.5rem;font-style:italic;margin-bottom:.4rem}
+.uz-sub{font-size:.8rem;color:rgba(255,255,255,.35);font-weight:300}
+.uz-formats{display:flex;justify-content:center;gap:.5rem;margin-top:.8rem;flex-wrap:wrap}
+.uz-fmt{font-family:var(--fg);font-size:.42rem;letter-spacing:.1em;padding:.2rem .5rem;border:1px solid rgba(255,105,180,.2);color:rgba(255,105,180,.5)}
+.progress-wrap{margin-top:1rem;display:none}
+.progress-bar{height:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--hot),var(--bubble));width:0%;transition:width .3s;box-shadow:0 0 8px var(--hot)}
+.progress-label{font-family:var(--fg);font-size:.48rem;letter-spacing:.1em;color:var(--bubble);margin-top:.4rem;text-align:center}
+.media-preview{display:none;margin-top:1.2rem}
+.preview-player{width:100%;max-height:360px;background:#000;border:1px solid var(--border);display:block}
+.preview-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-top:.8rem}
+.meta-pill{padding:.7rem;background:rgba(255,255,255,.03);border:1px solid var(--border);text-align:center}
+.meta-label{font-family:var(--fg);font-size:.4rem;letter-spacing:.12em;color:rgba(255,105,180,.5);margin-bottom:.2rem}
+.meta-value{font-size:.8rem;color:rgba(255,255,255,.7);font-weight:500}
+.format-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:1rem}
+.fmt-card{padding:1rem;border:1px solid var(--border);text-align:center;transition:all .28s;cursor:pointer;position:relative;overflow:hidden}
+.fmt-card:hover{border-color:var(--bubble);background:rgba(255,105,180,.05)}
+.fmt-card.active{border-color:var(--hot);background:rgba(255,0,128,.1)}
+.fmt-card.active::before{content:'✓';position:absolute;top:.4rem;right:.5rem;color:var(--hot);font-family:var(--fg);font-size:.55rem}
+.fmt-icon{font-size:1.5rem;margin-bottom:.4rem;display:block}
+.fmt-name{font-family:var(--fg);font-size:.44rem;letter-spacing:.1em;color:var(--blush);margin-bottom:.2rem}
+.fmt-dims{font-size:.65rem;color:rgba(255,255,255,.3)}
+.fmt-type{font-size:.6rem;color:rgba(255,255,255,.25)}
+.pipeline{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.2rem 0}
+.step{padding:1.2rem 1rem;border:1px solid var(--border);text-align:center;position:relative;transition:all .3s}
+.step::after{content:'→';position:absolute;right:-.55rem;top:50%;transform:translateY(-50%);color:rgba(255,105,180,.3);font-size:.9rem;z-index:1}
+.step:last-child::after{display:none}
+.step.done{border-color:#7FFFD4;background:rgba(127,255,212,.04)}
+.step.done .step-icon{color:#7FFFD4}
+.step.active-step{border-color:var(--hot);background:rgba(255,0,128,.06);animation:step-pulse 1.5s ease infinite}
+@keyframes step-pulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 15px rgba(255,0,128,.3)}}
+.step-icon{font-size:1.6rem;display:block;margin-bottom:.4rem}
+.step-name{font-family:var(--fg);font-size:.44rem;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-bottom:.2rem}
+.step-status{font-size:.65rem;color:rgba(255,255,255,.3)}
+.transcript-box{padding:1rem;background:rgba(255,255,255,.03);border:1px solid var(--border);font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.75;max-height:220px;overflow-y:auto;white-space:pre-wrap;font-style:italic}
+.lib-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-top:1rem}
+.lib-item{position:relative;border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:all .28s;aspect-ratio:9/16}
+.lib-item:hover{border-color:var(--bubble);transform:scale(1.02)}
+.lib-item video,.lib-item img{width:100%;height:100%;object-fit:cover}
+.lib-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(8,0,10,.9) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:.6rem;opacity:0;transition:opacity .2s}
+.lib-item:hover .lib-overlay{opacity:1}
+.lib-name{font-family:var(--fg);font-size:.42rem;letter-spacing:.1em;color:var(--blush);margin-bottom:.3rem}
+.lib-actions{display:flex;gap:.3rem}
+.lib-btn{padding:.2rem .5rem;font-family:var(--fg);font-size:.38rem;border:1px solid var(--bubble);color:var(--bubble);background:transparent;cursor:pointer}
+.lib-type-badge{position:absolute;top:.4rem;left:.4rem;font-family:var(--fg);font-size:.38rem;padding:.15rem .4rem;background:rgba(255,0,128,.7)}
+.setup-card{padding:1.4rem;border:1px solid rgba(255,215,0,.2);background:rgba(255,215,0,.03);margin-bottom:1rem}
+.setup-title{font-family:var(--fg);font-size:.52rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.setup-tool{padding:1rem;border:1px solid var(--border);display:flex;gap:.8rem;align-items:flex-start}
+.tool-icon{font-size:1.4rem;flex-shrink:0}
+.tool-name{font-family:var(--fg);font-size:.5rem;letter-spacing:.1em;color:#fff;margin-bottom:.25rem}
+.tool-desc{font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.55;font-weight:300}
+.tool-status{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--fg);font-size:.4rem;letter-spacing:.1em;margin-top:.4rem;padding:.2rem .5rem}
+.tool-status.free{border:1px solid #7FFFD4;color:#7FFFD4}
+.tool-status.paid{border:1px solid var(--gold);color:var(--gold)}
+.tool-status.built{border:1px solid var(--hot);color:var(--hot)}
+.modal-bg{position:fixed;inset:0;background:rgba(5,0,8,.92);backdrop-filter:blur(12px);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-bg.open{opacity:1;pointer-events:all}
+.modal{background:var(--mid);border:1px solid rgba(255,105,180,.28);border-top:3px solid var(--hot);max-width:560px;width:100%;padding:2.4rem;animation:fadein .3s ease}
+.modal h3{font-family:var(--fd);font-size:1.8rem;font-style:italic;margin-bottom:.4rem}
+.modal p{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:1.4rem;font-weight:300}
+.modal-close{float:right;font-family:var(--fg);font-size:.55rem;cursor:pointer;color:rgba(255,255,255,.3);background:none;border:none;transition:color .2s}
+.modal-close:hover{color:var(--hot)}
+.connect-steps{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.4rem}
+.cs{display:flex;gap:.8rem;align-items:flex-start;padding:.8rem;border:1px solid var(--border)}
+.cs-num{font-family:var(--fg);font-size:.6rem;font-weight:900;color:var(--hot);flex-shrink:0;width:1.4rem}
+.cs-text{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.6;font-weight:300}
+.cs-text a{color:var(--bubble);border-bottom:1px solid rgba(255,105,180,.3)}
+.cs-text code{font-family:var(--fg);font-size:.7rem;color:var(--blush);background:rgba(255,105,180,.1);padding:.1rem .35rem}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
 .app{grid-template-columns:1fr;grid-template-rows:56px auto 1fr}
 .sidebar{display:none}
 .mini-stats{grid-template-columns:repeat(2,1fr)}
 .type-grid{grid-template-columns:repeat(2,1fr)}
+.format-grid{grid-template-columns:repeat(2,1fr)}
+.pipeline{grid-template-columns:1fr}
+.step::after{display:none}
+.lib-grid{grid-template-columns:repeat(2,1fr)}
+.setup-grid,.preview-meta{grid-template-columns:1fr}
 }
 </style>
 
   <link rel="stylesheet" href="lexi-concierge.css"/>
 </head>
 <body>
+
+<!-- CLOUDINARY SETUP MODAL -->
+
+<div class="modal-bg" id="setup-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSetup()">✕ CLOSE</button>
+    <h3>Connect <em>Cloudinary</em></h3>
+    <p>Cloudinary is the free cloud storage that powers your media library — upload once from any device, access everywhere. Free account gives you 25GB storage and AI transformations.</p>
+    <div class="connect-steps">
+      <div class="cs"><div class="cs-num">1</div><div class="cs-text">Go to <a href="https://cloudinary.com" target="_blank">cloudinary.com</a> and create a free account (takes 2 min)</div></div>
+      <div class="cs"><div class="cs-num">2</div><div class="cs-text">From your dashboard, copy your <code>Cloud Name</code> — it looks like <code>dxxxxxx</code></div></div>
+      <div class="cs"><div class="cs-num">3</div><div class="cs-text">Create an <strong>Upload Preset</strong>: Settings → Upload → Add Preset → set to <code>unsigned</code>, name it <code>lexilucks_media</code></div></div>
+      <div class="cs"><div class="cs-num">4</div><div class="cs-text">Paste your Cloud Name below and click Connect</div></div>
+    </div>
+    <div class="field">
+      <label>Your Cloudinary Cloud Name</label>
+      <input id="cloud-name-input" type="text" placeholder="e.g. dxxxxxx"/>
+    </div>
+    <div class="field">
+      <label>Upload Preset Name</label>
+      <input id="preset-input" type="text" value="lexilucks_media"/>
+    </div>
+    <button class="btn btn-hot" onclick="saveCloudinary()" style="width:100%;justify-content:center">✦ Connect Cloud Storage</button>
+    <p style="text-align:center;margin-top:.8rem;font-size:.65rem;color:rgba(255,255,255,.25)">Free · 25GB storage · No credit card required</p>
+  </div>
+</div>
+
 <div class="app">
 
 <!-- TOP BAR -->
@@ -220,6 +335,7 @@ color:var(--blush);cursor:pointer;transition:all .22s;
   <div class="tb-right">
     <div class="tb-stat"><strong id="posts-generated">0</strong>Posts Today</div>
     <div class="tb-stat"><strong id="queue-count">0</strong>In Queue</div>
+    <div class="tb-stat"><strong id="lib-count">0</strong>Media</div>
     <a href="index.html" class="tb-link">← Site</a>
   </div>
 </header>
@@ -255,6 +371,20 @@ color:var(--blush);cursor:pointer;transition:all .22s;
   <div class="nav-item" onclick="showView('voicesettings')" id="nav-voicesettings">
     <span class="nav-icon">👑</span> Brand Voice
   </div>
+
+  <div class="nav-section">Media</div>
+  <div class="nav-item" onclick="showView('upload')" id="nav-upload">
+    <span class="nav-icon">📤</span> Upload & Process
+  </div>
+  <div class="nav-item" onclick="showView('library')" id="nav-library">
+    <span class="nav-icon">🎬</span> Media Library
+  </div>
+  <div class="nav-item" onclick="showView('formats')" id="nav-formats">
+    <span class="nav-icon">📐</span> Platform Formats
+  </div>
+  <div class="nav-item" onclick="showView('tools')" id="nav-tools">
+    <span class="nav-icon">⚙️</span> Tools Setup
+  </div>
 </nav>
 
 <!-- MAIN CONTENT -->
@@ -271,7 +401,6 @@ color:var(--blush);cursor:pointer;transition:all .22s;
       </div>
     </div>
 
-```
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;align-items:start">
 
   <!-- LEFT: CONTROLS -->
@@ -379,7 +508,6 @@ color:var(--blush);cursor:pointer;transition:all .22s;
   </div>
 
 </div>
-```
 
   </div>
 
@@ -399,7 +527,6 @@ color:var(--blush);cursor:pointer;transition:all .22s;
       </div>
     </div>
 
-```
 <div class="card" style="margin-bottom:1rem">
   <div class="card-title">// Week Theme & Focus</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
@@ -433,7 +560,6 @@ color:var(--blush);cursor:pointer;transition:all .22s;
     <div class="queue-empty">Generate a week of content above ↑</div>
   </div>
 </div>
-```
 
   </div>
 
@@ -447,11 +573,9 @@ color:var(--blush);cursor:pointer;transition:all .22s;
       </div>
     </div>
 
-```
 <div id="hashtag-sets-container">
   <!-- Populated by JS -->
 </div>
-```
 
   </div>
 
@@ -561,6 +685,350 @@ color:var(--blush);cursor:pointer;transition:all .22s;
     <div id="voice-saved-msg" style="display:none;color:#7FFFD4;font-family:var(--fg);font-size:.55rem;letter-spacing:.15em;text-align:center;margin-top:1rem">✓ VOICE SETTINGS SAVED</div>
   </div>
 
+  <!-- ── VIEW: UPLOAD & PROCESS ── -->
+
+  <div class="view" id="view-upload">
+    <div class="page-hdr">
+      <div>
+        <h1>Upload & <em>Process</em></h1>
+        <p>Film it → upload it → send the context into the main Content Studio generator.</p>
+      </div>
+      <div class="page-hdr-actions">
+        <button class="out-btn" onclick="openSetup()">☁ Cloudinary Setup</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">// Drop Your Video or Photo</div>
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="file-input" accept="video/*,image/*" onchange="handleFileSelect(event)"/>
+        <span class="uz-icon">🎬</span>
+        <div class="uz-title">Drop your video or photo here</div>
+        <div class="uz-sub">Or tap to browse · Works from your phone camera roll</div>
+        <div class="uz-formats">
+          <span class="uz-fmt">MP4</span><span class="uz-fmt">MOV</span><span class="uz-fmt">AVI</span>
+          <span class="uz-fmt">JPG</span><span class="uz-fmt">PNG</span><span class="uz-fmt">HEIC</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="progress-label" id="progress-label">Uploading...</div>
+      </div>
+    </div>
+
+    <div class="media-preview" id="media-preview">
+      <div class="card">
+        <div class="card-title" id="preview-title">// Preview</div>
+        <div id="preview-container"></div>
+        <div class="preview-meta" id="preview-meta"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">// Tell the AI What This Is About</div>
+        <div class="field">
+          <label>What's happening in this video / photo?</label>
+          <textarea id="media-context" rows="3" placeholder="e.g. I'm in my Princess Peach cosplay at Nintendo World, feeling iconic, blue sky day..."></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+          <div class="field">
+            <label>Content Type</label>
+            <select id="media-type">
+              <option>Glam & Fashion</option>
+              <option>Gaming</option>
+              <option>Event & Party</option>
+              <option>Trans Advocacy</option>
+              <option>Stream Announcement</option>
+              <option>Miss West Hollywood</option>
+              <option>Lifestyle / Personal</option>
+              <option>Merch & Shop</option>
+              <option>Behind the Scenes</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Platforms to Format For</label>
+            <select id="media-platforms" multiple style="height:84px">
+              <option selected>Instagram Reels</option>
+              <option selected>TikTok</option>
+              <option>Instagram Feed</option>
+              <option>Twitter/X</option>
+              <option>YouTube Shorts</option>
+            </select>
+          </div>
+        </div>
+        <button class="gen-btn" id="send-media-btn" onclick="sendMediaToContentStudio()">
+          <span class="btn-text">✦ Send to Content Studio →</span>
+          <span class="spinner">⟳ Saving...</span>
+        </button>
+        <div id="media-handoff-msg" style="display:none;color:#7FFFD4;font-family:var(--fg);font-size:.55rem;letter-spacing:.15em;text-align:center;margin-top:1rem">✓ MEDIA CONTEXT LOADED IN AI GENERATOR</div>
+      </div>
+
+      <div class="pipeline" id="media-pipeline-steps">
+        <div class="step" id="step-upload">
+          <span class="step-icon">📤</span>
+          <div class="step-name">Upload</div>
+          <div class="step-status" id="ss-upload">Ready</div>
+        </div>
+        <div class="step" id="step-analyze">
+          <span class="step-icon">🔍</span>
+          <div class="step-name">AI Analyze</div>
+          <div class="step-status" id="ss-analyze">Send context</div>
+        </div>
+        <div class="step" id="step-format">
+          <span class="step-icon">📐</span>
+          <div class="step-name">Format Cuts</div>
+          <div class="step-status" id="ss-format">Guide ready</div>
+        </div>
+      </div>
+
+      <div id="media-process-results" style="display:none">
+        <div class="card" id="analysis-card">
+          <div class="card-title">// AI Content Analysis</div>
+          <div id="analysis-output" class="transcript-box"></div>
+        </div>
+
+        <div class="card" id="formats-card">
+          <div class="card-title">// Platform Format Guide</div>
+          <div id="formats-output"></div>
+          <div style="margin-top:1rem;padding:1rem;background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.15)">
+            <div style="font-family:var(--fg);font-size:.44rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.4rem">⚡ AI VIDEO EDITING — UPGRADE PATH</div>
+            <div style="font-size:.78rem;color:rgba(255,255,255,.45);line-height:1.6;font-weight:300">
+              Auto-cutting & editing your video for each platform requires a video AI tool. The two best options:<br><br>
+              <strong style="color:#fff">OpusClip</strong> — uploads your video, AI auto-clips the best 30-60 second moments for TikTok/Reels. Free tier available. <a href="https://www.opus.pro" target="_blank" style="color:var(--bubble);border-bottom:1px solid rgba(255,105,180,.3)">opus.pro</a><br><br>
+              <strong style="color:#fff">Runway ML</strong> — full AI video editor, scene removal, auto-cut, effects. $15/mo. <a href="https://runwayml.com" target="_blank" style="color:var(--bubble);border-bottom:1px solid rgba(255,105,180,.3)">runwayml.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VIEW: MEDIA LIBRARY ── -->
+
+  <div class="view" id="view-library">
+    <div class="page-hdr">
+      <div>
+        <h1>Media <em>Library</em></h1>
+        <p>All your uploaded content — accessible from anywhere once Cloudinary is connected.</p>
+      </div>
+      <div class="page-hdr-actions">
+        <button class="btn btn-ghost" onclick="showView('upload')">+ Upload New</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">// Your Content</div>
+      <div class="lib-grid" id="library-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:2rem;color:rgba(255,255,255,.2)">
+          <div style="font-size:2.5rem;margin-bottom:.5rem">🎬</div>
+          <div style="font-family:var(--fg);font-size:.48rem;letter-spacing:.14em">Upload your first video or photo to start building your library</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VIEW: PLATFORM FORMATS ── -->
+
+  <div class="view" id="view-formats">
+    <div class="page-hdr">
+      <div>
+        <h1>Platform <em>Formats</em></h1>
+        <p>Exact specs for every platform — so every upload is perfect.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">// Video Formats</div>
+      <div class="format-grid">
+        <div class="fmt-card active">
+          <span class="fmt-icon">📸</span>
+          <div class="fmt-name">Instagram Reels</div>
+          <div class="fmt-dims">1080 × 1920</div>
+          <div class="fmt-type">9:16 · Max 90s · MP4</div>
+        </div>
+        <div class="fmt-card active">
+          <span class="fmt-icon">🎵</span>
+          <div class="fmt-name">TikTok</div>
+          <div class="fmt-dims">1080 × 1920</div>
+          <div class="fmt-type">9:16 · Max 10min · MP4</div>
+        </div>
+        <div class="fmt-card">
+          <span class="fmt-icon">📺</span>
+          <div class="fmt-name">YouTube Shorts</div>
+          <div class="fmt-dims">1080 × 1920</div>
+          <div class="fmt-type">9:16 · Max 60s · MP4</div>
+        </div>
+        <div class="fmt-card">
+          <span class="fmt-icon">🐦</span>
+          <div class="fmt-name">Twitter/X Video</div>
+          <div class="fmt-dims">1280 × 720</div>
+          <div class="fmt-type">16:9 · Max 2:20 · MP4</div>
+        </div>
+        <div class="fmt-card">
+          <span class="fmt-icon">📘</span>
+          <div class="fmt-name">Facebook Reels</div>
+          <div class="fmt-dims">1080 × 1920</div>
+          <div class="fmt-type">9:16 · Max 90s · MP4</div>
+        </div>
+        <div class="fmt-card">
+          <span class="fmt-icon">🟣</span>
+          <div class="fmt-name">Twitch Clip</div>
+          <div class="fmt-dims">1920 × 1080</div>
+          <div class="fmt-type">16:9 · Max 60s · MP4</div>
+        </div>
+        <div class="fmt-card">
+          <span class="fmt-icon">🔲</span>
+          <div class="fmt-name">Instagram Feed</div>
+          <div class="fmt-dims">1080 × 1080</div>
+          <div class="fmt-type">1:1 · Max 60s · MP4</div>
+        </div>
+        <div class="fmt-card">
+          <span class="fmt-icon">📷</span>
+          <div class="fmt-name">IG Story / Photo</div>
+          <div class="fmt-dims">1080 × 1920</div>
+          <div class="fmt-type">9:16 · Max 15s · JPG/MP4</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">// Pro Tips for Mass Production</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem">
+        <div style="padding:1rem;border:1px solid var(--border)">
+          <div style="font-family:var(--fg);font-size:.46rem;letter-spacing:.12em;color:var(--bubble);margin-bottom:.5rem">📱 FILM VERTICAL ALWAYS</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;font-weight:300">Always film in 9:16 portrait mode. One vertical video → TikTok, Reels, YouTube Shorts, Stories. One horizontal → Twitch clips, Twitter, YouTube. Never waste a shoot.</div>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border)">
+          <div style="font-family:var(--fg);font-size:.46rem;letter-spacing:.12em;color:var(--bubble);margin-bottom:.5rem">⚡ BATCH IN ONE OUTFIT</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;font-weight:300">Film 10-15 clips in one outfit session. Upload all at once. AI generates unique captions for each. That's a month of content from one afternoon shoot.</div>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border)">
+          <div style="font-family:var(--fg);font-size:.46rem;letter-spacing:.12em;color:var(--bubble);margin-bottom:.5rem">🎯 HOOK IN FIRST 2 SECONDS</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;font-weight:300">TikTok and Reels live or die in the first 2 seconds. Start mid-action, with a reaction, or with text overlay. The AI will write your hook in the generator — you just have to nail the opening shot.</div>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border)">
+          <div style="font-family:var(--fg);font-size:.46rem;letter-spacing:.12em;color:var(--bubble);margin-bottom:.5rem">💗 REPURPOSE EVERYTHING</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;font-weight:300">One video → post to TikTok, Reels, YouTube Shorts, story highlights. One photo → Instagram post, Twitter, Facebook, Discord. The studio sends context into one copy engine for platform-specific output.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VIEW: TOOLS SETUP ── -->
+
+  <div class="view" id="view-tools">
+    <div class="page-hdr">
+      <div>
+        <h1>Tools <em>Setup</em></h1>
+        <p>What's built in, what needs connecting, and what's optional.</p>
+      </div>
+    </div>
+
+    <div class="setup-card">
+      <div class="setup-title">✦ What You Can Do Right Now — No Setup Needed</div>
+      <div class="setup-grid">
+        <div class="setup-tool">
+          <div class="tool-icon">✍️</div>
+          <div>
+            <div class="tool-name">AI Caption Generator</div>
+            <div class="tool-desc">Generates captions, hooks, hashtags, and copy from Lexi's brand voice. Works with local fallbacks now and can connect to Claude through a secure proxy.</div>
+            <div class="tool-status built">✓ Proxy Ready</div>
+          </div>
+        </div>
+        <div class="setup-tool">
+          <div class="tool-icon">📐</div>
+          <div>
+            <div class="tool-name">Platform Format Guide</div>
+            <div class="tool-desc">Exact specs for every platform. The studio tells you exactly how to export every clip for every destination with zero wasted effort.</div>
+            <div class="tool-status built">✓ Built In</div>
+          </div>
+        </div>
+        <div class="setup-tool">
+          <div class="tool-icon">🏷️</div>
+          <div>
+            <div class="tool-name">Hashtag Arsenal</div>
+            <div class="tool-desc">6 pre-loaded sets of 15+ hashtags — Glam, Gaming, Trans Pride, Events, Miss West Hollywood, Streaming. One click to copy any set.</div>
+            <div class="tool-status built">✓ Built In</div>
+          </div>
+        </div>
+        <div class="setup-tool">
+          <div class="tool-icon">📋</div>
+          <div>
+            <div class="tool-name">Post Queue & Calendar</div>
+            <div class="tool-desc">Save every generated post. View your content calendar. Copy in bulk when you're ready to schedule. All local, no account needed.</div>
+            <div class="tool-status built">✓ Built In</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-card" style="border-color:rgba(127,255,212,.2);background:rgba(127,255,212,.02)">
+      <div class="setup-title" style="color:#7FFFD4">☁ Free Setup — 15 Minutes</div>
+      <div class="setup-grid">
+        <div class="setup-tool">
+          <div class="tool-icon">☁️</div>
+          <div>
+            <div class="tool-name">Cloudinary Media Library</div>
+            <div class="tool-desc">Upload photos and videos from your phone or any device. 25GB free. Your media lives in the cloud — accessible everywhere, never touches your computer storage again.</div>
+            <div class="tool-status free" id="cloud-status">Free · 25GB</div>
+            <br/>
+            <button class="btn btn-ghost" style="font-size:.5rem;padding:.4rem .9rem" onclick="openSetup()">Connect Now →</button>
+          </div>
+        </div>
+        <div class="setup-tool">
+          <div class="tool-icon">🔊</div>
+          <div>
+            <div class="tool-name">Auto-Transcription (AssemblyAI)</div>
+            <div class="tool-desc">Upload a video and AI transcribes everything you say. Used to auto-generate captions and give the AI context about your video content. Free tier: 100 hours/month.</div>
+            <div class="tool-status free">Free Tier · 100hr/mo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="setup-card" style="border-color:rgba(255,215,0,.2);background:rgba(255,215,0,.02)">
+      <div class="setup-title">⚡ Paid Upgrades — When You're Ready to Scale</div>
+      <div class="setup-grid">
+        <div class="setup-tool">
+          <div class="tool-icon">✂️</div>
+          <div>
+            <div class="tool-name">OpusClip — AI Auto-Clipper</div>
+            <div class="tool-desc">Upload a long video and AI finds the most viral 30-90 second moments, auto-cuts them, adds captions, and formats for TikTok/Reels/Shorts. This is the closest thing to "AI editing" available right now.</div>
+            <div class="tool-status paid">Free tier · $15+/mo for bulk</div>
+            <br/><a href="https://www.opus.pro" target="_blank" style="font-family:var(--fg);font-size:.44rem;letter-spacing:.1em;color:var(--bubble);border-bottom:1px solid rgba(255,105,180,.25)">opus.pro →</a>
+          </div>
+        </div>
+        <div class="setup-tool">
+          <div class="tool-icon">🎬</div>
+          <div>
+            <div class="tool-name">Runway ML — AI Video Editor</div>
+            <div class="tool-desc">Professional-grade AI video editing. Remove backgrounds, auto-cut scenes, add motion effects, generate b-roll. The most powerful AI video tool available.</div>
+            <div class="tool-status paid">From $15/mo</div>
+            <br/><a href="https://runwayml.com" target="_blank" style="font-family:var(--fg);font-size:.44rem;letter-spacing:.1em;color:var(--bubble);border-bottom:1px solid rgba(255,105,180,.25)">runwayml.com →</a>
+          </div>
+        </div>
+        <div class="setup-tool">
+          <div class="tool-icon">💬</div>
+          <div>
+            <div class="tool-name">Auto Captions / Subtitles</div>
+            <div class="tool-desc">Kapwing or CapCut (both free tiers) add animated captions directly to your video. Essential for TikTok and Reels — 80% of people watch without sound.</div>
+            <div class="tool-status free">Free tiers available</div>
+            <br/><a href="https://www.kapwing.com" target="_blank" style="font-family:var(--fg);font-size:.44rem;letter-spacing:.1em;color:var(--bubble);border-bottom:1px solid rgba(255,105,180,.25)">kapwing.com →</a>
+          </div>
+        </div>
+        <div class="setup-tool">
+          <div class="tool-icon">📅</div>
+          <div>
+            <div class="tool-name">Scheduling (Later / Buffer)</div>
+            <div class="tool-desc">Once your content is generated and formatted, Later or Buffer lets you schedule posts to Instagram, TikTok, and Twitter automatically — set it and forget it. Free tier posts 10/mo.</div>
+            <div class="tool-status free">Free tiers · $18+/mo for unlimited</div>
+            <br/><a href="https://later.com" target="_blank" style="font-family:var(--fg);font-size:.44rem;letter-spacing:.1em;color:var(--bubble);border-bottom:1px solid rgba(255,105,180,.25)">later.com →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
 </div>
 
@@ -570,6 +1038,10 @@ let queue = JSON.parse(localStorage.getItem('ll-queue') || '[]');
 let postsToday = parseInt(localStorage.getItem('ll-posts-today') || '0');
 let calDate = new Date();
 let voiceSettings = JSON.parse(localStorage.getItem('ll-voice') || 'null');
+let mediaLibrary = JSON.parse(localStorage.getItem('ll-media') || '[]');
+let currentFile = null;
+let currentFileURL = null;
+let cloudinaryConfig = JSON.parse(localStorage.getItem('ll-cloudinary') || 'null');
 
 // ── DEFAULT VOICE ──
 const DEFAULT_VOICE = `You are writing social media content for Lexi Lucks — actress, producer, gaming creator, Miss West Hollywood USA, and founder of Transcend Foundation. Her voice is confident, celebratory, inclusive, playful with edge, professional when needed, and authentic. She owns her story without self-deprecation, lifts LGBTQ+ community, and mixes gaming/streaming culture with polished LA creator energy.
@@ -592,6 +1064,7 @@ function showView(name) {
   if (name === 'hashtags') renderHashtags();
   if (name === 'templates') renderTemplates();
   if (name === 'queue') renderQueue();
+  if (name === 'library') renderLibrary();
 }
 
 // ── CHIP SELECTION ──
@@ -1016,8 +1489,364 @@ function saveVoice() {
   setTimeout(() => msg.style.display = 'none', 2000);
 }
 
+// ── MEDIA UPLOAD + LIBRARY ──
+function initMediaUpload() {
+  const zone = document.getElementById('upload-zone');
+  const modal = document.getElementById('setup-modal');
+  if (zone) {
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) processFileSelection(file);
+    });
+  }
+  if (modal) {
+    modal.addEventListener('click', function(e){ if(e.target===this) closeSetup(); });
+  }
+}
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) processFileSelection(file);
+}
+
+function processFileSelection(file) {
+  currentFile = file;
+  if (currentFileURL) URL.revokeObjectURL(currentFileURL);
+  currentFileURL = URL.createObjectURL(file);
+
+  const progressWrap = document.getElementById('progress-wrap');
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+  if (progressWrap) {
+    progressWrap.style.display = 'block';
+    progressFill.style.width = '100%';
+    progressLabel.textContent = 'Preview ready';
+    setTimeout(() => { progressWrap.style.display = 'none'; progressFill.style.width = '0%'; }, 900);
+  }
+
+  const previewContainer = document.getElementById('preview-container');
+  const isVideo = file.type.startsWith('video/');
+  if (isVideo) {
+    previewContainer.innerHTML = `<video class="preview-player" controls src="${currentFileURL}"></video>`;
+  } else {
+    previewContainer.innerHTML = `<img class="preview-player" src="${currentFileURL}" alt="Uploaded media preview" style="max-height:400px;width:auto;margin:0 auto;object-fit:contain"/>`;
+  }
+
+  const sizeMB = (file.size / 1048576).toFixed(1);
+  document.getElementById('preview-meta').innerHTML = `
+    <div class="meta-pill"><div class="meta-label">File Name</div><div class="meta-value" style="font-size:.7rem">${escHtml(file.name.substring(0,22))}${file.name.length>22?'...':''}</div></div>
+    <div class="meta-pill"><div class="meta-label">Type</div><div class="meta-value">${escHtml((file.type.split('/')[1] || 'file').toUpperCase())}</div></div>
+    <div class="meta-pill"><div class="meta-label">Size</div><div class="meta-value">${sizeMB} MB</div></div>
+  `;
+
+  document.getElementById('preview-title').textContent = `// ${isVideo ? '🎬 Video' : '📸 Photo'} Ready`;
+  document.getElementById('media-preview').style.display = 'block';
+  resetMediaSteps();
+  document.getElementById('preview-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+async function sendMediaToContentStudio() {
+  if (!currentFile) { alert('Upload a file first!'); return; }
+
+  const btn = document.getElementById('send-media-btn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  const context = document.getElementById('media-context').value.trim();
+  const type = document.getElementById('media-type').value;
+  const platformsEl = document.getElementById('media-platforms');
+  const mediaPlatforms = [...platformsEl.selectedOptions].map(o => o.value);
+  const isVideo = currentFile.type.startsWith('video/');
+
+  try {
+    setStep('upload', 'active-step', 'Saving...');
+    if (cloudinaryConfig) {
+      await uploadToCloudinary(currentFile);
+    } else {
+      await storeLocally(currentFile);
+    }
+    setStep('upload', 'done', 'Saved ✓');
+
+    setStep('analyze', 'active-step', 'Analyzing...');
+    const analysis = await analyzeMediaContext(context, type, isVideo, mediaPlatforms);
+    setStep('analyze', 'done', 'Ready ✓');
+
+    setStep('format', 'active-step', 'Building guide...');
+    document.getElementById('formats-output').innerHTML = buildFormatGuide(mediaPlatforms, isVideo);
+    setStep('format', 'done', 'Ready ✓');
+
+    document.getElementById('analysis-output').textContent = analysis;
+    document.getElementById('media-process-results').style.display = 'block';
+    loadMediaContextIntoGenerator(context, type, mediaPlatforms, analysis);
+    showView('generate');
+  } catch (err) {
+    alert(`Media handoff hit a snag: ${err.message}`);
+  }
+
+  btn.classList.remove('loading');
+  btn.disabled = false;
+}
+
+function loadMediaContextIntoGenerator(context, type, mediaPlatforms, analysis) {
+  const generatorType = mapMediaTypeToGeneratorType(type);
+  setGeneratorType(generatorType);
+  setGeneratorPlatforms(mediaPlatforms);
+
+  const mediaName = currentFile ? currentFile.name : 'uploaded media';
+  const mediaKind = currentFile && currentFile.type.startsWith('video/') ? 'video' : 'photo';
+  const prompt = [
+    `Uploaded ${mediaKind}: ${mediaName}`,
+    `Media content type: ${type}`,
+    `Format targets: ${mediaPlatforms.join(', ') || 'Instagram, TikTok'}`,
+    `Description: ${context || 'Use the visual content and Lexi Lucks brand voice to create platform-specific copy.'}`,
+    '',
+    `Media strategy notes: ${analysis}`
+  ].join('\n');
+
+  document.getElementById('context-input').value = prompt;
+  document.getElementById('copy-all-btn').style.display = 'none';
+  document.getElementById('output-area').innerHTML = `
+    <div style="text-align:center;padding:2rem 1rem;color:rgba(255,255,255,.25)">
+      <div style="font-size:2rem;margin-bottom:.5rem">🎬</div>
+      <div style="font-family:var(--fg);font-size:.5rem;letter-spacing:.15em;color:var(--bubble);margin-bottom:.5rem">Media context loaded</div>
+      <div style="font-size:.8rem;color:rgba(255,255,255,.45)">Choose tone and tap Generate Content when you're ready.</div>
+    </div>
+  `;
+}
+
+function mapMediaTypeToGeneratorType(type) {
+  const map = {
+    'Lifestyle / Personal': 'Personal & Lifestyle',
+    'Behind the Scenes': 'Personal & Lifestyle'
+  };
+  return map[type] || type;
+}
+
+function setGeneratorType(type) {
+  const cards = document.querySelectorAll('#type-cards .type-card');
+  let matched = false;
+  cards.forEach(card => {
+    const isMatch = card.dataset.type === type;
+    card.classList.toggle('active', isMatch);
+    matched = matched || isMatch;
+  });
+  if (!matched) {
+    cards.forEach(card => card.classList.remove('active'));
+    const fallback = document.querySelector('#type-cards .type-card[data-type="Personal & Lifestyle"]');
+    if (fallback) fallback.classList.add('active');
+  }
+}
+
+function setGeneratorPlatforms(mediaPlatforms) {
+  const mapped = new Set();
+  mediaPlatforms.forEach(platform => {
+    if (platform.includes('Instagram')) mapped.add('Instagram');
+    if (platform.includes('TikTok')) mapped.add('TikTok');
+    if (platform.includes('Twitter/X')) mapped.add('Twitter/X');
+    if (platform.includes('Facebook')) mapped.add('Facebook');
+    if (platform.includes('Twitch')) mapped.add('Twitch');
+  });
+  if (!mapped.size) mapped.add('Instagram');
+  document.querySelectorAll('#platform-chips .chip').forEach(chip => {
+    chip.classList.toggle('active', mapped.has(chip.dataset.platform));
+  });
+}
+
+function resetMediaSteps() {
+  setStep('upload', '', 'Ready');
+  setStep('analyze', '', 'Send context');
+  setStep('format', '', 'Guide ready');
+  const results = document.getElementById('media-process-results');
+  if (results) results.style.display = 'none';
+}
+
+function setStep(id, cls, status) {
+  const el = document.getElementById('step-' + id);
+  const ss = document.getElementById('ss-' + id);
+  if (el) el.className = `step ${cls}`.trim();
+  if (ss) ss.textContent = status;
+}
+
+async function uploadToCloudinary(file) {
+  if (!cloudinaryConfig) return null;
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', cloudinaryConfig.preset);
+  formData.append('cloud_name', cloudinaryConfig.cloudName);
+
+  try {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/auto/upload`, {
+      method: 'POST', body: formData
+    });
+    const data = await res.json();
+    if (data.secure_url) {
+      addToLibrary({ url: data.secure_url, publicId: data.public_id, type: file.type, name: file.name, size: file.size, date: new Date().toISOString(), source: 'cloudinary' });
+      return data.secure_url;
+    }
+  } catch(e) { console.error('Cloudinary upload error:', e); }
+  await storeLocally(file);
+  return null;
+}
+
+async function storeLocally(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      addToLibrary({ url: e.target.result, type: file.type, name: file.name, size: file.size, date: new Date().toISOString(), source: 'local' });
+      resolve(e.target.result);
+    };
+    reader.onerror = () => {
+      addToLibrary({ url: currentFileURL, type: file.type, name: file.name, size: file.size, date: new Date().toISOString(), source: 'session' });
+      resolve(currentFileURL);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function addToLibrary(item) {
+  const storedItem = { ...item, id: Date.now() };
+  mediaLibrary.unshift(storedItem);
+  if (mediaLibrary.length > 50) mediaLibrary = mediaLibrary.slice(0, 50);
+  try {
+    localStorage.setItem('ll-media', JSON.stringify(mediaLibrary));
+  } catch(e) {
+    storedItem.url = currentFileURL || storedItem.url;
+    storedItem.source = 'session';
+  }
+  updateLibraryCount();
+}
+
+function updateLibraryCount() {
+  const count = document.getElementById('lib-count');
+  if (count) count.textContent = mediaLibrary.length;
+}
+
+async function analyzeMediaContext(context, type, isVideo, platforms) {
+  const systemPrompt = `You are analyzing social media content for Lexi Lucks — actress, producer, gaming creator, Miss West Hollywood USA, and founder of Transcend Foundation. Her voice is confident, celebratory, inclusive, playful with edge, professional when needed, and authentic. Be specific, strategic, community-aware, and never generic.`;
+  const fallback = `AI Analysis:\n\nHOOK IDEA — Lead with the strongest ${isVideo ? 'motion' : 'visual'} moment first, then connect it to confidence, community, or transformation.\n\nBEST PLATFORM — ${platforms[0] || 'Instagram Reels'} based on content type and audience intent.\n\nPOSTING TIME — Tuesday-Thursday, 7-9pm EST for peak engagement.\n\nTREND ANGLE — Frame it as a Level UP moment, a LIVE/community touchpoint, or a polished creator story.\n\nREPURPOSE PLAN — Send this context through the AI Generator for platform-specific copy, then use the format guide for edits and exports.`;
+  const userPrompt = `Analyze this ${isVideo ? 'video' : 'photo'} content for social media strategy:
+
+CONTENT TYPE: ${type}
+CONTEXT: ${context || 'Content in her brand aesthetic'}
+TARGET PLATFORMS: ${platforms.join(', ')}
+
+Provide:
+1. HOOK IDEA — The perfect opening line/visual hook for this content
+2. BEST PLATFORM — Which platform this will perform best on and why
+3. POSTING TIME — Best time to post for maximum reach
+4. TREND ANGLE — Any current trends or sounds this could tap into
+5. REPURPOSE PLAN — How to get maximum posts from this single piece of content
+
+Do not write final captions here. Keep it sharp and actionable — 2-3 sentences per point max.`;
+
+  try {
+    return await callStudioAI(systemPrompt, userPrompt, fallback, 'media-analysis-studio');
+  } catch(e) {
+    return fallback;
+  }
+}
+
+function buildFormatGuide(platforms, isVideo) {
+  const specs = {
+    'Instagram Reels':   { dims:'1080×1920', ratio:'9:16', max: isVideo ? '90 seconds' : 'N/A', tip:'Start with a hook in first 2 seconds. Add captions — 85% watch without sound.' },
+    'TikTok':            { dims:'1080×1920', ratio:'9:16', max: isVideo ? '10 minutes' : 'N/A', tip:'Hook in first 3 seconds. Add trending audio. Caption overlay increases completion rate.' },
+    'Instagram Feed':    { dims:'1080×1080', ratio:'1:1',  max: isVideo ? '60 seconds' : '20MB', tip:'Square crop. First frame matters most — it is your grid thumbnail.' },
+    'Twitter/X':         { dims:'1280×720',  ratio:'16:9', max: isVideo ? '2:20 min' : '5MB', tip:'Autoplay on mute. First 3 seconds must work without sound.' },
+    'YouTube Shorts':    { dims:'1080×1920', ratio:'9:16', max: isVideo ? '60 seconds' : 'N/A', tip:'Vertical only. Title shows as overlay — make it a question or bold statement.' },
+    'Facebook Reels':    { dims:'1080×1920', ratio:'9:16', max: isVideo ? '90 seconds' : 'N/A', tip:'Reshare from Instagram Reels for zero extra effort.' },
+  };
+
+  return (platforms.length ? platforms : ['Instagram Reels', 'TikTok']).map(p => {
+    const s = specs[p] || { dims:'1080×1920', ratio:'9:16', max:'Varies', tip:'Check platform guidelines.' };
+    return `<div style="display:flex;gap:1rem;align-items:flex-start;padding:.8rem;border:1px solid var(--border);margin-bottom:.5rem">
+      <div style="font-family:var(--fg);font-size:.8rem;font-weight:900;color:var(--hot);flex-shrink:0;width:2rem;text-align:center">📐</div>
+      <div style="flex:1">
+        <div style="font-family:var(--fg);font-size:.46rem;letter-spacing:.12em;color:var(--bubble);margin-bottom:.3rem">${escHtml(p.toUpperCase())}</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,.65);font-family:var(--fg);letter-spacing:.06em">${s.dims} · ${s.ratio} · Max ${s.max}</div>
+        <div style="font-size:.76rem;color:rgba(255,255,255,.4);margin-top:.3rem;font-weight:300">💡 ${s.tip}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderLibrary() {
+  const grid = document.getElementById('library-grid');
+  const items = mediaLibrary.filter(m => m.url);
+
+  if (!items.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem;color:rgba(255,255,255,.2)">
+      <div style="font-size:2.5rem;margin-bottom:.5rem">🎬</div>
+      <div style="font-family:var(--fg);font-size:.48rem;letter-spacing:.14em">Your library is empty — upload something!</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map((item, i) => {
+    const isVideo = item.type && item.type.startsWith('video/');
+    const media = isVideo
+      ? `<video src="${escHtml(item.url)}" muted loop playsinline></video>`
+      : `<img src="${escHtml(item.url)}" alt="${escHtml(item.name || 'Uploaded media')}"/>`;
+    const safeUrl = JSON.stringify(item.url);
+    return `<div class="lib-item" onmouseenter="${isVideo ? `this.querySelector('video').play()` : ''}" onmouseleave="${isVideo ? `this.querySelector('video').pause()` : ''}">
+      ${media}
+      <div class="lib-type-badge">${isVideo ? '🎬' : '📸'}</div>
+      <div class="lib-overlay">
+        <div class="lib-name">${escHtml((item.name||'untitled').substring(0,20))}</div>
+        <div class="lib-actions">
+          <button class="lib-btn" onclick="copyLibraryUrl(this, ${safeUrl})">🔗 URL</button>
+          <button class="lib-btn" onclick="removeFromLibrary(${i})">✕</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function copyLibraryUrl(btn, url) {
+  navigator.clipboard.writeText(url).then(() => { btn.textContent = '✓'; });
+}
+
+function removeFromLibrary(i) {
+  mediaLibrary.splice(i, 1);
+  localStorage.setItem('ll-media', JSON.stringify(mediaLibrary));
+  updateLibraryCount();
+  renderLibrary();
+}
+
+function openSetup() { document.getElementById('setup-modal').classList.add('open'); }
+function closeSetup() { document.getElementById('setup-modal').classList.remove('open'); }
+
+function saveCloudinary() {
+  const cloudName = document.getElementById('cloud-name-input').value.trim();
+  const preset = document.getElementById('preset-input').value.trim();
+  if (!cloudName) { alert('Enter your Cloudinary cloud name'); return; }
+  cloudinaryConfig = { cloudName, preset };
+  localStorage.setItem('ll-cloudinary', JSON.stringify(cloudinaryConfig));
+  checkCloudinaryStatus();
+  closeSetup();
+}
+
+function checkCloudinaryStatus() {
+  const cloudNameInput = document.getElementById('cloud-name-input');
+  const presetInput = document.getElementById('preset-input');
+  const statusEl = document.getElementById('cloud-status');
+  if (!cloudinaryConfig) return;
+  if (cloudNameInput) cloudNameInput.value = cloudinaryConfig.cloudName || '';
+  if (presetInput) presetInput.value = cloudinaryConfig.preset || 'lexilucks_media';
+  if (statusEl) {
+    statusEl.textContent = '✓ Connected';
+    statusEl.className = 'tool-status free';
+  }
+}
+
 // ── INIT ──
 updateQueueCount();
+updateLibraryCount();
+checkCloudinaryStatus();
+initMediaUpload();
 document.getElementById('posts-generated').textContent = postsToday;
 </script>
 
