@@ -1,0 +1,44 @@
+{
+  "name": "lexi-text-call-funnel",
+  "version": "1.0.0",
+  "description": "Lexi Text/Call Funnel - SMS automation, payments, scheduling",
+  "main": "api/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch api/index.js",
+    "test": "mocha test/**/*.test.js --timeout 5000 --exit",
+    "test:watch": "mocha test/**/*.test.js --watch",
+    "test:coverage": "nyc mocha test/**/*.test.js",
+    "build": "npm run lint && npm run test",
+    "lint": "eslint src/ api/ test/ --fix",
+    "start": "node api/index.js",
+    "migrate": "node scripts/migrate.js"
+  },
+  "keywords": [
+    "sms",
+    "twilio",
+    "stripe",
+    "supabase",
+    "fan-engagement"
+  ],
+  "author": "Lexi",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "twilio": "^4.0.0",
+    "stripe": "^13.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "eslint": "^8.50.0",
+    "nyc": "^15.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

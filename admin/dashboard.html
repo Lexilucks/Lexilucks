@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexi Concierge | Admin</title>
+  <style>
+    :root {
+      --bg: #111;
+      --surface: #222;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --primary: #c29b7a;
+      --primary-hover: #e0b48c;
+      --border: #333;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 { color: var(--primary); }
+    .container { max-width: 1000px; margin: 0 auto; }
+    
+    #login-section {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: 100px auto;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background: #000;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    button {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover { background: var(--primary-hover); }
+    
+    #dashboard-section { display: none; }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background: var(--surface);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background-color: #1a1a1a;
+      color: var(--primary);
+    }
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .status-paid { background: rgba(194, 155, 122, 0.2); color: var(--primary); }
+    .status-scheduled { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .status-completed { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+    
+    .action-btn {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      width: auto;
+    }
+    .action-btn:hover {
+      background: var(--primary);
+      color: #000;
+    }
+    
+    .error { color: #ef4444; margin-top: 10px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <div id="login-section">
+    <h2>Admin Login</h2>
+    <input type="password" id="admin-key" placeholder="Enter Admin Secret Key">
+    <button onclick="login()">Enter Dashboard</button>
+    <div id="login-error" class="error"></div>
+  </div>
+
+  <div id="dashboard-section">
+    <h1>Lexi Concierge Requests</h1>
+    <p style="color: var(--text-muted)">Manage and fulfill pending fan requests.</p>
+    
+    <table id="requests-table">
+      <thead>
+        <tr>
+          <th>ID / Date</th>
+          <th>Phone</th>
+          <th>Package</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="requests-body">
+        <!-- Rows populated via JS -->
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  let authKey = localStorage.getItem('lexi_admin_key');
+
+  if (authKey) {
+    loadDashboard();
+  }
+
+  async function login() {
+    const key = document.getElementById('admin-key').value;
+    if (!key) return;
+    
+    authKey = key;
+    await loadDashboard();
+  }
+
+  async function loadDashboard() {
+    try {
+      const res = await fetch('/api/admin/requests', {
+        headers: { 'Authorization': `Bearer ${authKey}` }
+      });
+
+      if (!res.ok) {
+        throw new Error('Unauthorized');
+      }
+
+      const { data } = await res.json();
+      
+      localStorage.setItem('lexi_admin_key', authKey);
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('dashboard-section').style.display = 'block';
+      
+      renderTable(data);
+      
+    } catch (err) {
+      document.getElementById('login-error').innerText = 'Invalid key or unauthorized.';
+      localStorage.removeItem('lexi_admin_key');
+      authKey = null;
+    }
+  }
+
+  function renderTable(requests) {
+    const tbody = document.getElementById('requests-body');
+    tbody.innerHTML = '';
+    
+    if (!requests || requests.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">No active requests found.</td></tr>';
+      return;
+    }
+
+    requests.forEach(req => {
+      const date = new Date(req.created_at).toLocaleDateString();
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div style="font-size:0.8rem; color:var(--text-muted)">${req.id.split('_')[1] || req.id}</div>
+          <div>${date}</div>
+        </td>
+        <td>${req.phone_number}</td>
+        <td><strong>${req.package_type}</strong></td>
+        <td><span class="status-badge status-${req.status}">${req.status}</span></td>
+        <td>
+          ${req.status !== 'completed' ? `<button class="action-btn" onclick="fulfill('${req.id}')">Mark Complete</button>` : '<em>Done</em>'}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  async function fulfill(id) {
+    if (!confirm('Mark this request as complete?')) return;
+
+    try {
+      const res = await fetch('/api/admin/fulfill', {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${authKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          requestId: id,
+          action: 'complete',
+          note: 'Fulfilled via admin dashboard.'
+        })
+      });
+
+      if (res.ok) {
+        alert('Request fulfilled!');
+        loadDashboard(); // reload table
+      } else {
+        alert('Failed to fulfill request.');
+      }
+    } catch (err) {
+      alert('Error connecting to server.');
+    }
+  }
+</script>
+
+</body>
+</html>

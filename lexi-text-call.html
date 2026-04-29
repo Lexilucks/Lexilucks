@@ -183,10 +183,37 @@
       .sticky-cta{display:grid}
       .footer-bottom{flex-direction:column}
     }
+    .age-gate-modal{position:fixed;inset:0;background:rgba(10,0,8,.95);backdrop-filter:blur(10px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:2rem}
+    .age-gate-content{background:var(--mid);border:2px solid var(--hot);padding:3rem 2rem;max-width:500px;text-align:center;box-shadow:var(--glow-hot)}
+    .age-gate-content h2{font-family:var(--fd);font-size:2.5rem;font-style:italic;margin-bottom:1rem;color:#fff}
+    .age-gate-content p{color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:2rem}
+    .age-gate-actions{display:flex;gap:1rem;justify-content:center}
+    
+    .sms-cta-section{background:linear-gradient(135deg, rgba(255,0,128,0.05), rgba(10,0,8,1)); padding:6rem 5%; text-align:center; position:relative;}
+    .sms-cta-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--hot),transparent);}
+    .sms-phone-number{font-family:var(--fg); font-size:clamp(1.8rem, 5vw, 3.5rem); font-weight:900; color:var(--bubble); letter-spacing:0.1em; margin:1.5rem 0; text-shadow: 0 0 20px rgba(255,105,180,0.4);}
+    
+    .entry-paths{display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin-top:3rem;}
+    .entry-path-card{background:rgba(255,255,255,.03); border:1px solid rgba(255,105,180,.2); padding:1.5rem; min-width:140px; text-align:center; transition:all .2s;}
+    .entry-path-card:hover{background:rgba(255,255,255,.06); border-color:var(--hot); transform:translateY(-3px);}
+    .entry-path-card h4{font-family:var(--fg); color:var(--aqua); letter-spacing:0.15em; text-transform:uppercase; font-size:0.6rem; margin-bottom:0.5rem;}
+    .entry-path-card p{font-size:0.75rem; color:rgba(255,255,255,.5);}
   </style>
   <link rel="stylesheet" href="lexi-concierge.css"/>
 </head>
 <body>
+  <div id="age-gate" class="age-gate-modal">
+    <div class="age-gate-content">
+      <div class="label">// Verification Required</div>
+      <h2>Are you 18 or older?</h2>
+      <p>This site contains fan access packages that require you to be at least 18 years of age. Please confirm your age to continue.</p>
+      <div class="age-gate-actions">
+        <button class="btn btn-outline" onclick="window.location.href='https://google.com'">Exit</button>
+        <button class="btn btn-pink" onclick="confirmAge()">I am 18+</button>
+      </div>
+    </div>
+  </div>
+
   <nav>
     <a href="index.html" class="nav-logo">Lexi Lucks<sub>Text / Call ✦ 18+</sub></a>
     <ul class="nav-links">
@@ -203,8 +230,8 @@
     <div class="hero-content">
       <div class="age-pill">18+ Fan Access Only</div>
       <div class="label">// Text / Call Lexi Lucks</div>
-      <h1 class="h1">Choose Your <em>Access</em></h1>
-      <p class="hero-lede">Join Lexi's text list, request paid fan access, or apply for real Lexi time through text, voice, or video. <strong>Adult-only content is routed to verified platforms, not hosted here.</strong></p>
+      <h1 class="h1">Lexi <em>Concierge</em></h1>
+      <p class="hero-lede">Your dedicated <strong>Lexi Concierge</strong> is here to help you join the text list, request paid fan access, or apply for real Lexi time through text, voice, or video. <strong>Adult-only content is routed to verified platforms, not hosted here.</strong></p>
       <div class="hero-actions">
         <a href="#packages" class="btn btn-pink" data-analytics-event="text_call_package_click" data-analytics-label="Hero choose access">Choose Your Access</a>
         <a href="#request" class="btn btn-outline" data-analytics-event="text_call_form_start" data-analytics-label="Hero join text list">Join Text List</a>
@@ -220,6 +247,21 @@
   </header>
 
   <main>
+    <section id="sms-cta" class="sms-cta-section">
+      <div class="label">// Direct Line</div>
+      <h2 class="h2">Text <em>Lexi Concierge</em></h2>
+      <p>Skip the forms. Text us directly to join the list or request premium access.</p>
+      <div class="sms-phone-number" id="display-phone-number">+1 (555) 123-4567</div>
+      <p style="color:rgba(255,255,255,.4); font-size:0.75rem; letter-spacing:0.05em;">Standard message and data rates may apply. Reply STOP to opt out.</p>
+      
+      <div class="entry-paths">
+        <div class="entry-path-card"><h4>Website</h4><p>You are here</p></div>
+        <div class="entry-path-card"><h4>Instagram</h4><p>Link in bio</p></div>
+        <div class="entry-path-card"><h4>TikTok</h4><p>Link in bio</p></div>
+        <div class="entry-path-card"><h4>Text</h4><p>Direct SMS</p></div>
+      </div>
+    </section>
+
     <section id="packages">
       <div class="section-head">
         <div class="label">// Packages</div>
@@ -632,13 +674,33 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      if(localStorage.getItem('lexi.ageConfirmed') === 'true') {
+        const ageGate = document.getElementById('age-gate');
+        if(ageGate) ageGate.style.display = 'none';
+      }
+      
+      const phoneEl = document.getElementById('display-phone-number');
+      if (phoneEl && window.CONCIERGE_CONFIG && window.CONCIERGE_CONFIG.phoneNumber) {
+        phoneEl.textContent = window.CONCIERGE_CONFIG.phoneNumber;
+      }
+
       renderPackages();
       initAssistant();
       initFormTracking();
       handleOnlyFansVisibility();
       track("text_call_page_view", { page:"lexi-text-call" });
     });
+
+    function confirmAge() {
+      localStorage.setItem('lexi.ageConfirmed', 'true');
+      const ageGate = document.getElementById('age-gate');
+      if(ageGate) ageGate.style.display = 'none';
+      track("age_gate_passed");
+    }
   </script>
+  <script src="src/config/concierge.js"></script>
+  <script src="src/lib/sms-copy-templates.js"></script>
+  <script src="src/lib/analytics-events.js"></script>
   <script src="src/lib/analytics.js" defer></script>
   <script src="src/lib/lead-capture.js" defer></script>
   <script src="src/lib/site-enhancements.js" defer></script>
