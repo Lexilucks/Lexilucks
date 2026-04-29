@@ -427,7 +427,7 @@ nav{padding:.75rem 4%}
     <button class="modal-close" onclick="closeModal()" aria-label="Close membership preview">✕ CLOSE</button>
     <div id="modal-form-state">
       <div class="modal-tier-badge" id="modal-tier-label">👑 Party Network</div>
-      <h3 id="modal-title">Preview — Party Network</h3>
+      <h3 id="modal-title">Stripe Checkout</h3>
       <div class="modal-price" id="modal-price"><strong>$2.77</strong> / month</div>
       <form class="modal-form" id="sub-form" onsubmit="handleSubscribe(event)">
         <input type="hidden" id="sub-tier" name="tier" value="party-network"/>
@@ -442,14 +442,14 @@ nav{padding:.75rem 4%}
           <div class="payment-hint" id="payment-placeholder">Stripe or Patreon checkout connects here</div>
           <!-- Stripe Elements: <div id="card-element"></div> -->
         </div>
-        <button type="submit" class="modal-submit">✦ Request Membership Link</button>
-        <p class="modal-fine">Preview checkout · Stripe or Patreon can connect here · Event access is subject to capacity and eligibility</p>
+        <button type="submit" class="modal-submit">✦ Open Stripe Checkout</button>
+        <p class="modal-fine">Secure Stripe checkout · Event access is subject to capacity and eligibility</p>
       </form>
     </div>
     <div class="modal-success" id="modal-success">
       <span class="s-icon">👑</span>
-      <h4>Request Received</h4>
-      <p>Lexi's team has your membership interest. Watch your email for the checkout link, community next steps, and members-first updates.</p>
+      <h4>Opening Stripe</h4>
+      <p>Your secure checkout opens directly through Stripe. After payment, Stripe sends the receipt and confirmation to the email used at checkout.</p>
       <button class="btn btn-pink" style="margin-top:1.5rem;width:100%;justify-content:center;" onclick="closeModal()">Let's Go ✦</button>
     </div>
   </div>
@@ -564,7 +564,7 @@ nav{padding:.75rem 4%}
   <div class="mem-header">
     <div class="label">// Membership</div>
     <h2 class="h2">Choose Your <em>Access</em></h2>
-    <p>Small yeses, clear perks, and realistic member paths. Start curious, join the Party Network, or level into VIP community updates when it fits.</p>
+    <p>Clear support tiers, real checkout links, and realistic member paths. Join the Party Network or level into VIP community updates when it fits.</p>
   </div>
 
   <div class="party-banner">
@@ -577,21 +577,6 @@ nav{padding:.75rem 4%}
   </div>
 
   <div class="tier-grid">
-    <!-- CURIOSITY -->
-    <div class="tier-card">
-      <span class="tier-icon">✦</span>
-      <div class="tier-name">Curiosity Drop</div>
-      <div class="tier-freq">Teaser Tier</div>
-      <div class="tier-price"><span class="amt">$0.77</span><span class="per">/ mo</span></div>
-      <ul class="tier-perks">
-        <li class="hi">Tiny yes, real signal</li>
-        <li>Members-first update previews</li>
-        <li>Occasional behind-the-scenes drops</li>
-        <li>Public stream and event reminders</li>
-        <li>Upgrade path when perks expand</li>
-      </ul>
-      <button class="tier-btn ghost" onclick="openModal('curiosity')" data-analytics-event="patreon_tier_click" data-analytics-label="Curiosity Drop $0.77">Preview — $0.77/mo</button>
-    </div>
     <!-- PARTY NETWORK -->
     <div class="tier-card featured">
       <div class="tier-pop">✦ MOST POPULAR</div>
@@ -606,7 +591,7 @@ nav{padding:.75rem 4%}
         <li>Discord/community role when connected</li>
         <li>Behind-the-scenes drops</li>
       </ul>
-      <button class="tier-btn pink" onclick="openModal('party-network')" data-analytics-event="patreon_tier_click" data-analytics-label="Party Network $2.77">Join — $2.77/mo</button>
+      <button class="tier-btn pink" onclick="openModal('party-network')" data-analytics-event="patreon_tier_click" data-analytics-label="Party Network $2.77">Checkout — $2.77/mo</button>
     </div>
     <!-- FAN -->
     <div class="tier-card">
@@ -621,7 +606,7 @@ nav{padding:.75rem 4%}
         <li>Community perk eligibility</li>
         <li>Early merch/drop notifications</li>
       </ul>
-      <button class="tier-btn ghost" onclick="openModal('fan')" data-analytics-event="patreon_tier_click" data-analytics-label="Fan Tier $5">Preview — $5/mo</button>
+      <button class="tier-btn ghost" onclick="openModal('fan')" data-analytics-event="patreon_tier_click" data-analytics-label="Fan Tier $5">Checkout — $5/mo</button>
     </div>
     <!-- SUPPORTER -->
     <div class="tier-card">
@@ -636,7 +621,7 @@ nav{padding:.75rem 4%}
         <li>Community prompt and poll access</li>
         <li>Select private event opportunity alerts</li>
       </ul>
-      <button class="tier-btn ghost" onclick="openModal('supporter')" data-analytics-event="patreon_tier_click" data-analytics-label="Supporter $10">Preview — $10/mo</button>
+      <button class="tier-btn ghost" onclick="openModal('supporter')" data-analytics-event="patreon_tier_click" data-analytics-label="Supporter $10">Checkout — $10/mo</button>
     </div>
     <!-- VIP -->
     <div class="tier-card">
@@ -651,7 +636,7 @@ nav{padding:.75rem 4%}
         <li>Higher-priority Discord/community role</li>
         <li>Members-first merch and live updates</li>
       </ul>
-      <button class="tier-btn ghost" onclick="openModal('vip')" data-analytics-event="patreon_tier_click" data-analytics-label="VIP $20">Preview — $20/mo</button>
+      <button class="tier-btn ghost" onclick="openModal('vip')" data-analytics-event="patreon_tier_click" data-analytics-label="VIP $20">Checkout — $20/mo</button>
     </div>
     <!-- INNER CIRCLE -->
     <div class="tier-card">
@@ -666,7 +651,7 @@ nav{padding:.75rem 4%}
         <li>Closer behind-the-scenes drops</li>
         <li>Campaign and content preference polls</li>
       </ul>
-      <button class="tier-btn ghost" onclick="openModal('inner-circle')" data-analytics-event="patreon_tier_click" data-analytics-label="Inner Circle $50">Preview — $50/mo</button>
+      <button class="tier-btn ghost" onclick="openModal('inner-circle')" data-analytics-event="patreon_tier_click" data-analytics-label="Inner Circle $50">Checkout — $50/mo</button>
     </div>
   </div>
 
@@ -993,10 +978,11 @@ nav{padding:.75rem 4%}
     <div class="footer-col">
       <h4>Membership</h4>
       <ul>
-        <li><button class="footer-link" onclick="openModal('curiosity')" data-analytics-event="patreon_tier_click" data-analytics-label="Footer curiosity">Curiosity — $0.77/mo</button></li>
         <li><button class="footer-link" onclick="openModal('party-network')" data-analytics-event="patreon_tier_click" data-analytics-label="Footer party network">Party Network — $2.77/mo</button></li>
         <li><button class="footer-link" onclick="openModal('fan')" data-analytics-event="patreon_tier_click" data-analytics-label="Footer fan">Fan — $5/mo</button></li>
+        <li><button class="footer-link" onclick="openModal('supporter')" data-analytics-event="patreon_tier_click" data-analytics-label="Footer supporter">Supporter — $10/mo</button></li>
         <li><button class="footer-link" onclick="openModal('vip')" data-analytics-event="patreon_tier_click" data-analytics-label="Footer vip">VIP — $20/mo</button></li>
+        <li><button class="footer-link" onclick="openModal('inner-circle')" data-analytics-event="patreon_tier_click" data-analytics-label="Footer inner circle">Inner Circle — $50/mo</button></li>
         <li><a href="#merch">Merch Shop</a></li>
         <li><a href="#party-network">Party Network</a></li>
       </ul>
@@ -1033,28 +1019,17 @@ nav{padding:.75rem 4%}
 
 <script>
 const TIERS={
-  curiosity:{label:'✦ Curiosity Drop',name:'Curiosity Drop',priceLabel:'<strong>$0.77</strong> / month'},
-  'party-network':{label:'👑 Party Network',name:'Party Network',priceLabel:'<strong>$2.77</strong> / month'},
-  fan:{label:'💗 Fan Tier',name:'Fan Tier',priceLabel:'<strong>$5</strong> / month'},
-  supporter:{label:'💎 Supporter Tier',name:'Supporter',priceLabel:'<strong>$10</strong> / month'},
-  vip:{label:'✨ VIP Tier',name:'VIP',priceLabel:'<strong>$20</strong> / month'},
-  'inner-circle':{label:'🌟 Inner Circle',name:'Inner Circle',priceLabel:'<strong>$50</strong> / month'},
+  'party-network':{label:'👑 Party Network',name:'Party Network',priceLabel:'<strong>$2.77</strong> / month',stripeUrl:'https://buy.stripe.com/14A4gyekidfIfXobBhbAs01'},
+  fan:{label:'💗 Fan Tier',name:'Fan Tier',priceLabel:'<strong>$5</strong> / month',stripeUrl:'https://buy.stripe.com/bJeeVcgsqejM8uWeNtbAs02'},
+  supporter:{label:'💎 Supporter Tier',name:'Supporter',priceLabel:'<strong>$10</strong> / month',stripeUrl:'https://buy.stripe.com/fZu9AS4JI7VoeTk34LbAs03'},
+  vip:{label:'✨ VIP Tier',name:'VIP',priceLabel:'<strong>$20</strong> / month',stripeUrl:'https://buy.stripe.com/00w6oG0tsgrUfXogVBbAs04'},
+  'inner-circle':{label:'🌟 Inner Circle',name:'Inner Circle',priceLabel:'<strong>$50</strong> / month',stripeUrl:'https://buy.stripe.com/bJeeVc4JIcbEcLc8p5bAs00'},
 };
 
 function openModal(tier){
   const t=TIERS[tier]||TIERS['party-network'];
-  document.getElementById('modal-tier-label').textContent=t.label;
-  document.getElementById('modal-title').textContent='Preview — '+t.name;
-  document.getElementById('modal-price').innerHTML=t.priceLabel;
-  document.getElementById('sub-tier').value=tier;
-  document.getElementById('modal-form-state').style.display='block';
-  document.getElementById('modal-success').style.display='none';
-  const btn=document.querySelector('.modal-submit');
-  btn.textContent='✦ Request Membership Link';
-  btn.disabled=false;
-  document.getElementById('modal').classList.add('open');
-  document.body.style.overflow='hidden';
-  window.LexiAnalytics?.track(window.LexiAnalytics.EVENTS.PATREON_TIER_CLICK,{tier:tier,source:'membership_modal'});
+  window.LexiAnalytics?.track(window.LexiAnalytics.EVENTS.PATREON_TIER_CLICK,{tier:tier,source:'stripe_checkout'});
+  window.location.href=t.stripeUrl;
 }
 function closeModal(){
   document.getElementById('modal').classList.remove('open');
@@ -1076,25 +1051,9 @@ async function handleSubscribe(e){
     email:form.email.value,
     instagram:form.instagram.value,
   };
-  /* ─── STRIPE INTEGRATION POINT ───────────────────────────────
-     Replace this Formspree preview with Stripe Checkout, Patreon,
-     Memberful, Fourthwall, or another membership provider when the
-     live billing account and product IDs are ready. Keep the tier
-     keys above as the source of truth for analytics and fulfillment.
-  ────────────────────────────────────────────────────────────── */
-  try{
-    await fetch('https://formspree.io/f/xkopkbkr',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({...data,_subject:'💳 Membership link request — '+data.tier})
-    });
-    window.LexiAnalytics?.track(window.LexiAnalytics.EVENTS.PATREON_TIER_CLICK,{tier:data.tier,mode:'request_submitted'});
-    document.getElementById('modal-form-state').style.display='none';
-    document.getElementById('modal-success').style.display='block';
-  }catch(err){
-    btn.textContent='⟳ Retry — Something went wrong';
-    btn.disabled=false;
-  }
+  const tier=TIERS[data.tier]||TIERS['party-network'];
+  window.LexiAnalytics?.track(window.LexiAnalytics.EVENTS.PATREON_TIER_CLICK,{tier:data.tier,source:'modal_submit'});
+  window.location.href=tier.stripeUrl;
 }
 
 // Nav shrink
