@@ -7,6 +7,7 @@ const publicPages = [
   "index.html",
   "shop.html",
   "dashboard.html",
+  "lexi-text-call.html",
   "princess-protocol.html",
   "coachella2026.html",
   "coachella2026-itinerary.html",
@@ -37,7 +38,16 @@ const requiredEvents = [
   "brand_inquiry_click",
   "ai_concierge_open",
   "ai_concierge_message_submit",
-  "transcend_cta_click"
+  "transcend_cta_click",
+  "text_call_page_view",
+  "text_call_package_click",
+  "text_call_form_start",
+  "text_call_form_submit",
+  "text_call_stripe_click",
+  "text_call_onlyfans_click",
+  "text_call_ai_open",
+  "text_call_ai_message",
+  "real_lexi_upgrade_click"
 ];
 
 const failures = [];

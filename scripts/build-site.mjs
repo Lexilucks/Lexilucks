@@ -7,6 +7,7 @@ const required = [
   "index.html",
   "shop.html",
   "dashboard.html",
+  "lexi-text-call.html",
   "media-kit.html",
   "rate-card.html",
   "privacy.html",

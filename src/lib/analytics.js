@@ -15,6 +15,15 @@
     AI_CONCIERGE_OPEN: "ai_concierge_open",
     AI_CONCIERGE_MESSAGE_SUBMIT: "ai_concierge_message_submit",
     TRANSCEND_CTA_CLICK: "transcend_cta_click",
+    TEXT_CALL_PAGE_VIEW: "text_call_page_view",
+    TEXT_CALL_PACKAGE_CLICK: "text_call_package_click",
+    TEXT_CALL_FORM_START: "text_call_form_start",
+    TEXT_CALL_FORM_SUBMIT: "text_call_form_submit",
+    TEXT_CALL_STRIPE_CLICK: "text_call_stripe_click",
+    TEXT_CALL_ONLYFANS_CLICK: "text_call_onlyfans_click",
+    TEXT_CALL_AI_OPEN: "text_call_ai_open",
+    TEXT_CALL_AI_MESSAGE: "text_call_ai_message",
+    REAL_LEXI_UPGRADE_CLICK: "real_lexi_upgrade_click",
     LEAD_FORM_ERROR: "lead_form_error"
   });
 

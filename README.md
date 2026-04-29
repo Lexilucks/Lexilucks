@@ -6,6 +6,7 @@ Static production site for lexilucks.com. The site is built as HTML/CSS/JavaScri
 
 - Converts visitors into Party Network leads with email/SMS consent and attribution capture.
 - Routes fans to live streams, Discord, memberships, merch, and Patreon/subscription interest.
+- Adds an 18+ Text / Call Lexi funnel for paid fan-access requests, compliant OnlyFans routing, and future SMS/voice/video automation.
 - Routes brands to media kit, rate card, UGC, beauty, gaming, nightlife, event, LGBTQ+ campaign, and editorial collaboration paths.
 - Separates Lexi Lucks creator partnerships from Transcend Foundation/community inquiries.
 - Provides a demo-mode AI Concierge with local personalization and future API endpoint support.
@@ -16,6 +17,7 @@ Static production site for lexilucks.com. The site is built as HTML/CSS/JavaScri
 - `index.html` - primary business funnel
 - `shop.html` - affiliate, merch, and Patreon/shop hub
 - `dashboard.html` - demo/admin and fan status preview
+- `lexi-text-call.html` - 18+ text list, paid fan access, voice/video request, and OnlyFans routing funnel
 - `princess-protocol.html` - creator product funnel
 - `media-kit.html` - sponsor media kit
 - `rate-card.html` - collaboration pricing/rate card
@@ -49,3 +51,4 @@ git push origin main
 - `GROWTH_ENGINE.md` - analytics events and funnel architecture
 - `ENVIRONMENT.md` - endpoint/provider configuration
 - `TESTING.md` - checks and QA workflow
+- `TEXT_CALL_FUNNEL.md` - Text / Call Lexi setup, Stripe/Twilio/scheduling notes, and compliance checklist
