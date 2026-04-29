@@ -293,8 +293,7 @@ section{padding:5rem 4%}
         <input class="m-input" type="email" name="email" placeholder="Email Address" required/>
         <div class="pay-placeholder">
           <div class="pay-label">SECURE PAYMENT</div>
-          <div class="pay-hint" id="stripe-mount">Connect Stripe to enable payments — or use Gumroad link below</div>
-          <!-- Stripe Elements mount: <div id="card-element"></div> -->
+          <div class="pay-hint" id="stripe-mount">Secure checkout opens directly through Stripe</div>
         </div>
         <button type="submit" class="modal-submit">✦ Get Instant Access</button>
         <p class="modal-fine">Instant digital delivery · 30-day money back guarantee · Secure checkout</p>
@@ -490,12 +489,11 @@ section{padding:5rem 4%}
   <div class="section-center">
     <div class="label" style="justify-content:center;display:flex;margin-bottom:.7rem">// Kits & Pricing</div>
     <h2 class="h2">Pick Your <em class="glow">Protocol</em></h2>
-    <p>Every kit is a one-time purchase. You get the files, you deploy them, you own them forever. No subscriptions. No rev share. Yours.</p>
+      <p>Every kit is a one-time digital product purchase. You get the files, you deploy them, you own them forever. No subscriptions. No rev share. Yours.</p>
   </div>
 
   <div class="products-grid">
 
-```
 <!-- STARTER -->
 <div class="product-card">
   <span class="product-icon">⚡</span>
@@ -532,7 +530,7 @@ section{padding:5rem 4%}
     <li class="bold-item">Everything in Starter Kit</li>
     <li class="bold-item">Complete Website Kit</li>
     <li>Multi-page site — deploy in 20 min</li>
-    <li>Native subscription tiers ($15/$35/$75)</li>
+    <li>Fan support tier templates</li>
     <li>Press wall & media credentials</li>
     <li>Party network funnel system</li>
     <li>Media Studio (upload anywhere)</li>
@@ -563,8 +561,28 @@ section{padding:5rem 4%}
   </ul>
   <button class="product-btn ghost" onclick="openCheckout('media')">Get Media Kit — $47</button>
 </div>
-```
 
+<!-- MONETIZATION KIT -->
+<div class="product-card">
+  <span class="product-icon">💳</span>
+  <div class="product-name">Monetization Kit</div>
+  <div class="product-tagline">Turn attention into owned revenue paths</div>
+  <div class="product-price">
+    <span class="price-old">VALUE: $247</span>
+    <span class="price-now">$67</span><span class="price-per">one-time</span>
+  </div>
+  <ul class="product-includes">
+    <li class="bold-item">Offer ladder blueprint</li>
+    <li>Fan support tier templates</li>
+    <li>Lead capture and RSVP funnel prompts</li>
+    <li>Stripe checkout planning guide</li>
+    <li>Email/SMS consent copy kit</li>
+    <li>Discord/community perk map</li>
+    <li>Launch checklist for paid offers</li>
+    <li>Future automation notes</li>
+  </ul>
+  <button class="product-btn ghost" onclick="openCheckout('monetization')">Get Monetization Kit — $67</button>
+</div>
   </div>
 
   <!-- BUNDLE -->
@@ -671,7 +689,7 @@ section{padding:5rem 4%}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">How do I take payments for my own subscriptions?<span class="faq-arrow">▼</span></div>
-      <div class="faq-a"><div class="faq-a-inner">The monetization kit includes a detailed Stripe integration guide. Stripe is free to set up — you pay a small % only when you make a sale. Until you connect Stripe, form submissions route to your email via Formspree (also free). You're collecting leads from day one, converting them to paid members when you're ready.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">The monetization kit includes a detailed Stripe integration guide. Stripe is free to set up — you pay a small % only when you make a sale. These product kits already use direct Stripe Payment Links; fan support tiers need their own Stripe products before monthly support checkout goes live.</div></div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Can I sell this to my own audience?<span class="faq-arrow">▼</span></div>
@@ -723,6 +741,7 @@ section{padding:5rem 4%}
         <li><a href="#checkout-modal" onclick="openCheckout('starter'); return false;">Starter Kit — $27</a></li>
         <li><a href="#checkout-modal" onclick="openCheckout('creator'); return false;">Creator Kit — $97</a></li>
         <li><a href="#checkout-modal" onclick="openCheckout('media'); return false;">Media Kit — $47</a></li>
+        <li><a href="#checkout-modal" onclick="openCheckout('monetization'); return false;">Monetization Kit — $67</a></li>
         <li><a href="#checkout-modal" onclick="openCheckout('bundle'); return false;">Full Bundle — $197</a></li>
       </ul>
     </div>
@@ -745,26 +764,18 @@ section{padding:5rem 4%}
 <script>
 /* ── PRODUCTS CONFIG ── */
 const PRODUCTS = {
-  starter: { label:'⚡ Starter Kit', name:'Starter Kit', price:'<strong>$27</strong> one-time' },
-  creator: { label:'👑 Creator Kit', name:'Creator Kit', price:'<strong>$97</strong> one-time' },
-  media:   { label:'🎬 Media Kit',   name:'Media Kit',   price:'<strong>$47</strong> one-time' },
-  bundle:  { label:'✦ Full Crown Bundle', name:'Full Crown Bundle', price:'<strong>$197</strong> one-time' },
+  starter: { label:'⚡ Starter Kit', name:'Starter Kit', price:'<strong>$27</strong> one-time', stripeUrl:'https://buy.stripe.com/14A4gyekidfIfXobBhbAs01' },
+  creator: { label:'👑 Creator Kit', name:'Creator Kit', price:'<strong>$97</strong> one-time', stripeUrl:'https://buy.stripe.com/bJeeVcgsqejM8uWeNtbAs02' },
+  media:   { label:'🎬 Media Kit',   name:'Media Kit',   price:'<strong>$47</strong> one-time', stripeUrl:'https://buy.stripe.com/fZu9AS4JI7VoeTk34LbAs03' },
+  bundle:  { label:'✦ Full Crown Bundle', name:'Full Crown Bundle', price:'<strong>$197</strong> one-time', stripeUrl:'https://buy.stripe.com/00w6oG0tsgrUfXogVBbAs04' },
+  monetization: { label:'💳 Monetization Kit', name:'Monetization Kit', price:'<strong>$67</strong> one-time', stripeUrl:'https://buy.stripe.com/bJeeVc4JIcbEcLc8p5bAs00' },
 };
 
 /* ── CHECKOUT MODAL ── */
 function openCheckout(product) {
   const p = PRODUCTS[product] || PRODUCTS.bundle;
-  document.getElementById('modal-product-label').textContent = p.label;
-  document.getElementById('modal-product-name').textContent  = p.name;
-  document.getElementById('modal-product-price').innerHTML   = p.price;
-  document.getElementById('checkout-product').value          = product;
-  document.getElementById('checkout-form-state').style.display = 'block';
-  document.getElementById('checkout-success').style.display    = 'none';
-  const btn = document.querySelector('.modal-submit');
-  btn.textContent = '✦ Get Instant Access';
-  btn.disabled = false;
-  document.getElementById('checkout-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  window.LexiAnalytics?.track(window.LexiAnalytics.EVENTS.MERCH_CLICK,{product:product,source:'digital_product_checkout'});
+  window.location.href = p.stripeUrl;
 }
 function closeCheckout() {
   document.getElementById('checkout-modal').classList.remove('open');
@@ -773,23 +784,7 @@ function closeCheckout() {
 document.getElementById('checkout-modal').addEventListener('click', function(e){ if(e.target===this) closeCheckout(); });
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeCheckout(); });
 
-/* ── CHECKOUT HANDLER ──────────────────────────────────────
-   Wire Stripe here when ready.
-
-   Option A — Stripe Checkout (recommended):
-   const res = await fetch('/api/checkout', {
-     method: 'POST',
-     body: JSON.stringify({ product: data.product, email: data.email })
-   });
-   const { url } = await res.json();
-   window.location.href = url;
-
-   Gumroad alternative (instant, no backend needed):
-   Replace submit button with direct Gumroad product links:
-   Starter: https://gumroad.com/l/XXXXXX
-   Creator: https://gumroad.com/l/XXXXXX
-   Bundle:  https://gumroad.com/l/XXXXXX
-─────────────────────────────────────────────────────────── */
+/* Direct checkout is handled by openCheckout with Stripe Payment Links. */
 async function handleCheckout(e) {
   e.preventDefault();
   const btn = document.querySelector('.modal-submit');
@@ -802,19 +797,8 @@ async function handleCheckout(e) {
     lastName:  form.lastName.value,
     email:     form.email.value,
   };
-  try {
-    // Fallback: capture lead via Formspree until Stripe/Gumroad is connected
-    await fetch('https://formspree.io/f/xkopkbkr', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ ...data, _subject: '💰 Princess Protocol Purchase — ' + data.product })
-    });
-    document.getElementById('checkout-form-state').style.display = 'none';
-    document.getElementById('checkout-success').style.display    = 'block';
-  } catch(err) {
-    btn.textContent = '⟳ Retry — Something went wrong';
-    btn.disabled = false;
-  }
+  const product = PRODUCTS[data.product] || PRODUCTS.bundle;
+  window.location.href = product.stripeUrl;
 }
 
 /* ── FAQ TOGGLE ── */
