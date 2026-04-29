@@ -45,10 +45,17 @@ test("form requires 18 plus, contact consent, terms, and request details", () =>
   ].forEach((token) => assert.ok(html.includes(token), `missing ${token}`));
 });
 
-test("empty Stripe links fall back to request flow", () => {
-  assert.ok(html.includes("fanDrop: \"\""));
-  assert.ok(html.includes("Stripe link not added yet"));
-  assert.ok(html.includes("Request Access"));
+test("Stripe links are wired for paid checkout", () => {
+  [
+    "https://buy.stripe.com/9B67sKfom6Rkh1s8p5bAs05",
+    "https://buy.stripe.com/fZudR87VU3F8aD448PbAs06",
+    "https://buy.stripe.com/bJe4gyfoma3w12u6gXbAs07",
+    "https://buy.stripe.com/aFaeVc0ts3F8bH89t9bAs08",
+    "https://buy.stripe.com/9B6cN4ccagrUeTkdJpbAs09",
+    "https://buy.stripe.com/fZubJ0b864Jc9z08p5bAs0a",
+    "Secure Stripe checkout opens after validation.",
+    "Checkout"
+  ].forEach((token) => assert.ok(html.includes(token), `missing ${token}`));
 });
 
 test("OnlyFans route is present and tracked", () => {

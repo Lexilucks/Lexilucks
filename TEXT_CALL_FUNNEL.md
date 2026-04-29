@@ -21,20 +21,33 @@ Create Stripe Payment Links for:
 - `video20` - $199 20-Min Zoom / FaceTime Request
 - `vip` - $499 VIP Private Fan Experience
 
-Then paste the links into `TEXT_CALL_PRODUCTS` in `lexi-text-call.html`:
+Live Payment Links created:
+
+- `fanDrop` - `https://buy.stripe.com/9B67sKfom6Rkh1s8p5bAs05`
+- `priorityText` - `https://buy.stripe.com/fZudR87VU3F8aD448PbAs06`
+- `realLexiText` - `https://buy.stripe.com/bJe4gyfoma3w12u6gXbAs07`
+- `voice10` - `https://buy.stripe.com/aFaeVc0ts3F8bH89t9bAs08`
+- `video20` - `https://buy.stripe.com/9B6cN4ccagrUeTkdJpbAs09`
+- `vip` - `https://buy.stripe.com/fZubJ0b864Jc9z08p5bAs0a`
+
+They are already pasted into `TEXT_CALL_PRODUCTS` in `lexi-text-call.html`:
 
 ```js
 const TEXT_CALL_PRODUCTS = {
-  fanDrop: "https://buy.stripe.com/...",
-  priorityText: "https://buy.stripe.com/...",
-  realLexiText: "https://buy.stripe.com/...",
-  voice10: "https://buy.stripe.com/...",
-  video20: "https://buy.stripe.com/...",
-  vip: "https://buy.stripe.com/..."
+  fanDrop: "https://buy.stripe.com/9B67sKfom6Rkh1s8p5bAs05",
+  priorityText: "https://buy.stripe.com/fZudR87VU3F8aD448PbAs06",
+  realLexiText: "https://buy.stripe.com/bJe4gyfoma3w12u6gXbAs07",
+  voice10: "https://buy.stripe.com/aFaeVc0ts3F8bH89t9bAs08",
+  video20: "https://buy.stripe.com/9B6cN4ccagrUeTkdJpbAs09",
+  vip: "https://buy.stripe.com/fZubJ0b864Jc9z08p5bAs0a"
 };
 ```
 
 If a link is empty, the page saves a request instead of opening checkout.
+
+## OpenAI / Assistant Setup
+
+The current page uses a safe demo-mode `Lexi AI Assistant` in browser JavaScript. Do not paste an OpenAI API key into public HTML. To connect OpenAI later, create a backend or serverless endpoint that receives the user message, calls OpenAI with the secret key server-side, and returns the assistant reply. Then point the page at that endpoint.
 
 ## SMS / Voice / Scheduling Setup
 
