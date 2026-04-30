@@ -1,1 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lexi Lucks Master OS</title>
+  <style>
+    :root {
+      --bg: #09070b;
+      --panel: rgba(255, 255, 255, 0.065);
+      --panel-strong: rgba(255, 255, 255, 0.11);
+      --border: rgba(255, 192, 226, 0.22);
+      --text: #fff7fb;
+      --muted: #c7aebb;
+      --pink: #ff5fb7;
+      --pink-soft: #ffc3e3;
+      --gold: #f5d48b;
+      --danger: #ff6b6b;
+      --warn: #ffc857;
+      --good: #79f2c0;
+      --blue: #8ab4ff;
+      --shadow: 0 20px 60px rgba(255, 95, 183, 0.14);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 95, 183, 0.28), transparent 28rem),
+        radial-gradient(circle at top right, rgba(245, 212, 139, 0.18), transparent 26rem),
+        linear-gradient(135deg, #07050a 0%, #130b18 45%, #08050c 100%);
+    }
+
+    header {
+      padding: 28px 22px 14px;
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 4.4rem);
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 820px;
+      margin: 10px 0 0;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--pink-soft);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 12px 22px 44px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.085), rgba(255,255,255,0.045));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
+    .span-5 { grid-column: span 5; }
+    .span-6 { grid-column: span 6; }
+    .span-7 { grid-column: span 7; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    .card h2, .card h3 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .metric {
+      font-size: 2.15rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin: 8px 0 4px;
+    }
+
+    .muted { color: var(--muted); }
+    .pink { color: var(--pink-soft); }
+    .gold { color: var(--gold); }
+    .danger { color: var(--danger); }
+    .good { color: var(--good); }
+    .blue { color: var(--blue); }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+      color: var(--text);
+    }
+
+    button {
+      border: 1px solid rgba(255, 192, 226, 0.32);
+      background: linear-gradient(135deg, rgba(255,95,183,0.24), rgba(255,255,255,0.07));
+      padding: 10px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    button:hover { transform: translateY(-1px); border-color: rgba(255, 192, 226, 0.7); }
+    button.secondary { background: rgba(255,255,255,0.06); }
+    button.danger-btn { background: rgba(255, 107, 107, 0.16); border-color: rgba(255, 107, 107, 0.32); }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 192, 226, 0.25);
+      background: rgba(0,0,0,0.28);
+      border-radius: 14px;
+      padding: 10px 12px;
+      outline: none;
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(4, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1050px;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.9rem;
+    }
+
+    th {
+      color: var(--pink-soft);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-weight: 700;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .pill.critical { color: var(--danger); border-color: rgba(255,107,107,0.4); }
+    .pill.high { color: var(--warn); border-color: rgba(255,200,87,0.4); }
+    .pill.revenue { color: var(--good); border-color: rgba(121,242,192,0.35); }
+    .pill.waiting { color: var(--blue); border-color: rgba(138,180,255,0.35); }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0 14px;
+    }
+
+    .tab {
+      opacity: 0.72;
+    }
+
+    .tab.active {
+      opacity: 1;
+      border-color: rgba(255, 195, 227, 0.7);
+      background: rgba(255, 95, 183, 0.2);
+    }
+
+    .briefing-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .briefing-list li {
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      line-height: 1.45;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .form-grid .wide { grid-column: span 2; }
+    .form-grid .full { grid-column: 1 / -1; }
+
+    .drawer {
+      display: none;
+      margin-top: 14px;
+    }
+
+    .drawer.open { display: block; }
+
+    .tiny {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    a { color: var(--pink-soft); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 1020px) {
+      .span-3, .span-4, .span-5, .span-6, .span-7, .span-8 { grid-column: span 12; }
+      .filters { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      header, main { padding-left: 14px; padding-right: 14px; }
+      .filters, .form-grid { grid-template-columns: 1fr; }
+      .form-grid .wide { grid-column: span 1; }
+      .metric { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div>
+        <h1>Lexi Lucks Master OS</h1>
+        <p class="subtitle">Private command center for lawsuits, fan funnels, website pages, chatbots, brand deals, events, monetization, and where to restart when you left off.</p>
+      </div>
+      <span class="badge">● Local prototype · Claude-ready · No API keys exposed</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid" id="metrics"></section>
+
+    <section class="controls">
+      <button onclick="generateBriefing()">Generate Today’s AI-Style Briefing</button>
+      <button class="secondary" onclick="toggleDrawer('addDrawer')">Add / Update Project</button>
+      <button class="secondary" onclick="exportJSON()">Export Master Backup JSON</button>
+      <button class="secondary" onclick="document.getElementById('importFile').click()">Import JSON</button>
+      <button class="danger-btn" onclick="resetSeedData()">Reset Seed Data</button>
+      <input id="importFile" type="file" accept="application/json" style="display:none" onchange="importJSON(event)" />
+    </section>
+
+    <section id="briefing" class="grid"></section>
+
+    <section id="addDrawer" class="drawer card">
+      <h2>Add / Update Project</h2>
+      <p class="tiny">Use the same title to update an existing record. This keeps the dashboard simple while you are still in local prototype mode.</p>
+      <div class="form-grid">
+        <input id="title" placeholder="Project title" />
+        <select id="division">
+          <option>Legal</option><option>Website</option><option>Fan Funnel</option><option>AI Systems</option><option>Brand Deals</option><option>Events</option><option>Digital Product</option><option>Streaming</option><option>Personal Admin</option>
+        </select>
+        <select id="status">
+          <option>Active</option><option>Not Started</option><option>Waiting</option><option>Urgent</option><option>Done</option><option>Revenue Opportunity</option><option>Broken / Needs Fix</option>
+        </select>
+        <select id="priority">
+          <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
+        </select>
+        <select id="risk" class="wide">
+          <option>Low</option><option>Medium</option><option>High</option><option>Severe</option>
+        </select>
+        <select id="revenue" class="wide">
+          <option>Low</option><option>Medium</option><option>High</option><option>Very High</option>
+        </select>
+        <input id="deadline" type="date" />
+        <input id="link" class="wide" placeholder="Relevant link / page URL / doc URL" />
+        <input id="nextAction" class="full" placeholder="Next action — where you left off" />
+        <textarea id="notes" class="full" placeholder="Notes, blockers, contacts, evidence, pricing, compliance concerns, Claude instructions"></textarea>
+      </div>
+      <div class="controls">
+        <button onclick="saveProject()">Save Project</button>
+        <button class="secondary" onclick="clearForm()">Clear</button>
+      </div>
+    </section>
+
+    <section class="tabs" id="tabs"></section>
+
+    <section class="card span-12">
+      <div class="filters">
+        <input id="search" placeholder="Search projects, lawsuits, pages, funnels, bots..." oninput="renderTable()" />
+        <select id="divisionFilter" onchange="renderTable()"><option value="">All divisions</option></select>
+        <select id="statusFilter" onchange="renderTable()"><option value="">All statuses</option></select>
+        <select id="priorityFilter" onchange="renderTable()"><option value="">All priorities</option></select>
+        <select id="sortBy" onchange="renderTable()">
+          <option value="priority">Sort by priority</option>
+          <option value="deadline">Sort by deadline</option>
+          <option value="revenue">Sort by revenue</option>
+          <option value="updated">Sort by updated</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Division</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Risk</th>
+              <th>Revenue</th>
+              <th>Deadline</th>
+              <th>Where You Left Off / Next Fix</th>
+              <th>Link</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projectRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'lexi_lucks_master_os_v1';
+
+    const seedProjects = [
+      { title: 'Legal Cases Master Tracker', division: 'Legal', status: 'Urgent', priority: 'Critical', risk: 'Severe', revenue: 'High', deadline: '', link: '', nextAction: 'Enter every active case, deadline, filing task, evidence item, and opposing party into the tracker.', notes: 'This is the highest-risk lane. Every lawsuit needs deadline control, exhibit control, next-action control, and proof-of-service tracking.', updated: new Date().toISOString() },
+      { title: 'FCRA / Credit Reporting Lawsuit', division: 'Legal', status: 'Active', priority: 'Critical', risk: 'Severe', revenue: 'High', deadline: '', link: '', nextAction: 'Keep deadline calendar current; separate Experian, Equifax, Capital One, and settlement-related tasks.', notes: 'Track filings, exhibits, certified mail, adverse action notices, bureau disputes, evidence screenshots, settlement documents, and court deadlines.', updated: new Date().toISOString() },
+      { title: 'Newport Beach Police / DUI / Hit-and-Run Matter', division: 'Legal', status: 'Active', priority: 'Critical', risk: 'Severe', revenue: 'Medium', deadline: '', link: '', nextAction: 'Organize motions, exhibits, witness issues, suppression arguments, and transcript references.', notes: 'Track motion to suppress, supplemental dismissal, Brady, Fourth Amendment, Barker, Strickland, Marsden-related material, and proof of service.', updated: new Date().toISOString() },
+      { title: 'Consumer Justice Law Firm Fee Dispute', division: 'Legal', status: 'Active', priority: 'High', risk: 'High', revenue: 'High', deadline: '', link: '', nextAction: 'Build arbitration packet: fee agreement, billing disputes, client-led evidence, settlement posture, written communications.', notes: 'Keep written record. Track claims of double-dipping, fee-shifting, damages allocation, and arbitration steps.', updated: new Date().toISOString() },
+      { title: 'LexiLucks.com Main Funnel', division: 'Website', status: 'Active', priority: 'High', risk: 'Medium', revenue: 'Very High', deadline: '', link: 'https://lexilucks.com/index.html', nextAction: 'Audit hero CTA, membership pathway, analytics, and routing to paid offers.', notes: 'Homepage should sell access, brand, events, fan tiers, and credibility without confusing traffic.', updated: new Date().toISOString() },
+      { title: 'Public Dashboard / Party Network Page', division: 'Website', status: 'Active', priority: 'Medium', risk: 'Medium', revenue: 'Medium', deadline: '', link: 'https://lexilucks.com/dashboard.html', nextAction: 'Decide whether this remains fan-facing or gets renamed so it does not conflict with the private Master OS.', notes: 'Do not overwrite this with private legal/business data.', updated: new Date().toISOString() },
+      { title: 'Shop / Affiliate Hub', division: 'Website', status: 'Active', priority: 'High', risk: 'Low', revenue: 'High', deadline: '', link: 'https://lexilucks.com/shop.html', nextAction: 'Add best-converting products, affiliate disclosure, and conversion tracking.', notes: 'Use this for beauty, tech, gaming, creator tools, and event looks.', updated: new Date().toISOString() },
+      { title: 'Princess Protocol', division: 'Digital Product', status: 'Revenue Opportunity', priority: 'High', risk: 'Medium', revenue: 'Very High', deadline: '', link: 'https://lexilucks.com/princess-protocol.html', nextAction: 'Define offer promise, price ladder, checkout path, and who it is for.', notes: 'Potential digital product/community/program. Needs clearer transformation and monetization structure.', updated: new Date().toISOString() },
+      { title: 'Coachella 2026 Landing Page', division: 'Events', status: 'Active', priority: 'Medium', risk: 'Low', revenue: 'High', deadline: '2026-04-10', link: 'https://lexilucks.com/coachella2026.html', nextAction: 'Tie the page to brand outreach, deliverables, RSVP/guest-list proof, and sponsor packages.', notes: 'Use for event access, brand pitching, UGC, and content partnerships.', updated: new Date().toISOString() },
+      { title: 'Coachella 2026 Itinerary', division: 'Events', status: 'Active', priority: 'Medium', risk: 'Low', revenue: 'Medium', deadline: '2026-04-10', link: 'https://lexilucks.com/coachella2026-itinerary.html', nextAction: 'Keep schedule, accommodations, contacts, and content deliverables current.', notes: 'Should support execution, not just aesthetics.', updated: new Date().toISOString() },
+      { title: 'Media Kit', division: 'Brand Deals', status: 'Active', priority: 'High', risk: 'Low', revenue: 'Very High', deadline: '', link: 'https://lexilucks.com/media-kit.html', nextAction: 'Update follower counts, press proof, collaboration categories, and CTA to book/pitch.', notes: 'This is a revenue asset. Needs fast links, screenshots, rates, and credibility.', updated: new Date().toISOString() },
+      { title: 'Rate Card', division: 'Brand Deals', status: 'Active', priority: 'High', risk: 'Low', revenue: 'Very High', deadline: '', link: 'https://lexilucks.com/rate-card.html', nextAction: 'Add performance-based pricing, rush fees, usage rights, exclusivity, and event add-ons.', notes: 'Must protect against underpricing. Include UGC, Reels, Stories, event appearances, whitelisting, and licensing.', updated: new Date().toISOString() },
+      { title: 'Celine Medspa Pitch', division: 'Brand Deals', status: 'Waiting', priority: 'High', risk: 'Low', revenue: 'High', deadline: '', link: 'https://lexilucks.com/celine-medspa-pitch.html', nextAction: 'Track recipient, follow-up date, package offered, and response status.', notes: 'Should be logged as CRM opportunity with next follow-up copy.', updated: new Date().toISOString() },
+      { title: 'Text / Call Monetization Funnel', division: 'Fan Funnel', status: 'Broken / Needs Fix', priority: 'Critical', risk: 'High', revenue: 'Very High', deadline: '', link: '', nextAction: 'Finalize no-API monetization path: payment link → request form → manual fulfillment queue → approval → delivery.', notes: 'Needs age/consent confirmation, payment confirmation, fulfillment queue, and boundary rules. Do not expose phone or API keys.', updated: new Date().toISOString() },
+      { title: 'Antigravity Phone/Text Monetization', division: 'AI Systems', status: 'Active', priority: 'Critical', risk: 'High', revenue: 'Very High', deadline: '', link: '', nextAction: 'Document what Antigravity already built, what is blocked by no API keys, and what can be shipped manually now.', notes: 'No-API version should use payment links, forms, local queue, and manual approval. Later upgrade to Twilio/SendGrid/Stripe webhooks.', updated: new Date().toISOString() },
+      { title: 'Website AI Concierge', division: 'AI Systems', status: 'Not Started', priority: 'High', risk: 'Medium', revenue: 'High', deadline: '', link: '', nextAction: 'Define allowed actions, forbidden actions, data source, escalation rules, and revenue CTAs.', notes: 'Should answer fan questions, route to offers, and avoid claims it cannot verify.', updated: new Date().toISOString() },
+      { title: 'OnlyFans Routing Funnel', division: 'Fan Funnel', status: 'Active', priority: 'High', risk: 'High', revenue: 'Very High', deadline: '', link: '', nextAction: 'Create clear offer ladder and traffic routing from site/socials to paid platforms.', notes: 'Keep public site compliant and route adult content appropriately.', updated: new Date().toISOString() },
+      { title: 'Discord Bot / Fan Community', division: 'AI Systems', status: 'Building', priority: 'High', risk: 'Medium', revenue: 'High', deadline: '', link: '', nextAction: 'Define bot purpose: onboarding, fan tiers, event drops, announcements, support, and upsells.', notes: 'Needs moderation, role assignment, paid access rules, and escalation to human.', updated: new Date().toISOString() },
+      { title: 'GitHub Repository Maintenance', division: 'Website', status: 'Active', priority: 'Medium', risk: 'Medium', revenue: 'Medium', deadline: '', link: 'https://github.com/Lexilucks/Lexilucks', nextAction: 'Keep README, page map, deployment notes, and issue list current. Treat this as the public website production repo.', notes: 'Primary job: keep lexilucks.com live, polished, tracked, legally safer, and monetized. Use GitHub Issues as the technical backlog.', updated: new Date().toISOString() },
+      { title: 'GitHub Repo: Lexilucks Website', division: 'Website', status: 'Active', priority: 'Critical', risk: 'High', revenue: 'Very High', deadline: '', link: 'https://github.com/Lexilucks/Lexilucks', nextAction: 'Create repo job list: fix pages, audit links, connect funnels, add Master OS, track deployments, and protect public-facing compliance copy.', notes: 'Repository role: main website, brand hub, funnel hub, media kit, rate card, Coachella pages, shop, dashboard, and public monetization entry points.', updated: new Date().toISOString() },
+      { title: 'GitHub Repo: trading-bot-pro', division: 'AI Systems', status: 'Needs Review', priority: 'High', risk: 'High', revenue: 'High', deadline: '', link: 'https://github.com/Lexilucks/trading-bot-pro', nextAction: 'Audit what the bot currently does, what APIs or broker/data sources it expects, what risk controls exist, and whether it is demo-only or real-money capable.', notes: 'Repository role: trading automation project. Treat as high-risk until security, API keys, paper-trading mode, logs, disclaimers, and kill-switch behavior are verified. Do not run live-money automation without review.', updated: new Date().toISOString() },
+      { title: 'GitHub Repo: marketing-skills', division: 'Brand Deals', status: 'Active', priority: 'Medium', risk: 'Low', revenue: 'High', deadline: '', link: 'https://github.com/Lexilucks/marketing-skills', nextAction: 'Use this as the reusable marketing-agent skill library for outreach, copywriting, campaign strategy, creator funnels, and sponsorship pitch generation.', notes: 'Repository role: AI marketing skills library. Convert useful modules into prompts/tools for brand outreach, funnel copy, UGC offers, and fan monetization campaigns.', updated: new Date().toISOString() },
+      { title: 'Repository Job System', division: 'Website', status: 'Not Started', priority: 'High', risk: 'Medium', revenue: 'High', deadline: '', link: 'https://github.com/Lexilucks', nextAction: 'Add one tracked job queue per repo: purpose, current blocker, next commit, bugs, monetization tie-in, deployment status, and AI assistant instructions.', notes: 'Every repo needs a job: Lexilucks = public site/funnels; trading-bot-pro = high-risk automation; marketing-skills = reusable growth/copy skills. Later sync this to GitHub Issues.', updated: new Date().toISOString() },
+      { title: 'Streaming / Gaming Monetization', division: 'Streaming', status: 'Active', priority: 'High', risk: 'Low', revenue: 'High', deadline: '', link: '', nextAction: 'Map streaming platforms, tip alerts, overlays, subscriber offers, and weekly schedule.', notes: 'Connect to fan funnel and Discord. Gaming traffic should feed memberships and VIP access.', updated: new Date().toISOString() }
+    ];
+
+    let projects = loadProjects();
+    let currentTab = 'All';
+
+    function loadProjects() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : seedProjects;
+      } catch (e) {
+        return seedProjects;
+      }
+    }
+
+    function persist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+    }
+
+    function priorityRank(p) { return { Critical: 4, High: 3, Medium: 2, Low: 1 }[p] || 0; }
+    function revenueRank(r) { return { 'Very High': 4, High: 3, Medium: 2, Low: 1 }[r] || 0; }
+    function riskRank(r) { return { Severe: 4, High: 3, Medium: 2, Low: 1 }[r] || 0; }
+
+    function daysUntil(dateStr) {
+      if (!dateStr) return null;
+      const today = new Date();
+      const d = new Date(dateStr + 'T00:00:00');
+      return Math.ceil((d - today) / (1000 * 60 * 60 * 24));
+    }
+
+    function renderMetrics() {
+      const active = projects.filter(p => p.status !== 'Done').length;
+      const critical = projects.filter(p => p.priority === 'Critical').length;
+      const highRevenue = projects.filter(p => p.revenue === 'Very High' || p.revenue === 'High').length;
+      const broken = projects.filter(p => p.status === 'Broken / Needs Fix' || p.status === 'Urgent').length;
+      const waiting = projects.filter(p => p.status === 'Waiting').length;
+      const legal = projects.filter(p => p.division === 'Legal').length;
+
+      document.getElementById('metrics').innerHTML = `
+        <div class="card span-3"><h3>Active Projects</h3><div class="metric">${active}</div><div class="muted">Open loops being tracked</div></div>
+        <div class="card span-3"><h3>Critical Priority</h3><div class="metric danger">${critical}</div><div class="muted">Needs immediate control</div></div>
+        <div class="card span-3"><h3>Money Opportunities</h3><div class="metric good">${highRevenue}</div><div class="muted">High / very high revenue potential</div></div>
+        <div class="card span-3"><h3>Urgent or Broken</h3><div class="metric gold">${broken}</div><div class="muted">Fix-first systems</div></div>
+        <div class="card span-6"><h3>Waiting On Someone</h3><div class="metric blue">${waiting}</div><div class="muted">Follow-up queue. Do not let these die silently.</div></div>
+        <div class="card span-6"><h3>Legal Control</h3><div class="metric danger">${legal}</div><div class="muted">Case lanes need deadline, exhibit, and filing discipline.</div></div>
+      `;
+    }
+
+    function renderTabs() {
+      const divisions = ['All', ...Array.from(new Set(projects.map(p => p.division))).sort()];
+      document.getElementById('tabs').innerHTML = divisions.map(d => `<button class="tab ${currentTab === d ? 'active' : ''}" onclick="setTab('${d}')">${d}</button>`).join('');
+
+      const divisionSelect = document.getElementById('divisionFilter');
+      const statusSelect = document.getElementById('statusFilter');
+      const prioritySelect = document.getElementById('priorityFilter');
+      divisionSelect.innerHTML = '<option value="">All divisions</option>' + Array.from(new Set(projects.map(p => p.division))).sort().map(v => `<option>${v}</option>`).join('');
+      statusSelect.innerHTML = '<option value="">All statuses</option>' + Array.from(new Set(projects.map(p => p.status))).sort().map(v => `<option>${v}</option>`).join('');
+      prioritySelect.innerHTML = '<option value="">All priorities</option>' + ['Critical','High','Medium','Low'].map(v => `<option>${v}</option>`).join('');
+    }
+
+    function setTab(tab) {
+      currentTab = tab;
+      renderTabs();
+      renderTable();
+    }
+
+    function renderTable() {
+      const q = document.getElementById('search').value.toLowerCase();
+      const division = document.getElementById('divisionFilter').value;
+      const status = document.getElementById('statusFilter').value;
+      const priority = document.getElementById('priorityFilter').value;
+      const sortBy = document.getElementById('sortBy').value;
+
+      let rows = projects.filter(p => {
+        const haystack = `${p.title} ${p.division} ${p.status} ${p.priority} ${p.risk} ${p.revenue} ${p.nextAction} ${p.notes} ${p.link}`.toLowerCase();
+        return (!q || haystack.includes(q)) &&
+          (!division || p.division === division) &&
+          (!status || p.status === status) &&
+          (!priority || p.priority === priority) &&
+          (currentTab === 'All' || p.division === currentTab);
+      });
+
+      rows.sort((a,b) => {
+        if (sortBy === 'deadline') return (daysUntil(a.deadline) ?? 99999) - (daysUntil(b.deadline) ?? 99999);
+        if (sortBy === 'revenue') return revenueRank(b.revenue) - revenueRank(a.revenue);
+        if (sortBy === 'updated') return new Date(b.updated || 0) - new Date(a.updated || 0);
+        return priorityRank(b.priority) - priorityRank(a.priority) || riskRank(b.risk) - riskRank(a.risk);
+      });
+
+      document.getElementById('projectRows').innerHTML = rows.map(p => {
+        const due = daysUntil(p.deadline);
+        const dueLabel = p.deadline ? `${p.deadline}${due !== null ? `<br><span class="tiny">${due < 0 ? Math.abs(due) + ' days overdue' : due + ' days left'}</span>` : ''}` : '<span class="muted">No date</span>';
+        return `
+          <tr>
+            <td><strong>${escapeHTML(p.title)}</strong><br><span class="tiny">Updated ${new Date(p.updated || Date.now()).toLocaleDateString()}</span></td>
+            <td><span class="pill">${escapeHTML(p.division)}</span></td>
+            <td><span class="pill ${p.status === 'Waiting' ? 'waiting' : ''}">${escapeHTML(p.status)}</span></td>
+            <td><span class="pill ${p.priority.toLowerCase()}">${escapeHTML(p.priority)}</span></td>
+            <td><span class="pill ${p.risk === 'Severe' || p.risk === 'High' ? 'critical' : ''}">${escapeHTML(p.risk)}</span></td>
+            <td><span class="pill ${p.revenue === 'Very High' || p.revenue === 'High' ? 'revenue' : ''}">${escapeHTML(p.revenue)}</span></td>
+            <td>${dueLabel}</td>
+            <td>${escapeHTML(p.nextAction || '')}<br><span class="tiny">${escapeHTML(p.notes || '')}</span></td>
+            <td>${p.link ? `<a href="${escapeAttr(p.link)}" target="_blank">Open</a>` : '<span class="muted">—</span>'}</td>
+            <td>
+              <button class="secondary" onclick="editProject('${escapeAttr(p.title)}')">Edit</button>
+              <button class="danger-btn" onclick="deleteProject('${escapeAttr(p.title)}')">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function generateBriefing() {
+      const open = projects.filter(p => p.status !== 'Done');
+      const top = [...open].sort((a,b) => priorityRank(b.priority) - priorityRank(a.priority) || riskRank(b.risk) - riskRank(a.risk) || revenueRank(b.revenue) - revenueRank(a.revenue)).slice(0,3);
+      const money = [...open].sort((a,b) => revenueRank(b.revenue) - revenueRank(a.revenue) || priorityRank(b.priority) - priorityRank(a.priority)).slice(0,3);
+      const risk = [...open].sort((a,b) => riskRank(b.risk) - riskRank(a.risk) || priorityRank(b.priority) - priorityRank(a.priority)).slice(0,3);
+      const waiting = open.filter(p => p.status === 'Waiting').slice(0,5);
+      const broken = open.filter(p => p.status === 'Broken / Needs Fix' || p.status === 'Urgent').slice(0,5);
+      const deadlines = open.filter(p => p.deadline).sort((a,b) => (daysUntil(a.deadline) ?? 99999) - (daysUntil(b.deadline) ?? 99999)).slice(0,5);
+
+      document.getElementById('briefing').innerHTML = `
+        <div class="card span-7">
+          <h2>Today’s Top 3 Moves</h2>
+          <ul class="briefing-list">
+            ${top.map((p,i) => `<li><strong>${i+1}. ${escapeHTML(p.title)}</strong><br><span class="pink">${escapeHTML(p.nextAction)}</span><br><span class="tiny">${escapeHTML(p.division)} · ${escapeHTML(p.priority)} · Risk: ${escapeHTML(p.risk)} · Revenue: ${escapeHTML(p.revenue)}</span></li>`).join('')}
+          </ul>
+        </div>
+        <div class="card span-5">
+          <h2>Highest Money Moves</h2>
+          <ul class="briefing-list">
+            ${money.map(p => `<li><strong>${escapeHTML(p.title)}</strong><br><span class="good">${escapeHTML(p.nextAction)}</span></li>`).join('')}
+          </ul>
+        </div>
+        <div class="card span-4">
+          <h2>Biggest Risk</h2>
+          <ul class="briefing-list">
+            ${risk.map(p => `<li><strong>${escapeHTML(p.title)}</strong><br><span class="danger">${escapeHTML(p.nextAction)}</span></li>`).join('')}
+          </ul>
+        </div>
+        <div class="card span-4">
+          <h2>Waiting / Follow-Up Queue</h2>
+          <ul class="briefing-list">
+            ${waiting.length ? waiting.map(p => `<li><strong>${escapeHTML(p.title)}</strong><br>${escapeHTML(p.nextAction)}</li>`).join('') : '<li>No waiting items marked. Add follow-up dates so opportunities do not disappear.</li>'}
+          </ul>
+        </div>
+        <div class="card span-4">
+          <h2>Broken / Fix First</h2>
+          <ul class="briefing-list">
+            ${broken.length ? broken.map(p => `<li><strong>${escapeHTML(p.title)}</strong><br>${escapeHTML(p.nextAction)}</li>`).join('') : '<li>No broken systems marked.</li>'}
+          </ul>
+        </div>
+        <div class="card span-12">
+          <h2>Upcoming Deadlines</h2>
+          <ul class="briefing-list">
+            ${deadlines.length ? deadlines.map(p => `<li><strong>${escapeHTML(p.title)}</strong> — ${escapeHTML(p.deadline)} (${daysUntil(p.deadline)} days left)<br>${escapeHTML(p.nextAction)}</li>`).join('') : '<li>No deadlines entered yet. This is dangerous for legal and event work. Add dates immediately.</li>'}
+          </ul>
+        </div>
+      `;
+    }
+
+    function saveProject() {
+      const p = {
+        title: document.getElementById('title').value.trim(),
+        division: document.getElementById('division').value,
+        status: document.getElementById('status').value,
+        priority: document.getElementById('priority').value,
+        risk: document.getElementById('risk').value,
+        revenue: document.getElementById('revenue').value,
+        deadline: document.getElementById('deadline').value,
+        link: document.getElementById('link').value.trim(),
+        nextAction: document.getElementById('nextAction').value.trim(),
+        notes: document.getElementById('notes').value.trim(),
+        updated: new Date().toISOString()
+      };
+      if (!p.title) return alert('Project title is required.');
+      const idx = projects.findIndex(existing => existing.title.toLowerCase() === p.title.toLowerCase());
+      if (idx >= 0) projects[idx] = { ...projects[idx], ...p };
+      else projects.unshift(p);
+      persist(); clearForm(); renderAll(); generateBriefing();
+    }
+
+    function editProject(title) {
+      const p = projects.find(x => x.title === title);
+      if (!p) return;
+      document.getElementById('addDrawer').classList.add('open');
+      document.getElementById('title').value = p.title || '';
+      document.getElementById('division').value = p.division || 'Website';
+      document.getElementById('status').value = p.status || 'Active';
+      document.getElementById('priority').value = p.priority || 'Medium';
+      document.getElementById('risk').value = p.risk || 'Medium';
+      document.getElementById('revenue').value = p.revenue || 'Medium';
+      document.getElementById('deadline').value = p.deadline || '';
+      document.getElementById('link').value = p.link || '';
+      document.getElementById('nextAction').value = p.nextAction || '';
+      document.getElementById('notes').value = p.notes || '';
+      window.scrollTo({ top: document.getElementById('addDrawer').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function deleteProject(title) {
+      if (!confirm(`Delete "${title}" from this local dashboard?`)) return;
+      projects = projects.filter(p => p.title !== title);
+      persist(); renderAll(); generateBriefing();
+    }
+
+    function clearForm() {
+      ['title','deadline','link','nextAction','notes'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('division').value = 'Legal';
+      document.getElementById('status').value = 'Active';
+      document.getElementById('priority').value = 'Critical';
+      document.getElementById('risk').value = 'Low';
+      document.getElementById('revenue').value = 'Low';
+    }
+
+    function toggleDrawer(id) { document.getElementById(id).classList.toggle('open'); }
+
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), projects }, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `lexi-lucks-master-os-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          projects = Array.isArray(data) ? data : data.projects;
+          if (!Array.isArray(projects)) throw new Error('Invalid JSON structure');
+          persist(); renderAll(); generateBriefing();
+        } catch (e) {
+          alert('Import failed. Use a valid Master OS JSON export.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetSeedData() {
+      if (!confirm('Reset to seed data? This overwrites local changes unless you exported a backup.')) return;
+      projects = seedProjects;
+      persist(); renderAll(); generateBriefing();
+    }
+
+    function escapeHTML(str) {
+      return String(str || '').replace(/[&<>'"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[c]));
+    }
+    function escapeAttr(str) { return escapeHTML(str).replace(/`/g, '&#96;'); }
+
+    function renderAll() {
+      renderMetrics(); renderTabs(); renderTable();
+    }
+
+    renderAll();
+    generateBriefing();
+  </script>
+</body>
+</html>
 
