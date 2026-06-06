@@ -4,14 +4,14 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Text / Call Lexi Lucks | Fan Access, Voice Calls & Video Requests</title>
-  <meta name="description" content="Join Lexi Lucks' 18+ text list, request paid fan access, voice calls, video calls, and route adult-only inquiries safely to OnlyFans."/>
+  <meta name="description" content="Join Lexi Lucks' 18+ text list, request paid fan access, voice calls, video calls, and route adult-only inquiries safely to a verified external platform."/>
   <link rel="canonical" href="https://lexilucks.com/lexi-text-call.html"/>
   <meta name="theme-color" content="#0A0008"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://lexilucks.com/lexi-text-call.html"/>
   <meta property="og:site_name" content="Lexi Lucks"/>
   <meta property="og:title" content="Text / Call Lexi Lucks"/>
-  <meta property="og:description" content="18+ fan access requests, text list, paid voice/video call requests, and verified OnlyFans routing."/>
+  <meta property="og:description" content="18+ fan access requests, text list, paid voice/video call requests, and verified platform routing."/>
   <meta property="og:image" content="https://lexilucks.com/lexi-lucks2.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Text / Call Lexi Lucks"/>
@@ -200,6 +200,14 @@
     .entry-path-card p{font-size:0.75rem; color:rgba(255,255,255,.5);}
   </style>
   <link rel="stylesheet" href="lexi-concierge.css"/>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H0KETRJV5M"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-H0KETRJV5M");
+</script>
 </head>
 <body>
   <div id="age-gate" class="age-gate-modal">
@@ -232,11 +240,11 @@
       <div class="label">// Text / Call Lexi Lucks</div>
       <h1 class="h1">Lexi <em>Concierge</em></h1>
       <p class="hero-lede">Your dedicated <strong>Lexi Concierge</strong> is here to help you join the text list, request paid fan access, or apply for real Lexi time through text, voice, or video. <strong>Adult-only content is routed to verified platforms, not hosted here.</strong></p>
-      <div class="hero-actions">
-        <a href="#packages" class="btn btn-pink" data-analytics-event="text_call_package_click" data-analytics-label="Hero choose access">Choose Your Access</a>
-        <a href="#request" class="btn btn-outline" data-analytics-event="text_call_form_start" data-analytics-label="Hero join text list">Join Text List</a>
-        <a href="https://www.onlyfans.com/tslollypopz" target="_blank" rel="noopener" class="btn btn-soft" data-analytics-event="text_call_onlyfans_click" data-analytics-label="Hero OnlyFans">OnlyFans 18+ →</a>
-      </div>
+	      <div class="hero-actions">
+	        <a href="#packages" class="btn btn-pink" data-analytics-event="text_call_package_click" data-analytics-label="Hero choose access">Choose Your Access</a>
+	        <a href="#request" class="btn btn-outline" data-analytics-event="text_call_form_start" data-analytics-label="Hero join text list">Join Text List</a>
+	        <a href="/api/access/onlyfans" target="_blank" rel="noopener" class="btn btn-soft" id="bonus-link-hero" hidden data-analytics-event="text_call_onlyfans_click" data-analytics-label="Hero private link">Private Link →</a>
+	      </div>
       <div class="hero-disclaimers">
         <span>18+ only</span>
         <span>Real Lexi access is availability-based</span>
@@ -298,17 +306,17 @@
           <div class="form-row">
             <div class="field"><label for="fan-method">Contact Method</label><select id="fan-method" name="contactMethod">
               <option value="">Choose one</option>
-              <option>Email</option><option>SMS text</option><option>Voice call</option><option>Zoom/video</option><option>OnlyFans</option>
+              <option>Email</option><option>SMS text</option><option>Voice call</option><option>Zoom/video</option><option>Verified platform</option>
             </select><span class="error" data-error-for="contactMethod" hidden></span></div>
             <div class="field"><label for="fan-interest">Interest Type</label><select id="fan-interest" name="interestType">
               <option value="general">General fan access</option>
               <option value="real-lexi">Real Lexi premium access</option>
               <option value="voice">Voice call</option>
               <option value="video">Zoom / FaceTime-style video</option>
-              <option value="adult">Adult / spicy / OnlyFans</option>
+              <option value="adult">Adult / spicy (verified platform link)</option>
             </select></div>
           </div>
-          <div class="field"><label for="fan-notes">Notes / Request</label><textarea id="fan-notes" name="notes" placeholder="Tell Lexi's team what you want to request. Keep it respectful. Adult-only content routes to OnlyFans."></textarea></div>
+	          <div class="field"><label for="fan-notes">Notes / Request</label><textarea id="fan-notes" name="notes" placeholder="Tell Lexi's team what you want to request. Keep it respectful. Adult-only content stays off this site and routes via verified platforms."></textarea></div>
           <div class="checks">
             <label class="check"><input type="checkbox" name="ageConfirmed"/> <span>I confirm I am 18+ and legally allowed to access adult-oriented fan content where I live.</span></label>
             <span class="error" data-error-for="ageConfirmed" hidden></span>
@@ -321,37 +329,40 @@
           <p class="form-status" id="form-status" aria-live="polite"></p>
         </form>
 
-        <aside class="panel">
-          <div class="panel-title">// Adult Content Routing</div>
-          <div class="routing-card" id="onlyfans-routing" hidden>
-            <h3>Continue on OnlyFans</h3>
-            <p>For adult-only content and verified platform access, continue on OnlyFans.</p>
-            <a href="https://www.onlyfans.com/tslollypopz" target="_blank" rel="noopener" class="btn btn-pink" data-analytics-event="text_call_onlyfans_click" data-analytics-label="Request form OnlyFans">Continue to OnlyFans →</a>
-          </div>
-          <div class="compliance-list">
+	        <aside class="panel">
+	          <div class="panel-title">// Verified Platform Routing</div>
+	          <div class="routing-card" id="onlyfans-routing" hidden>
+	            <h3>Private Link</h3>
+	            <p>Adult-only content stays off this site. The discreet verified-platform link unlocks after <strong>Flirty Fan Drop</strong> ($7.77).</p>
+	            <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.1rem">
+	              <a href="/api/access/onlyfans" target="_blank" rel="noopener" class="btn btn-pink" id="bonus-link-routing" hidden data-analytics-event="text_call_onlyfans_click" data-analytics-label="Verified platform link">Open Private Link →</a>
+	              <button class="btn btn-outline" type="button" id="unlock-fan-drop-btn">Unlock Flirty Fan Drop</button>
+	            </div>
+	          </div>
+	          <div class="compliance-list">
             <div class="compliance-item"><span>18+</span><div><strong>Age gated</strong>Every request requires 18+ confirmation before submission or checkout routing.</div></div>
             <div class="compliance-item"><span>✦</span><div><strong>Real Lexi premium</strong>Real replies, voice calls, and video calls are limited, approved manually, and availability-based.</div></div>
             <div class="compliance-item"><span>🔒</span><div><strong>No card capture</strong>The site never collects card numbers. Paid checkout should happen through Stripe Payment Links.</div></div>
             <div class="compliance-item"><span>AI</span><div><strong>Transparent assistant</strong>The assistant is labeled as AI and must disclose that it is not Lexi when asked.</div></div>
-            <div class="compliance-item"><span>OF</span><div><strong>Separate adult platform</strong>Adult/explicit content inquiries route to OnlyFans. The public site remains a request and routing funnel.</div></div>
-          </div>
-        </aside>
+	            <div class="compliance-item"><span>🔗</span><div><strong>Separate adult platform</strong>Adult/explicit content inquiries route to a verified external platform. The public site remains a request and routing funnel.</div></div>
+	          </div>
+	        </aside>
       </div>
     </section>
 
     <section id="assistant">
-      <div class="section-head">
-        <div class="label">// Lexi AI Assistant</div>
-        <h2 class="h2">Help Fans Pick the <em>Right Lane</em></h2>
-        <p>This assistant is a transparent demo-mode routing helper. It can explain packages, suggest upgrades, route adult inquiries to OnlyFans, and clearly disclose that it is AI when asked.</p>
-      </div>
+	      <div class="section-head">
+	        <div class="label">// Lexi AI Assistant</div>
+	        <h2 class="h2">Help Fans Pick the <em>Right Lane</em></h2>
+	        <p>This assistant is a transparent demo-mode routing helper. It can explain packages, suggest upgrades, route adult inquiries to the private-link flow, and clearly disclose that it is AI when asked.</p>
+	      </div>
       <div class="assistant-wrap">
         <div class="panel">
           <div class="panel-title">// Capabilities</div>
           <div class="cap-grid">
             <div class="cap"><strong>Package Matching</strong><span>Helps fans pick text list, priority text, real Lexi, call, video, or VIP.</span></div>
             <div class="cap"><strong>Scheduling Prep</strong><span>Explains that voice/video requests require approval and scheduling.</span></div>
-            <div class="cap"><strong>OnlyFans Routing</strong><span>Routes adult-only interest to the verified platform link.</span></div>
+	            <div class="cap"><strong>Private Link</strong><span>Routes adult-only interest to the gated verified-platform link.</span></div>
             <div class="cap"><strong>Disclosure Rule</strong><span>If asked whether it is Lexi, it says it is Lexi's AI assistant.</span></div>
           </div>
         </div>
@@ -364,10 +375,10 @@
             <span class="ai-badge">AI Assistant</span>
           </div>
           <div class="chat-log" id="chat-log">
-            <div class="msg bot">Hi, I'm Lexi's AI Assistant. I can help you choose a fan-access tier, request real Lexi time, or route adult-only content to OnlyFans. I am not Lexi.</div>
+	            <div class="msg bot">Hi, I'm Lexi's AI Assistant. I can help you choose a fan-access tier, request real Lexi time, or route adult-only content to the private-link flow. I am not Lexi.</div>
           </div>
           <form class="chat-input" id="assistant-form">
-            <input id="assistant-input" type="text" placeholder="Ask about packages, calls, video, OnlyFans, or real Lexi access"/>
+	            <input id="assistant-input" type="text" placeholder="Ask about packages, calls, video, verified-platform routing, or real Lexi access"/>
             <button class="btn btn-pink" type="submit">Send</button>
           </form>
           <div class="suggestions">
@@ -394,7 +405,7 @@
         <div class="backend-card"><strong>Supabase</strong><span>Store leads, requests, package state, consent, attribution, and fulfillment notes.</span></div>
         <div class="backend-card"><strong>Airtable / Sheets</strong><span>Mirror requests to a human-friendly approval queue.</span></div>
         <div class="backend-card"><strong>Zapier / Make</strong><span>Bridge form submissions, Stripe events, SMS, email, and scheduling.</span></div>
-        <div class="backend-card"><strong>OnlyFans</strong><span>Keep adult content on the verified external platform and track outbound intent.</span></div>
+	        <div class="backend-card"><strong>Verified Platform</strong><span>Keep adult content on the verified external platform and track outbound intent.</span></div>
       </div>
     </section>
   </main>
@@ -406,11 +417,11 @@
         <p>18+ fan-access request funnel for Lexi Lucks. Real creator access is limited, availability-based, and routed through approved packages only.</p>
       </div>
       <div class="footer-col"><h4>Access</h4><ul>
-        <li><a href="#packages">Packages</a></li>
-        <li><a href="#request">Request Access</a></li>
-        <li><a href="#assistant">AI Assistant</a></li>
-        <li><a href="https://www.onlyfans.com/tslollypopz" target="_blank" rel="noopener" data-analytics-event="text_call_onlyfans_click" data-analytics-label="Footer OnlyFans">OnlyFans 18+</a></li>
-      </ul></div>
+	        <li><a href="#packages">Packages</a></li>
+	        <li><a href="#request">Request Access</a></li>
+	        <li><a href="#assistant">AI Assistant</a></li>
+	        <li><a href="/api/access/onlyfans" target="_blank" rel="noopener" id="bonus-link-footer" hidden data-analytics-event="text_call_onlyfans_click" data-analytics-label="Footer private link">Private Link</a></li>
+	      </ul></div>
       <div class="footer-col"><h4>Site</h4><ul>
         <li><a href="index.html">Main Site</a></li>
         <li><a href="shop.html">Shop</a></li>
@@ -429,16 +440,15 @@
     </div>
   </footer>
 
-  <div class="sticky-cta" aria-label="Quick access">
-    <a href="#request" class="primary" data-analytics-event="text_call_form_start" data-analytics-label="Sticky text list">Text List</a>
-    <a href="#packages" data-analytics-event="text_call_package_click" data-analytics-label="Sticky packages">Packages</a>
-    <a href="https://www.onlyfans.com/tslollypopz" target="_blank" rel="noopener" data-analytics-event="text_call_onlyfans_click" data-analytics-label="Sticky OnlyFans">OnlyFans</a>
-  </div>
+	  <div class="sticky-cta" aria-label="Quick access">
+	    <a href="#request" class="primary" data-analytics-event="text_call_form_start" data-analytics-label="Sticky text list">Text List</a>
+	    <a href="#packages" data-analytics-event="text_call_package_click" data-analytics-label="Sticky packages">Packages</a>
+	    <a href="/api/access/onlyfans" target="_blank" rel="noopener" id="bonus-link-sticky" hidden data-analytics-event="text_call_onlyfans_click" data-analytics-label="Sticky private link">Private Link</a>
+	  </div>
 
-  <script>
-    const ONLYFANS_URL = "https://www.onlyfans.com/tslollypopz";
-    const STORAGE_KEY = "lexi.textCall.requests";
-    const TEXT_CALL_PRODUCTS = {
+	  <script>
+	    const STORAGE_KEY = "lexi.textCall.requests";
+	    const TEXT_CALL_PRODUCTS = {
       fanDrop: "https://buy.stripe.com/9B67sKfom6Rkh1s8p5bAs05",
       priorityText: "https://buy.stripe.com/fZudR87VU3F8aD448PbAs06",
       realLexiText: "https://buy.stripe.com/bJe4gyfoma3w12u6gXbAs07",
@@ -548,17 +558,58 @@
       status.className = "form-status error";
     }
 
-    function storeRequest(data) {
-      const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      existing.push(data);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(existing.slice(-200)));
-    }
+	    function storeRequest(data) {
+	      const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+	      existing.push(data);
+	      localStorage.setItem(STORAGE_KEY, JSON.stringify(existing.slice(-200)));
+	    }
 
-    function handleOnlyFansVisibility() {
-      const interest = document.getElementById("fan-interest").value;
-      const method = document.getElementById("fan-method").value;
-      document.getElementById("onlyfans-routing").hidden = interest !== "adult" && method !== "OnlyFans";
-    }
+	    async function getPrivateLinkEligibility() {
+	      try {
+	        const res = await fetch("/api/access/status", {
+	          method: "GET",
+	          headers: { "Accept": "application/json" },
+	          credentials: "same-origin"
+	        });
+	        const data = await res.json().catch(() => ({}));
+	        return Boolean(data?.eligible);
+	      } catch {
+	        return false;
+	      }
+	    }
+
+		    function setPrivateLinkUi({ eligible }) {
+		      const hero = document.getElementById("bonus-link-hero");
+		      const routing = document.getElementById("bonus-link-routing");
+		      const sticky = document.getElementById("bonus-link-sticky");
+		      const footer = document.getElementById("bonus-link-footer");
+		      const unlock = document.getElementById("unlock-fan-drop-btn");
+
+		      if (hero) hero.hidden = !eligible;
+		      if (routing) routing.hidden = !eligible;
+		      if (sticky) sticky.hidden = !eligible;
+		      if (footer) footer.hidden = !eligible;
+		      if (unlock) unlock.hidden = eligible;
+		    }
+
+	    async function updatePrivateLinkUi() {
+	      const eligible = await getPrivateLinkEligibility();
+	      setPrivateLinkUi({ eligible });
+	      return eligible;
+	    }
+
+	    function openFlirtyFanDropCheckout({ source }) {
+	      const stripeUrl = TEXT_CALL_PRODUCTS.fanDrop;
+	      if (!stripeUrl) return;
+	      track("text_call_stripe_click", { package_id: "fanDrop", package_name: "Flirty Fan Drop", href: stripeUrl, source });
+	      window.location.href = stripeUrl;
+	    }
+
+	    function handleOnlyFansVisibility() {
+	      const interest = document.getElementById("fan-interest").value;
+	      const method = document.getElementById("fan-method").value;
+	      document.getElementById("onlyfans-routing").hidden = interest !== "adult" && method !== "Verified platform";
+	    }
 
     function handleSubmit(event) {
       event.preventDefault();
@@ -577,10 +628,10 @@
       storeRequest(data);
       track("text_call_form_submit", { package_id:selected.id, package_name:selected.name, interest_type:data.interestType, contact_method:data.contactMethod });
 
-      if (data.interestType === "adult" || data.contactMethod === "OnlyFans") {
-        document.getElementById("onlyfans-routing").hidden = false;
-        track("text_call_onlyfans_click", { source:"form_success_prompt", package_id:selected.id });
-      }
+	      if (data.interestType === "adult" || data.contactMethod === "Verified platform") {
+	        document.getElementById("onlyfans-routing").hidden = false;
+	        updatePrivateLinkUi();
+	      }
 
       const stripeUrl = TEXT_CALL_PRODUCTS[selected.key];
       const status = document.getElementById("form-status");
@@ -610,15 +661,15 @@
       log.scrollTop = log.scrollHeight;
     }
 
-    function assistantReply(input) {
-      const msg = input.toLowerCase();
-      if (/are you|real lexi|is this lexi|human/.test(msg)) {
-        track("real_lexi_upgrade_click", { source:"assistant_disclosure" });
-        return "I'm Lexi's AI Assistant, not Lexi. Real Lexi access is available through the Real Lexi Text Pass, voice call, video call, or VIP request packages.";
-      }
-      if (/onlyfans|spicy|adult|sexy|explicit|nude|sext/.test(msg)) {
-        return `For adult-only content and verified platform access, continue on OnlyFans: ${ONLYFANS_URL}`;
-      }
+	    function assistantReply(input) {
+	      const msg = input.toLowerCase();
+	      if (/are you|real lexi|is this lexi|human/.test(msg)) {
+	        track("real_lexi_upgrade_click", { source:"assistant_disclosure" });
+	        return "I'm Lexi's AI Assistant, not Lexi. Real Lexi access is available through the Real Lexi Text Pass, voice call, video call, or VIP request packages.";
+	      }
+	      if (/onlyfans|spicy|adult|sexy|explicit|nude|sext/.test(msg)) {
+	        return "Adult-only content stays off this site. Unlock Flirty Fan Drop ($7.77) to reveal the discreet verified-platform link, then tap “Private Link”.";
+	      }
       if (/voice|call|phone/.test(msg)) {
         return "For a voice request, choose the 10-Min Voice Call Request. It requires 18+ confirmation, respectful conduct, approval, and scheduling.";
       }
@@ -634,22 +685,23 @@
       return "I can help you choose a package: Free text list for updates, $24.99 for priority text review, $49 for Real Lexi text access, $99 voice, $199 video, or $499 VIP application.";
     }
 
-    function initAssistant() {
-      const form = document.getElementById("assistant-form");
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const input = document.getElementById("assistant-input");
-        const text = input.value.trim();
-        if (!text) return;
-        addMessage("user", text);
-        input.value = "";
-        track("text_call_ai_message", { message_type:"user", prompt:text.slice(0,80) });
-        const reply = assistantReply(text);
-        setTimeout(() => {
-          addMessage("bot", reply);
-          track("text_call_ai_message", { message_type:"assistant", routed_to_onlyfans:reply.includes(ONLYFANS_URL) });
-        }, 180);
-      });
+	    function initAssistant() {
+	      const form = document.getElementById("assistant-form");
+	      form.addEventListener("submit", (event) => {
+	        event.preventDefault();
+	        const input = document.getElementById("assistant-input");
+	        const text = input.value.trim();
+	        if (!text) return;
+	        addMessage("user", text);
+	        input.value = "";
+	        track("text_call_ai_message", { message_type:"user", prompt:text.slice(0,80) });
+	        const routedToPrivateLink = /onlyfans|spicy|adult|sexy|explicit|nude|sext/.test(text.toLowerCase());
+	        const reply = assistantReply(text);
+	        setTimeout(() => {
+	          addMessage("bot", reply);
+	          track("text_call_ai_message", { message_type:"assistant", routed_to_private_link:routedToPrivateLink });
+	        }, 180);
+	      });
       document.querySelectorAll("[data-prompt]").forEach((btn) => {
         btn.addEventListener("click", () => {
           document.getElementById("assistant-input").value = btn.dataset.prompt;
@@ -684,12 +736,14 @@
         phoneEl.textContent = window.CONCIERGE_CONFIG.phoneNumber;
       }
 
-      renderPackages();
-      initAssistant();
-      initFormTracking();
-      handleOnlyFansVisibility();
-      track("text_call_page_view", { page:"lexi-text-call" });
-    });
+	      renderPackages();
+	      initAssistant();
+	      initFormTracking();
+	      handleOnlyFansVisibility();
+	      updatePrivateLinkUi();
+	      document.getElementById("unlock-fan-drop-btn")?.addEventListener("click", () => openFlirtyFanDropCheckout({ source: "routing_card" }));
+	      track("text_call_page_view", { page:"lexi-text-call" });
+	    });
 
     function confirmAge() {
       localStorage.setItem('lexi.ageConfirmed', 'true');

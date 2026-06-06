@@ -1,6 +1,6 @@
 # Text / Call Lexi Lucks Funnel
 
-`lexi-text-call.html` is the 18+ fan-access funnel for text list signups, paid access requests, real Lexi text/voice/video inquiries, VIP applications, and OnlyFans routing.
+`lexi-text-call.html` is the 18+ fan-access funnel for text list signups, paid access requests, real Lexi text/voice/video inquiries, VIP applications, and gated verified-platform routing.
 
 ## Current Mode
 
@@ -8,7 +8,7 @@
 - Does not collect card numbers or account passwords.
 - Uses Stripe Payment Link placeholders in `TEXT_CALL_PRODUCTS`.
 - Labels the assistant as `Lexi AI Assistant` and discloses that it is AI when asked.
-- Routes adult-only interest to `https://www.onlyfans.com/tslollypopz`.
+- Routes adult-only interest to a discreet gated private link (served by `/api/access/onlyfans`).
 
 ## Stripe Setup
 

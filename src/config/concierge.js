@@ -10,6 +10,5 @@ window.CONCIERGE_CONFIG = {
   brandColors: {
     primary: "#FF0080",
     secondary: "#FF69B4"
-  },
-  onlyFansUrl: "https://www.onlyfans.com/tslollypopz"
+  }
 };

@@ -59,9 +59,10 @@ test("Stripe links are wired for paid checkout", () => {
 });
 
 test("OnlyFans route is present and tracked", () => {
-  assert.ok(html.includes("https://www.onlyfans.com/tslollypopz"));
+  assert.ok(!html.includes("onlyfans.com"), "OnlyFans URL must not appear in page source");
+  assert.ok(html.includes("/api/access/onlyfans"), "missing gated private-link endpoint");
   assert.ok(html.includes("text_call_onlyfans_click"));
-  assert.ok(html.includes("For adult-only content and verified platform access, continue on OnlyFans."));
+  assert.ok(html.includes("Adult content is routed separately through verified platforms."));
 });
 
 test("AI assistant discloses it is not Lexi", () => {

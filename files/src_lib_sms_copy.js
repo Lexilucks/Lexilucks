@@ -55,18 +55,18 @@ export const SMS_TEMPLATES = {
 
   INVALID_RESPONSE: `❓ I didn't understand that. Reply with the number (1-8) of your choice, or "STOP" to unsubscribe.`,
 
-  HELP: `📋 Lexi AI Assistant here. Type a number to select a package:\n1=Text List | 2=Fan Drop | 3=Priority Text | 4=Real Lexi | 5=Voice | 6=Video | 7=VIP | 8=OnlyFans`,
+  HELP: `📋 Lexi AI Assistant here. Type a number to select a package:\n1=Text List | 2=Fan Drop | 3=Priority Text | 4=Real Lexi | 5=Voice | 6=Video | 7=VIP | 8=Private Link`,
 
   // ============================================
   // Error & Edge Cases
   // ============================================
-  ALREADY_COMPLETED: `✅ You've already completed this package! Check your email or visit Lexi's OnlyFans for more exclusive content.`,
+  ALREADY_COMPLETED: `✅ You've already completed this package! Check your email or visit lexilucks.com to access any unlocked links.`,
 
   SYSTEM_ERROR: `⚠️ Something went wrong. Please try again or contact support@lexi.com`,
 
   MUST_BE_18: `⚠️ You must be 18+ to access these services. Reply "YES" to confirm age, or "STOP" to unsubscribe.`,
 
-  ONLYFANS_REDIRECT: `🔗 For adult content, visit Lexi's OnlyFans: https://onlyfans.com/lexi\n\nReply STOP to unsubscribe.`,
+  ONLYFANS_REDIRECT: `🔗 Adult-only content stays off SMS. Use lexilucks.com to unlock the discreet verified-platform link.\n\nReply STOP to unsubscribe.`,
 };
 
 /**
